@@ -6,18 +6,22 @@
     <th class="md-text-cell">User Name</th>
     <th class="md-text-cell">Description</th>
     <th class="md-text-cell">Account Expiry Date</th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let user of users" (click)="editUser(user)">
+  <tr *ngFor="let user of users">
     <td class="md-text-cell">{{ user.loginId }}</td>
     <td class="md-text-cell">{{ user.domain }}</td>
     <td class="md-text-cell">{{ user.userName }}</td>
     <td class="md-text-cell">{{ user.description }}</td>
     <td class="md-text-cell">{{ user.expirationDate }}</td>
+    <td>
+      <button md-raised-button md-tooltip="Edit user" (click)="editUser(user)">EDIT</button>
+    </td>
   </tr>
   </tbody>
 </md-data-table>
 <span class="app-action" [class.m2app-dark]="isDarkTheme">
-  <button md-fab><md-icon>plus circle</md-icon></button>
+  <button md-fab><md-icon>add circle</md-icon></button>
 </span>
