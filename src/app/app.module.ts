@@ -7,7 +7,7 @@ import { MdDataTable } from 'ng2-material/components/data-table';
 
 import { AppComponent } from './app.component';
 import { UserListComponent } from './user/user-list/user-list.component';
-import { UserService } from './user/user-service.service';
+import { UserService } from './user/user.service';
 import { UserEditComponent,UserEditDialog } from './user/user-edit/user-edit.component';
 
 @NgModule({

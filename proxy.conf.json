@@ -1,10 +1,10 @@
 {
-  "/api/user": {
-    "target": "http://localhost:3000",
+  "/api/authentication": {
+    "target": "http://localhost:80/default",
     "secure": false
   },
   "/api": {
-    "target": "http://localhost:80/default",
+    "target": "http://localhost:3000",
     "secure": false
   }
 }

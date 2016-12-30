@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MdSnackBar} from '@angular/material';
-import { UserService } from '../user-service.service';
+import { UserService } from '../user.service';
 import { UserEditComponent, UserEditDialog } from '../user-edit/user-edit.component';
 
 @Component({

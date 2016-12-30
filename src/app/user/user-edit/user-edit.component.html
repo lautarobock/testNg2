@@ -1,4 +1,65 @@
-<p>
-  {{user.userName}}
-  user-edit works!
-</p>
+<h1 md-dialog-title>Edit User</h1>
+<md-dialog-content>
+  <md-tab-group>
+    <md-tab label="General">
+      <form>
+        <p>
+          <md-input-container class="p50">
+            <input md-input placeholder="Login id" [(ngModel)]="user.loginId" name="loginId">
+          </md-input-container>
+          <md-input-container class="p50">
+            <input md-input placeholder="Domain" [(ngModel)]="user.domain" name="domain">
+          </md-input-container>
+        </p>
+        <p>
+          <md-input-container class="p50">
+            <input md-input placeholder="User name" [(ngModel)]="user.userName" name="userName">
+          </md-input-container>
+          <md-input-container class="p50">
+            <input md-input placeholder="E-Mail" [(ngModel)]="user.emailAddress" name="emailAddress">
+          </md-input-container>
+        </p>
+        <p>
+          <md-input-container class="p100">
+            <textarea rows="3" md-input placeholder="Description" [(ngModel)]="user.description" name="description"  ></textarea>
+          </md-input-container>
+        </p>
+        <p>
+          <md-checkbox >Account expiry date</md-checkbox>
+          <md-input-container style="margin-left: 1em">
+            <!-- TODO Wait for oficial datepicker PR#1903 -->
+            <input md-input type="date" placeholder="Expiry Date" [(ngModel)]="user.expirationDate" name="expirationDate">
+          </md-input-container>
+          <md-checkbox>Use windows user email</md-checkbox>
+          <md-checkbox>Windows user</md-checkbox>
+          <md-checkbox>Account locked</md-checkbox>
+        </p>
+        <hr/>
+        <p>
+          <b>Workgroups</b>
+          <md-data-table layout-fill>
+            <thead>
+              <tr>
+                <th class="md-text-cell">Name</th>
+                <th class="md-text-cell">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let group of groups">
+                <td class="md-text-cell">{{ group.workgroupName }}</td>
+                <td class="md-text-cell">{{ group.description }}</td>
+              </tr>
+            </tbody>
+          </md-data-table>
+        </p>
+      </form>
+    </md-tab>
+    <md-tab label="Set Password">Content 2</md-tab>
+    <md-tab label="Assign Permissions">Content 2</md-tab>
+    <md-tab label="View Effective Permissions">Content 2</md-tab>
+  </md-tab-group>
+</md-dialog-content>
+<md-dialog-actions>
+  <button md-button (click)="dialogRef.close('Option 1')">Option 1</button>
+  <button md-button (click)="dialogRef.close('Option 2')">Option 2</button>
+</md-dialog-actions>
