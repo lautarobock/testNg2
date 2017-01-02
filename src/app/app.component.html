@@ -9,7 +9,7 @@
       <i class="material-icons app-toolbar-menu">menu</i>
     </button>
 
-    Angular Material2 Example App
+    PlanningSpace - Dataflow
 
     <span class="app-toolbar-filler"></span>
     <button md-raised-button  color="accent" (click)="login()">LOGIN</button>
@@ -17,9 +17,11 @@
   </md-toolbar>
 
   <div class="app-content">
-    <md-card>
+    <router-outlet></router-outlet>
+    
+    <!--<md-card>
       <app-user-list></app-user-list>
-    </md-card>
+    </md-card>-->
     <!--<md-card>
       <button md-button (click)="login()">FLAT</button>
       <button md-raised-button md-tooltip="This is a tooltip!">RAISED</button>

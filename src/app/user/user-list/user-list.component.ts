@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MdSnackBar} from '@angular/material';
+import { Router } from '@angular/router';
 import { UserService } from '../user.service';
-import { UserEditComponent, UserEditDialog } from '../user-edit/user-edit.component';
+// import { UserEditComponent, UserEditDialog } from '../user-edit/user-edit.component';
 
 @Component({
   selector: 'app-user-list',
@@ -13,7 +14,8 @@ export class UserListComponent implements OnInit {
 
   constructor(
     private _service: UserService, 
-    private _editDialog: UserEditDialog,
+    // private _editDialog: UserEditDialog,
+    private router: Router,
     private _snackbar: MdSnackBar
   ) { }
 
@@ -26,7 +28,8 @@ export class UserListComponent implements OnInit {
 
   editUser(user) {
     console.log(user);
-    this._editDialog.open(user);
+    this.router.navigate(['/users', user.userId]);
+    // this._editDialog.open(user);
   }
 
 }

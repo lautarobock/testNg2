@@ -45,6 +45,12 @@ md-sidenav-layout.m2app-dark {
   text-decoration: none;
 }
 
+.app-action {
+  display: inline-block;
+  position: fixed;
+  bottom: 20px; 
+  right: 35px;
+}
 
 .app-spinner {
   height: 30px;

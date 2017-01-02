@@ -1,38 +1,31 @@
 import { Component, OnInit, Injectable } from '@angular/core';
-import {MdDialog, MdDialogRef} from '@angular/material';
-import { UserService } from '../user.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { MdDialog, MdDialogRef} from '@angular/material';
+import { UserService, User } from '../user.service';
+import { slideInDownAnimation } from '../../animations';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-user-edit',
   templateUrl: './user-edit.component.html',
-  styleUrls: ['./user-edit.component.css']
+  styleUrls: ['./user-edit.component.css'],
+  animations: [ slideInDownAnimation ]
 })
 export class UserEditComponent implements OnInit {
-  public user: any;
+  user: User = <User>{};
   private groups: any[];
 
   constructor(
-    public dialogRef: MdDialogRef<UserEditComponent>,
+    private route: ActivatedRoute,
+    private router: Router,
     private _userService: UserService
   ) {}
 
   ngOnInit() {
     this._userService.groups().subscribe(data=>this.groups = data);
+    this.route.params
+    .switchMap((params:Params) => this._userService.get(+params['id']))
+    .subscribe((data: User) => this.user = data);
   }
 
-}
-
-@Injectable()
-export class UserEditDialog {
-  constructor (private dialog: MdDialog) {}
-
-  public open(user) {
-    var dialog = this.dialog.open(
-      UserEditComponent,{
-        width: '80%',
-        // height: '90%'
-      }
-    );
-    dialog.componentInstance.user = user;
-  }
 }

@@ -1,5 +1,6 @@
-<h1 md-dialog-title>Edit User</h1>
-<md-dialog-content>
+<!--<h1 md-dialog-title>Edit User</h1>
+<md-dialog-content>-->
+<md-card>
   <md-tab-group>
     <md-tab label="General">
       <form>
@@ -58,8 +59,11 @@
     <md-tab label="Assign Permissions">Content 2</md-tab>
     <md-tab label="View Effective Permissions">Content 2</md-tab>
   </md-tab-group>
-</md-dialog-content>
+  <button md-raised-button color="primary" (click)="dialogRef.close('Option 1')">Save</button>
+  <button md-button (click)="dialogRef.close('Option 2')">Cancel</button>
+</md-card>
+<!--</md-dialog-content>
 <md-dialog-actions>
   <button md-button (click)="dialogRef.close('Option 1')">Option 1</button>
   <button md-button (click)="dialogRef.close('Option 2')">Option 2</button>
-</md-dialog-actions>
+</md-dialog-actions>-->

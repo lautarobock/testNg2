@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { MdDataTable } from 'ng2-material/components/data-table';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserService } from './user/user.service';
-import { UserEditComponent,UserEditDialog } from './user/user-edit/user-edit.component';
+import { UserEditComponent } from './user/user-edit/user-edit.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -22,9 +24,13 @@ import { UserEditComponent,UserEditDialog } from './user/user-edit/user-edit.com
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterialModule.forRoot()
+    MaterialModule.forRoot(),
+    AppRoutingModule
   ],
-  providers: [UserService, UserEditDialog],
+  providers: [
+    UserService, 
+    RouterModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
