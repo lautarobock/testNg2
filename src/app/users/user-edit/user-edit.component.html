@@ -1,0 +1,121 @@
+<md-toolbar color="primary">
+  <button class="app-icon-button" routerLink="/users">
+    <i class="material-icons app-toolbar-menu">arrow_back</i>
+  </button>
+  Users
+  <span class="app-toolbar-filler"></span>
+  <button md-button>
+    <md-icon class="example-icon">save</md-icon>
+  </button>
+  <!--<button md-button>
+    <md-icon class="example-icon">cancel</md-icon>
+  </button>-->
+</md-toolbar>
+<div class="app-content">
+  <md-card>
+    <md-card-header>
+      <div md-card-avatar><md-icon style="font-size: 40px;">person</md-icon></div>
+      <md-card-title>GENERAL</md-card-title>
+      <md-card-subtitle>{{user.userName}}</md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <form>
+        <p>
+          <md-input-container class="p50">
+            <input md-input placeholder="Login id" [(ngModel)]="user.loginId" name="loginId">
+          </md-input-container>
+          <md-input-container class="p50">
+            <input md-input placeholder="Domain" [(ngModel)]="user.domain" name="domain">
+          </md-input-container>
+        </p>
+        <p>
+          <md-input-container class="p50">
+            <input md-input placeholder="User name" [(ngModel)]="user.userName" name="userName">
+          </md-input-container>
+          <md-input-container class="p50">
+            <input md-input placeholder="E-Mail" [(ngModel)]="user.emailAddress" name="emailAddress">
+          </md-input-container>
+        </p>
+        <p>
+          <md-input-container class="p100">
+            <textarea rows="3" md-input placeholder="Description" [(ngModel)]="user.description" name="description"  ></textarea>
+          </md-input-container>
+        </p>
+        <p>
+          <md-checkbox >Account expiry date</md-checkbox>
+          <md-input-container style="margin-left: 1em">
+            <!-- TODO Wait for oficial datepicker PR#1903 -->
+            <input md-input type="date" placeholder="Expiry Date" [(ngModel)]="user.expirationDate" name="expirationDate">
+          </md-input-container>
+          <md-checkbox>Use windows user email</md-checkbox>
+          <md-checkbox>Windows user</md-checkbox>
+          <md-checkbox>Account locked</md-checkbox>
+        </p>
+        <hr/>
+        <p>
+          <b>Workgroups</b>
+          <md-data-table layout-fill>
+            <thead>
+              <tr>
+                <th class="md-text-cell">Name</th>
+                <th class="md-text-cell">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let group of groups">
+                <td class="md-text-cell">{{ group.workgroupName }}</td>
+                <td class="md-text-cell">{{ group.description }}</td>
+              </tr>
+            </tbody>
+          </md-data-table>
+        </p>
+      </form>
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <md-card-header>
+      <div md-card-avatar><md-icon>locked</md-icon></div>
+      <md-card-title>SET PASSWORD</md-card-title>
+    </md-card-header>
+    <md-card-content>
+      <form>
+        <p>
+          <md-checkbox>Enforce password expiration</md-checkbox>
+          <md-checkbox>Enforce password policy</md-checkbox>
+          <md-checkbox>User must change password at next login</md-checkbox>
+          <md-checkbox>Change password</md-checkbox>
+        </p>
+        <p>
+          <md-input-container class="p50">
+            <input md-input type="password" placeholder="New Password" [(ngModel)]="password" name="password">
+          </md-input-container>
+        </p>
+        <p>
+          <md-input-container class="p50">
+            <input md-input type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword" name="confirmPassword">
+          </md-input-container>
+        </p>
+      </form>
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <md-card-header>
+      <div md-card-avatar><md-icon>check_box</md-icon></div>
+      <md-card-title>ASSIGN PERMISSIONS</md-card-title>
+    </md-card-header>
+    <md-card-content>
+
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <md-card-header>
+      <div md-card-avatar><md-icon>visibility</md-icon></div>
+      <md-card-title>VIEW EFFECTIVE PERMISSIONS</md-card-title>
+    </md-card-header>
+    <md-card-content>
+
+    </md-card-content>
+  </md-card>
+  <!--<button md-raised-button color="primary" (click)="dialogRef.close('Option 1')">Save</button>
+  <button md-button (click)="dialogRef.close('Option 2')">Cancel</button>-->
+</div>

@@ -7,17 +7,18 @@ import { MdDataTable } from 'ng2-material/components/data-table';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { UserListComponent } from './user/user-list/user-list.component';
-import { UserService } from './user/user.service';
-import { UserEditComponent } from './user/user-edit/user-edit.component';
+import { UserListComponent } from './users/user-list/user-list.component';
+import { UserService } from './users/user.service';
+import { UserEditComponent } from './users/user-edit/user-edit.component';
 import { AppRoutingModule } from './app-routing.module';
+import { GroupsModule } from './groups/groups.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     MdDataTable,
     UserListComponent,
-    UserEditComponent,
+    UserEditComponent
   ],
   entryComponents: [UserEditComponent],
   imports: [
@@ -25,7 +26,8 @@ import { AppRoutingModule } from './app-routing.module';
     FormsModule,
     HttpModule,
     MaterialModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    GroupsModule
   ],
   providers: [
     UserService, 

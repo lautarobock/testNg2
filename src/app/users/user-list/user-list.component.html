@@ -1,0 +1,45 @@
+  <md-toolbar color="primary">
+    <!--<button class="app-icon-button" (click)="sidenav.toggle()">
+      <i class="material-icons app-toolbar-menu">menu</i>
+    </button>-->
+    Users
+    <span class="app-toolbar-filler"></span>
+    <!--<button md-raised-button  color="accent" (click)="login()">LOGIN</button>
+    <button md-button (click)="isDarkTheme = !isDarkTheme">TOGGLE DARK THEME</button>-->
+    <button md-button>
+      <md-icon class="example-icon">person_add</md-icon>
+    </button>
+  </md-toolbar>
+  <div class="app-content">
+    <div style="padding-bottom: 70px;">
+      <md-card>
+        <md-data-table layout-fill>
+          <thead>
+          <tr>
+            <th class="md-text-cell" >Login ID</th>
+            <th class="md-text-cell">Domain</th>
+            <th class="md-text-cell">User Name</th>
+            <th class="md-text-cell">Description</th>
+            <th class="md-text-cell">Account Expiry Date</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let user of users">
+            <td class="md-text-cell">{{ user.loginId }}</td>
+            <td class="md-text-cell">{{ user.domain }}</td>
+            <td class="md-text-cell">{{ user.userName }}</td>
+            <td class="md-text-cell">{{ user.description }}</td>
+            <td class="md-text-cell">{{ user.expirationDate }}</td>
+            <td>
+              <button md-raised-button md-tooltip="Edit user" (click)="editUser(user)">EDIT</button>
+            </td>
+          </tr>
+          </tbody>
+        </md-data-table>
+      </md-card>
+      <span class="app-action" [class.m2app-dark]="isDarkTheme">
+        <button md-fab><md-icon>add circle</md-icon></button>
+      </span>
+    </div>
+  </div>

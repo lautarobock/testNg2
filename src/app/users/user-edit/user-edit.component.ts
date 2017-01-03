@@ -1,17 +1,16 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MdDialog, MdDialogRef} from '@angular/material';
 import { UserService, User } from '../user.service';
-import { slideInDownAnimation } from '../../animations';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-user-edit',
   templateUrl: './user-edit.component.html',
-  styleUrls: ['./user-edit.component.css'],
-  animations: [ slideInDownAnimation ]
+  styleUrls: ['./user-edit.component.css']
 })
 export class UserEditComponent implements OnInit {
+
   user: User = <User>{};
   private groups: any[];
 

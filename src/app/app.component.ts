@@ -1,4 +1,4 @@
-import {Component, Optional} from '@angular/core';
+import {Component, Optional, OnInit} from '@angular/core';
 import {MdDialog, MdDialogRef, MdSnackBar} from '@angular/material';
 import {Http, Response } from '@angular/http';
 
@@ -8,7 +8,7 @@ import {Http, Response } from '@angular/http';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   isDarkTheme: boolean = false;
   // lastDialogResult: string;
   // data: any[];
@@ -33,6 +33,10 @@ export class AppComponent {
   //     this.lastDialogResult = result;
   //   })
   // }
+
+  ngOnInit() {
+    
+  }
 
   login() {
     this.http.post('/api/authentication/logon?sso=false',{
