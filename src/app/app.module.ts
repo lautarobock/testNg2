@@ -3,34 +3,31 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
-import { MdDataTable } from 'ng2-material/components/data-table';
+// import { Ng2MaterialModule } from 'ng2-material';
 import { RouterModule } from '@angular/router';
-
 import { AppComponent } from './app.component';
-import { UserListComponent } from './users/user-list/user-list.component';
-import { UserService } from './users/user.service';
-import { UserEditComponent } from './users/user-edit/user-edit.component';
 import { AppRoutingModule } from './app-routing.module';
 import { GroupsModule } from './groups/groups.module';
+import { UsersModule } from './users/users.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MdDataTable,
-    UserListComponent,
-    UserEditComponent
+    // MdDataTable
   ],
-  entryComponents: [UserEditComponent],
+  // entryComponents: [UserEditComponent],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     MaterialModule.forRoot(),
+    // Ng2MaterialModule.forRoot(),
     AppRoutingModule,
-    GroupsModule
+    GroupsModule,
+    UsersModule
   ],
+  // exports: [MdDataTable],
   providers: [
-    UserService, 
     RouterModule
   ],
   bootstrap: [AppComponent]

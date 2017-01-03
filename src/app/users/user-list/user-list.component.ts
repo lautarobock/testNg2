@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MdSnackBar} from '@angular/material';
 import { Router } from '@angular/router';
-import { UserService } from '../user.service';
-// import { UserEditComponent, UserEditDialog } from '../user-edit/user-edit.component';
+import { UserService } from '../users.service';
 
 @Component({
   selector: 'app-user-list',

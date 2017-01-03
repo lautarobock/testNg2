@@ -1,7 +1,7 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MdDialog, MdDialogRef} from '@angular/material';
-import { UserService, User } from '../user.service';
+import { UserService, User } from '../users.service';
 import 'rxjs/add/operator/switchMap';
 
 @Component({

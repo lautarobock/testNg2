@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MdSnackBar} from '@angular/material';
+import { Router } from '@angular/router';
+import { GroupService } from '../group.service';
 
 @Component({
   selector: 'app-group-list',
@@ -7,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GroupListComponent implements OnInit {
 
-  constructor() { }
+  groups: any[];
+
+  constructor(
+    private _service: GroupService,
+    private router: Router,
+    private _snackbar: MdSnackBar
+  ) { }
 
   ngOnInit() {
+    this._service.all().subscribe(
+      data => this.groups = data,
+      err => this._snackbar.open(err.statusText,'Close')
+    );
+  }
+
+  edit(group) {
+    this.router.navigate(['/groups', group.workgroupId]);
   }
 
 }
