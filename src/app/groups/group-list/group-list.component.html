@@ -1,7 +1,7 @@
 <md-toolbar color="primary">
   Workgroups
   <span class="app-toolbar-filler"></span>
-  <button md-button>
+  <button md-icon-button>
     <md-icon class="example-icon">group_add</md-icon>
   </button>
 </md-toolbar>
@@ -21,7 +21,7 @@
           <td class="md-text-cell">{{ group.workgroupName }}</td>
           <td class="md-text-cell">{{ group.description }}</td>
           <td>
-            <button md-button md-tooltip="Edit group" (click)="edit(group)">
+            <button md-icon-button md-tooltip="Edit group" (click)="edit(group)">
               <md-icon>edit</md-icon>
             </button>
           </td>
