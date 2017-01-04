@@ -13,7 +13,6 @@ export class UserListComponent implements OnInit {
 
   constructor(
     private _service: UserService, 
-    // private _editDialog: UserEditDialog,
     private router: Router,
     private _snackbar: MdSnackBar
   ) { }
@@ -25,10 +24,9 @@ export class UserListComponent implements OnInit {
     );
   }
 
-  editUser(user) {
+  edit(user) {
     console.log(user);
     this.router.navigate(['/users', user.userId]);
-    // this._editDialog.open(user);
   }
 
 }

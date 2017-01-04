@@ -34,7 +34,7 @@ export class UserService {
   all() {
     return this.http.get('/api/users').map(res =>{
       var arr = res.json();
-      arr.forEach(g=>g.expirationDate = new Date(g.expirationDate));
+      arr.forEach(g=>g.expirationDate ? g.expirationDate = new Date(g.expirationDate) : null);
       return arr;
     });
   }
@@ -43,6 +43,7 @@ export class UserService {
     return this.http.get('/api/users/' + id).map(res => res.json());
   }
   
+  //@Deprecated (moved to GroupService)
   groups() {
     return this.http.get('/api/workgroups').map(res => res.json());
   }

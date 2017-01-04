@@ -7,8 +7,6 @@ import { UserService } from './users.service';
 import { UsersRoutingModule } from './users-routing.module';
 import { MaterialModule } from '@angular/material';
 import { UtilModule } from '../util/util.module';
-// import { Ng2MaterialModule } from 'ng2-material';
-// import { MdDataTable } from 'ng2-material/components/data-table';
 
 @NgModule({
   imports: [
@@ -18,11 +16,9 @@ import { UtilModule } from '../util/util.module';
     MaterialModule,
     UtilModule
   ],
-  // entryComponents: [UserEditComponent],
   declarations: [
     UserListComponent,
-    UserEditComponent,
-    // MdDataTable
+    UserEditComponent
   ],
   exports: [
     UserListComponent,

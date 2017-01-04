@@ -1,15 +1,12 @@
 <md-toolbar color="primary">
-  <button class="app-icon-button" routerLink="/users">
-    <i class="material-icons app-toolbar-menu">arrow_back</i>
+  <button md-icon-button routerLink="/users">
+    <md-icon>arrow_back</md-icon>
   </button>
   Users
   <span class="app-toolbar-filler"></span>
-  <button md-button>
-    <md-icon class="example-icon">save</md-icon>
+  <button md-icon-button>
+    <md-icon>save</md-icon>
   </button>
-  <!--<button md-button>
-    <md-icon class="example-icon">cancel</md-icon>
-  </button>-->
 </md-toolbar>
 <div class="app-content">
   <md-card>
@@ -51,25 +48,29 @@
           <md-checkbox>Windows user</md-checkbox>
           <md-checkbox>Account locked</md-checkbox>
         </p>
-        <hr/>
-        <p>
-          <b>Workgroups</b>
-          <md-data-table layout-fill>
-            <thead>
-              <tr>
-                <th class="md-text-cell">Name</th>
-                <th class="md-text-cell">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let group of groups">
-                <td class="md-text-cell">{{ group.workgroupName }}</td>
-                <td class="md-text-cell">{{ group.description }}</td>
-              </tr>
-            </tbody>
-          </md-data-table>
-        </p>
       </form>
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <md-card-header>
+      <div md-card-avatar><md-icon>group</md-icon></div>
+      <md-card-title>WORKGROUPS</md-card-title>
+    </md-card-header>
+    <md-card-content>
+      <md-data-table layout-fill [selectable]="true">
+        <thead>
+          <tr md-data-table-header-selectable-row >
+            <th class="md-text-cell">Name</th>
+            <th class="md-text-cell">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let group of groups" md-data-table-selectable-row [selectable-value]="group.workgroupId">
+            <td class="md-text-cell">{{ group.workgroupName }}</td>
+            <td class="md-text-cell">{{ group.description }}</td>
+          </tr>
+        </tbody>
+      </md-data-table>
     </md-card-content>
   </md-card>
   <md-card>

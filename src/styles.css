@@ -47,6 +47,14 @@ body {
   font-weight: 600 !important;
 }
 
+form .p50 {
+    width: 49%
+}
+
+form .p100 {
+    width: 100%
+}
+
 /*From component*/
 md-sidenav-layout.m2app-dark {
   background: black;
@@ -61,7 +69,6 @@ md-sidenav-layout.m2app-dark {
 }
 
 .app-sidenav {
-  /*padding: 10px;*/
   min-width: 100px;
 }
 
@@ -71,28 +78,6 @@ md-sidenav-layout.m2app-dark {
 
 .app-toolbar-filler {
   flex: 1 1 auto;
-}
-
-.app-toolbar-menu {
-  padding: 0 14px 0 14px;
-  color: white;
-}
-
-.app-icon-button {
-  box-shadow: none;
-  user-select: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  filter: none;
-  font-weight: normal;
-  height: auto;
-  line-height: inherit;
-  margin: 0;
-  min-width: 0;
-  padding: 0;
-  text-align: left;
-  text-decoration: none;
 }
 
 .app-action {

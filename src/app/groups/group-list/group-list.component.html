@@ -7,7 +7,7 @@
 </md-toolbar>
 <div class="app-content">
   <div style="padding-bottom: 70px;">
-    <md-card>
+    <!--<md-card>-->
       <md-data-table layout-fill>
         <thead>
         <tr>
@@ -21,14 +21,16 @@
           <td class="md-text-cell">{{ group.workgroupName }}</td>
           <td class="md-text-cell">{{ group.description }}</td>
           <td>
-            <button md-raised-button md-tooltip="Edit group" (click)="edit(group)">EDIT</button>
+            <button md-button md-tooltip="Edit group" (click)="edit(group)">
+              <md-icon>edit</md-icon>
+            </button>
           </td>
         </tr>
         </tbody>
       </md-data-table>
-    </md-card>
-    <span class="app-action" [class.m2app-dark]="isDarkTheme">
+    <!--</md-card>-->
+    <!--<span class="app-action" [class.m2app-dark]="isDarkTheme">
       <button md-fab><md-icon>add circle</md-icon></button>
-    </span>
+    </span>-->
   </div>
 </div>
