@@ -1,0 +1,8 @@
+<h1 md-dialog-title>EDIT VARIABLE</h1>
+<md-dialog-content>
+  <app-variable-edit [variable]="variable"></app-variable-edit>
+</md-dialog-content>
+<md-dialog-actions>
+  <button md-button style="float: right" md-dialog-close>CANCEL</button>
+  <button md-button style="float: right" (click)="dialogRef.close('yes')">SAVE</button>
+</md-dialog-actions>

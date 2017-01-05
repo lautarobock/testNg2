@@ -9,24 +9,22 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { GroupsModule } from './groups/groups.module';
 import { UsersModule } from './users/users.module';
+import { VariablesModule } from './variables/variables.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    // MdDataTable
+    AppComponent
   ],
-  // entryComponents: [UserEditComponent],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     MaterialModule.forRoot(),
-    // Ng2MaterialModule.forRoot(),
     AppRoutingModule,
     GroupsModule,
-    UsersModule
+    UsersModule,
+    VariablesModule
   ],
-  // exports: [MdDataTable],
   providers: [
     RouterModule
   ],

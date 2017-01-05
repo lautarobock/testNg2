@@ -19,7 +19,7 @@
   </div>
 
 </md-sidenav-layout>-->
-<md-sidenav-layout [class.m2app-dark]="isDarkTheme" fullscreen>
+<md-sidenav-container [class.m2app-dark]="isDarkTheme" fullscreen>
 
   <md-sidenav #sidenav mode="side" opened="true" class="app-sidenav" >
     <md-toolbar color="primary">
@@ -34,13 +34,17 @@
         <md-icon style="margin-top: 12px;" md-list-avatar>group</md-icon>
         <a md-line>Groups</a>
       </md-list-item>
-      <md-list-item routerLink="/roles" routerLinkActive="active">
-        <md-icon style="margin-top: 12px;" md-list-avatar>assignment</md-icon>
-        <a md-line>Roles</a>
+      <md-list-item routerLink="/variables" routerLinkActive="active">
+        <md-icon style="margin-top: 12px;" md-list-avatar>list</md-icon>
+        <a md-line>Variables</a>
+      </md-list-item>
+      <md-list-item (click)="login()">
+        <md-icon style="margin-top: 12px;"  md-list-avatar>power_settings_new</md-icon>
+        <a md-line>Login</a>
       </md-list-item>
     </md-nav-list>
   </md-sidenav>
 
   <router-outlet></router-outlet>
 
-</md-sidenav-layout>
+</md-sidenav-container>

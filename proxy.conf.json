@@ -3,6 +3,10 @@
     "target": "http://localhost:80/default",
     "secure": false
   },
+  "/api/v1": {
+    "target": "http://localhost:80/default/PlanningSpaceDataflow",
+    "secure": false
+  },
   "/api": {
     "target": "http://localhost:3000",
     "secure": false

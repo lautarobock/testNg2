@@ -25,7 +25,6 @@ export class UserListComponent implements OnInit {
   }
 
   edit(user) {
-    console.log(user);
     this.router.navigate(['/users', user.userId]);
   }
 
