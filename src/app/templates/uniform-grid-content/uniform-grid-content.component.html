@@ -1,5 +1,7 @@
-Uniform grid
-<div *ngFor="let content of content.contents">
-  <!--<template-loader [content]="content"></template-loader>-->
-  {{content.contentType}}({{content.name}})
+<div style="display: flex;">
+  <!-- FIXME jsonProperties.Colspan to flex-grow -->
+  <div *ngFor="let content of content.contents" style="flex-grow:1;">
+    <template-loader [content]="content"></template-loader>
+    <!--{{content.contentType}}({{content.name}})-->
+  </div>
 </div>

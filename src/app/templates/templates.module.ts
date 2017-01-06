@@ -8,6 +8,8 @@ import { TabContentComponent } from './tab-content/tab-content.component';
 import { PanelContentComponent } from './panel-content/panel-content.component';
 import { UniformGridContentComponent } from './uniform-grid-content/uniform-grid-content.component';
 import { ExpanderContentComponent } from './expander-content/expander-content.component';
+import { GroupContentComponent } from './group-content/group-content.component';
+import { VariableEditorContentComponent } from './variable-editor-content/variable-editor-content.component';
 
 @NgModule({
   imports: [
@@ -24,13 +26,17 @@ import { ExpanderContentComponent } from './expander-content/expander-content.co
     TabContentComponent, 
     PanelContentComponent, 
     UniformGridContentComponent, 
-    ExpanderContentComponent
+    ExpanderContentComponent, 
+    GroupContentComponent, 
+    VariableEditorContentComponent
   ],
   entryComponents: [
     TabContentComponent, 
     PanelContentComponent, 
     UniformGridContentComponent, 
-    ExpanderContentComponent
+    ExpanderContentComponent, 
+    GroupContentComponent,
+    VariableEditorContentComponent
   ]
 })
 export class TemplatesModule { }
