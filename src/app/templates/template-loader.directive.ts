@@ -1,7 +1,7 @@
 import { Component, Injectable, Input, OnInit, Directive,ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { TabContentComponent } from './tab-content/tab-content.component';
 import { PanelContentComponent } from './panel-content/panel-content.component';
-import { AbstractContentComponent, ContentType } from './abstract-content';
+import { AbstractContentComponent, AbstractEditorComponent, ContentType, EditorType, ContentData, EditorData } from './abstract-content';
 
 class TemplateLoaderRegister {
 
@@ -16,11 +16,31 @@ class TemplateLoaderRegister {
   }
 }
 
+class EditorLoaderRegister {
+
+  private _templates = {};
+
+  public register(type: EditorType, clazz) {
+    this._templates[EditorType[type]] = clazz;
+  }
+
+  public get(type: EditorType) {
+    return this._templates[type];
+  }
+}
+
 let TEMPLATE_REGISTER = new TemplateLoaderRegister();
+let EDITOR_REGISTER = new EditorLoaderRegister();
 
 export function RegisterTemplate(type: ContentType) {
   return function(target) {
     TEMPLATE_REGISTER.register(type, target);
+  }
+}
+
+export function RegisterEditor(type: EditorType) {
+  return function(target) {
+    EDITOR_REGISTER.register(type, target);
   }
 }
 
@@ -29,29 +49,48 @@ export function RegisterTemplate(type: ContentType) {
 })
 export class TemplateLoaderDirective {
 
-  @Input() content: any;
+  @Input() content: ContentData;
 
   constructor(private vcRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) {
   }
 
   ngOnChanges () {
     if (!this.content) return;
-
     let factory = this.componentFactoryResolver.resolveComponentFactory(TEMPLATE_REGISTER.get(this.content.contentType));
-
     // vCref is needed cause of that injector..
     let injector = ReflectiveInjector.fromResolvedProviders([], this.vcRef.parentInjector);
-
     // create component without adding it directly to the DOM
     let comp = factory.create(injector);
-
     // add inputs first !! otherwise component/template crashes ..
     let instance: AbstractContentComponent = <AbstractContentComponent>comp.instance;
     instance.content = this.content;
-
     // all inputs set? add it to the DOM ..
     this.vcRef.insert(comp.hostView);
+  }
+}
 
+@Directive({
+  selector: 'editor-loader'
+})
+export class EditorLoaderDirective {
+
+  @Input() editor: EditorData;
+
+  constructor(private vcRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) {
+  }
+
+  ngOnChanges () {
+    if (!this.editor) return;
+    let factory = this.componentFactoryResolver.resolveComponentFactory(EDITOR_REGISTER.get(this.editor.editorType));
+    // vCref is needed cause of that injector..
+    let injector = ReflectiveInjector.fromResolvedProviders([], this.vcRef.parentInjector);
+    // create component without adding it directly to the DOM
+    let comp = factory.create(injector);
+    // add inputs first !! otherwise component/template crashes ..
+    let instance: AbstractEditorComponent = <AbstractEditorComponent>comp.instance;
+    instance.editor = this.editor;
+    // all inputs set? add it to the DOM ..
+    this.vcRef.insert(comp.hostView);
   }
 }
 

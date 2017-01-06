@@ -2,6 +2,11 @@ export class AbstractContentComponent {
     public content: ContentData;
 }
 
+export class AbstractEditorComponent {
+    public editor: EditorData;
+}
+
+
 export enum ContentType {
     Group, 
     Panel,
@@ -32,7 +37,16 @@ export enum EditorType {
     Visualization,
     WebView,
     WorkingInterestGrid,
-    WellView
+    WellView,
+    Memo
+}
+
+export class EditorData {
+    
+    constructor(
+        public editorType: EditorType,
+        public variableIds: number[]
+    ) {}
 }
 
 export class ContentData {
@@ -41,6 +55,7 @@ export class ContentData {
         public contentType: ContentType,
         public name: string,
         public editorType: EditorType,
-        public informationText: string
+        public informationText: string,
+        public editors: EditorData[]
     ) {}
 }
