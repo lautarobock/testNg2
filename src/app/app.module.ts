@@ -10,6 +10,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { GroupsModule } from './groups/groups.module';
 import { UsersModule } from './users/users.module';
 import { VariablesModule } from './variables/variables.module';
+import { HierarchyModule } from './hierarchy/hierarchy.module';
+import { ConfigModule } from './config/config';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { VariablesModule } from './variables/variables.module';
     AppRoutingModule,
     GroupsModule,
     UsersModule,
-    VariablesModule
+    VariablesModule,
+    HierarchyModule,
+    ConfigModule
   ],
   providers: [
     RouterModule

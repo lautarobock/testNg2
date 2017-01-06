@@ -69,7 +69,8 @@ md-sidenav-layout.m2app-dark {
 }
 
 .app-sidenav {
-  min-width: 100px;
+  min-width: 330px;
+  max-width: 330px;
 }
 
 .app-content md-checkbox {
@@ -85,4 +86,19 @@ md-sidenav-layout.m2app-dark {
   position: fixed;
   bottom: 20px; 
   right: 35px;
+}
+
+.tree {
+  white-space: nowrap !important;
+}
+
+.material-design .toggle-children {
+  background-image: url('/assets/images/tree/ic_chevron_right_black_24px.svg');
+  width: 24px;
+  height: 24px;
+}
+
+.material-design .toggle-children-wrapper {
+  padding-right: 0px;
+  margin-right: -7px;
 }

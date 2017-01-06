@@ -1,50 +1,44 @@
-<!--<md-sidenav-layout [class.m2app-dark]="isDarkTheme">
-
-  <md-sidenav #sidenav mode="side" class="app-sidenav">
-    Sidenav
-  </md-sidenav>
-
+<div [class.m2app-dark]="isDarkTheme">
   <md-toolbar color="primary">
-    <button class="app-icon-button" (click)="sidenav.toggle()">
-      <i class="material-icons app-toolbar-menu">menu</i>
+    <button md-icon-button (click)="sidenav.toggle()">
+      <md-icon>menu</md-icon>
     </button>
     PlanningSpace - Dataflow
     <span class="app-toolbar-filler"></span>
-    <button md-raised-button  color="accent" (click)="login()">LOGIN</button>
+    <button md-raised-button  color="accent" (click)="login()">
+      <md-icon>power_settings_new</md-icon>
+      LOGIN
+    </button>
     <button md-button (click)="isDarkTheme = !isDarkTheme">TOGGLE DARK THEME</button>
   </md-toolbar>
+  <md-sidenav-container fullscreen style="margin-top: 64px;">
 
-  <div class="app-content">
-    <router-outlet></router-outlet>
-  </div>
+    <md-sidenav #sidenav mode="side" opened="true" class="app-sidenav" >
+      <app-hierarchy-panel></app-hierarchy-panel>
+      <!--<md-toolbar color="primary">
+        Security
+      </md-toolbar>-->
+      <!--<md-nav-list>
+        <md-list-item routerLink="/users" routerLinkActive="active">
+          <md-icon style="margin-top: 12px;" md-list-avatar>person</md-icon>
+          <a md-line >Users</a>
+        </md-list-item>
+        <md-list-item routerLink="/groups" routerLinkActive="active">
+          <md-icon style="margin-top: 12px;" md-list-avatar>group</md-icon>
+          <a md-line>Groups</a>
+        </md-list-item>
+        <md-list-item routerLink="/variables" routerLinkActive="active">
+          <md-icon style="margin-top: 12px;" md-list-avatar>list</md-icon>
+          <a md-line>Variables</a>
+        </md-list-item>
+        <md-list-item (click)="login()">
+          <md-icon style="margin-top: 12px;"  md-list-avatar>power_settings_new</md-icon>
+          <a md-line>Login</a>
+        </md-list-item>
+      </md-nav-list>-->
+    </md-sidenav>
 
-</md-sidenav-layout>-->
-<md-sidenav-container [class.m2app-dark]="isDarkTheme" fullscreen>
-
-  <md-sidenav #sidenav mode="side" opened="true" class="app-sidenav" >
-    <md-toolbar color="primary">
-      Security
-    </md-toolbar>
-    <md-nav-list>
-      <md-list-item routerLink="/users" routerLinkActive="active">
-        <md-icon style="margin-top: 12px;" md-list-avatar>person</md-icon>
-        <a md-line >Users</a>
-      </md-list-item>
-      <md-list-item routerLink="/groups" routerLinkActive="active">
-        <md-icon style="margin-top: 12px;" md-list-avatar>group</md-icon>
-        <a md-line>Groups</a>
-      </md-list-item>
-      <md-list-item routerLink="/variables" routerLinkActive="active">
-        <md-icon style="margin-top: 12px;" md-list-avatar>list</md-icon>
-        <a md-line>Variables</a>
-      </md-list-item>
-      <md-list-item (click)="login()">
-        <md-icon style="margin-top: 12px;"  md-list-avatar>power_settings_new</md-icon>
-        <a md-line>Login</a>
-      </md-list-item>
-    </md-nav-list>
-  </md-sidenav>
-
-  <router-outlet></router-outlet>
-
-</md-sidenav-container>
+    <!--<router-outlet></router-outlet>-->
+    
+  </md-sidenav-container>  
+</div>

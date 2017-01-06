@@ -1,0 +1,52 @@
+<div class="material-design">
+  <md-select [(ngModel)]="selectedVersion" style="width: 100%">
+    <md-option *ngFor="let version of versions" [value]="version" (onSelect)="loadDocuments()">
+      {{ version.name }}
+    </md-option>
+  </md-select>
+  <Tree [nodes]="hierarchy" [options]="options">
+    <template #treeNodeTemplate let-node="node" let-index="index">
+      <!--<md-icon>save</md-icon>-->
+      <img src="/assets/images/tree/{{node.data.nodeType.imageKey}}.png"
+                 style="position: relative;;width: 17px;height: 17px;top:3px" />
+      <span>{{ node.data.name }}</span>
+    </template>
+    <template #treeNodeFullTemplate
+          let-node="node"
+          let-index="index"
+          let-templates="templates">
+      <div
+          *ngIf="!node.isHidden"
+          class="tree-node tree-node-level-{{ node.level }}"
+          [class]="node.getClass()"
+          [class.tree-node-expanded]="node.isExpanded && node.hasChildren"
+          [class.tree-node-collapsed]="node.isCollapsed && node.hasChildren"
+          [class.tree-node-leaf]="node.isLeaf"
+          [class.tree-node-active]="node.isActive"
+          [class.tree-node-focused]="node.isFocused">
+
+        <TreeNodeDropSlot *ngIf="index === 0" [dropIndex]="index" [node]="node.parent">
+        </TreeNodeDropSlot>
+
+        <div class="node-wrapper" [style.padding-left]="node.getNodePadding()">
+          <TreeNodeExpander [node]="node"></TreeNodeExpander>
+          <div class="node-content-wrapper" 
+            (click)="node.mouseAction('click', $event)"
+            (dblclick)="node.mouseAction('dblClick', $event)"
+            (contextmenu)="node.mouseAction('contextMenu', $event)"
+            (treeDrop)="node.onDrop($event)"
+            [treeAllowDrop]="node.allowDrop"
+            [treeDrag]="node"
+            [treeDragEnabled]="node.allowDrag()">
+
+            <TreeNodeContent [node]="node" [index]="index" [template]="templates.treeNodeTemplate">
+            </TreeNodeContent>
+          </div>
+        </div>
+
+        <TreeNodeChildren [node]="node" [templates]="templates"></TreeNodeChildren>
+        <TreeNodeDropSlot [dropIndex]="index + 1" [node]="node.parent"></TreeNodeDropSlot>
+      </div>
+    </template>
+  </Tree>
+</div>
