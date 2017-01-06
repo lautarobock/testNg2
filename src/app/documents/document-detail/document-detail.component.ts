@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Directive,ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { DocumentsService } from '../documents.service';
+import { DocumentsService, Document } from '../documents.service';
 
 @Component({
   selector: 'app-document-detail',
@@ -9,14 +9,16 @@ import { DocumentsService } from '../documents.service';
 })
 export class DocumentDetailComponent implements OnInit {
 
-  document: any = {};
+  document: Document = <Document>{};
 
   constructor(private route: ActivatedRoute, private _documentService: DocumentsService) { }
 
   ngOnInit() {
     this.route.params
     .switchMap((params:Params) => this._documentService.get(+params['id']))
-    .subscribe(data => this.document = data);
+    .subscribe((data: Document) => this.document = data);
   }
 
 }
+
+

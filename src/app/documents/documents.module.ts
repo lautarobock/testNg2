@@ -6,6 +6,7 @@ import { UtilModule } from '../util/util.module';
 import { DocumentsRoutingModule } from './documents-routing.module';
 import { DocumentDetailComponent } from './document-detail/document-detail.component';
 import { DocumentsService } from './documents.service';
+import { TemplatesModule } from '../templates/templates.module';
 
 @NgModule({
   imports: [
@@ -13,9 +14,11 @@ import { DocumentsService } from './documents.service';
     FormsModule,
     MaterialModule,
     UtilModule,
-    DocumentsRoutingModule
+    DocumentsRoutingModule,
+    TemplatesModule
   ],
   declarations: [DocumentDetailComponent],
-  providers: [DocumentsService]
+  providers: [DocumentsService],
+  
 })
 export class DocumentsModule { }

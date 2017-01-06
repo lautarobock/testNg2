@@ -14,7 +14,8 @@ export class HierarchyPanelComponent implements OnInit {
   selectedVersion: any;
   hierarchy: any[];
   options = {
-    childrenField: 'nodes' 
+    childrenField: 'nodes',
+    isExpandedField: 'expanded'
   };
 
   constructor(
@@ -39,9 +40,15 @@ export class HierarchyPanelComponent implements OnInit {
 
   loadDocuments() {
     this._hierarchyService.documents(this.selectedVersion.versionId).subscribe(
-      data => this.hierarchy = data,
+      data => this.hierarchy = this.markAsExpanded(data),
       err => this._snackbar.open(err.statusText,'Close')
     )
+  }
+
+  markAsExpanded(data) {
+    data[0].expanded = true;
+    data[0].nodes.forEach(n => n.expanded =- true);
+    return data;
   }
 
 }

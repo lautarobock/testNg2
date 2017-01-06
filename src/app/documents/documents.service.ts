@@ -2,6 +2,12 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Config } from '../config/config';
 
+export class Document {
+  constructor(
+    public documentName: string
+  ) {}
+}
+
 @Injectable()
 export class DocumentsService {
 

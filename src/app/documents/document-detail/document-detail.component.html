@@ -1,3 +1,6 @@
-<p>
-  document-detail works! {{document.documentName}}
-</p>
+<div style="margin: 1em">
+  <h3>{{document.documentName}}</h3>
+  <md-card *ngIf="document.template">
+    <template-loader *ngFor="let content of document.template.contents" [content]="content"></template-loader>
+  </md-card>
+</div>
