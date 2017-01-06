@@ -1,7 +1,7 @@
 <md-tab-group>
   <md-tab *ngFor="let content of content.contents" label="{{content.name}}">
-    <!--<template-loader [content]="content"></template-loader>-->
-    {{content.contentType}}
+    <template-loader [content]="content"></template-loader>
+    <!--{{content.contentType}}-->
   </md-tab>
   
 </md-tab-group>

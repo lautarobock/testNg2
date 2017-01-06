@@ -1,0 +1,10 @@
+.uniform-width-50 {
+    width: 50%;
+}
+
+@media (max-width: 1200px) {
+    .uniform-width-sm {
+        width: 99% !important;
+    }
+
+}

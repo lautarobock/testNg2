@@ -1,0 +1,4 @@
+<span [hidden]="!content.informationText">{{content.informationText}}</span>
+<div *ngFor="let content of content.contents">
+  <template-loader [content]="content"></template-loader>
+</div>

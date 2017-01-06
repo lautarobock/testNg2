@@ -1,24 +1,28 @@
-import { Component, Input, OnInit, Directive,ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentRef } from '@angular/core';
+import { Component, Injectable, Input, OnInit, Directive,ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { TabContentComponent } from './tab-content/tab-content.component';
+import { PanelContentComponent } from './panel-content/panel-content.component';
+import { AbstractContentComponent, ContentType } from './abstract-content';
 
-@Component({
-  selector: 'app-test',
-  template: 'Test ({{model.name}})'
-})
-export class Test {
+class TemplateLoaderRegister {
 
-  public model;
-  
-  constructor() { }
+  private _templates = {};
 
+  public register(type: ContentType, clazz) {
+    this._templates[ContentType[type]] = clazz;
+  }
 
+  public get(type: ContentType) {
+    return this._templates[type];
+  }
 }
 
-const TEMPLATES = {
-  TEST: Test,
-  TAB: TabContentComponent
-};
+let TEMPLATE_REGISTER = new TemplateLoaderRegister();
 
+export function RegisterTemplate(type: ContentType) {
+  return function(target) {
+    TEMPLATE_REGISTER.register(type, target);
+  }
+}
 
 @Directive({
   selector: 'template-loader'
@@ -33,7 +37,7 @@ export class TemplateLoaderDirective {
   ngOnChanges () {
     if (!this.content) return;
 
-    let factory = this.componentFactoryResolver.resolveComponentFactory(TEMPLATES[this.content.contentType.toUpperCase()]);
+    let factory = this.componentFactoryResolver.resolveComponentFactory(TEMPLATE_REGISTER.get(this.content.contentType));
 
     // vCref is needed cause of that injector..
     let injector = ReflectiveInjector.fromResolvedProviders([], this.vcRef.parentInjector);
@@ -42,10 +46,12 @@ export class TemplateLoaderDirective {
     let comp = factory.create(injector);
 
     // add inputs first !! otherwise component/template crashes ..
-    comp.instance['content'] = this.content;
+    let instance: AbstractContentComponent = <AbstractContentComponent>comp.instance;
+    instance.content = this.content;
 
     // all inputs set? add it to the DOM ..
     this.vcRef.insert(comp.hostView);
 
   }
 }
+
