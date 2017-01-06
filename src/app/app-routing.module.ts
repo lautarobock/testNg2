@@ -1,22 +1,27 @@
-import { NgModule }             from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-// import { UserListComponent } from './users/user-list/user-list.component'
-// import { UserEditComponent } from './users/user-edit/user-edit.component'
+import { MaterialModule } from '@angular/material';
+
+@Component({
+  selector: 'default-view',
+  template: '<md-card style="margin: 1em">Welcome to Dataflow</md-card>'
+})
+export class DefaultComponent {
+}
 
 const appRoutes: Routes = [{
-//     path: 'users',
-//     component: UserListComponent
-// },{
-//     path: 'users/:id',
-//     component: UserEditComponent
-// },{
+    path: 'default',
+    component: DefaultComponent
+},{
     path: '',
-    redirectTo: '/users',
+    redirectTo: '/default',
     pathMatch: 'full'
 }];
 
 @NgModule({
-    imports: [RouterModule.forRoot(appRoutes,{})],
+    imports: [RouterModule.forRoot(appRoutes,{}), MaterialModule],
+    declarations: [DefaultComponent],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}
+

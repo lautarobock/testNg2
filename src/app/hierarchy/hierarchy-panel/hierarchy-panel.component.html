@@ -6,10 +6,9 @@
   </md-select>
   <Tree [nodes]="hierarchy" [options]="options">
     <template #treeNodeTemplate let-node="node" let-index="index">
-      <!--<md-icon>save</md-icon>-->
       <img src="/assets/images/tree/{{node.data.nodeType.imageKey}}.png"
                  style="position: relative;;width: 17px;height: 17px;top:3px" />
-      <span>{{ node.data.name }}</span>
+      <span (click)="select(node.data)">{{ node.data.name }}</span>
     </template>
     <template #treeNodeFullTemplate
           let-node="node"
