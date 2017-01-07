@@ -4,7 +4,9 @@ import { Config } from '../config/config';
 
 export class Document {
   constructor(
-    public documentName: string
+    public documentName: string,
+    public templateVariables: any[],
+    public variableDefinitions: any
   ) {}
 }
 

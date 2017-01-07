@@ -1,9 +1,13 @@
+import { Document } from '../documents/documents.service';
+
 export class AbstractContentComponent {
     public content: ContentData;
+    public document: Document;
 }
 
 export class AbstractEditorComponent {
     public editor: EditorData;
+    public document: Document;
 }
 
 
@@ -39,10 +43,6 @@ export enum EditorType {
     WorkingInterestGrid,
     WellView,
     Memo
-}
-
-export class DocumentData {
-
 }
 
 export class EditorData {

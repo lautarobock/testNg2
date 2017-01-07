@@ -21,8 +21,12 @@ export class DocumentDetailComponent implements OnInit {
     .subscribe((data: Document) => this.document = this.postProcess(data));
   }
 
-  postProcess(doc) {
+  postProcess(doc: Document) {
     // doc.variableDefinitions = _.keyBy(doc.templateVariables,'id');
+    doc.variableDefinitions = {};
+    doc.templateVariables.forEach(function(variable) {
+      doc.variableDefinitions[variable.id] = variable;
+    }); 
     return doc;
   }
 }
