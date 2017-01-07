@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, Directive,ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DocumentsService, Document } from '../documents.service';
+// import * as _ from "lodash";
+
 
 @Component({
   selector: 'app-document-detail',
@@ -16,9 +18,13 @@ export class DocumentDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params
     .switchMap((params:Params) => this._documentService.get(+params['id']))
-    .subscribe((data: Document) => this.document = data);
+    .subscribe((data: Document) => this.document = this.postProcess(data));
   }
 
+  postProcess(doc) {
+    // doc.variableDefinitions = _.keyBy(doc.templateVariables,'id');
+    return doc;
+  }
 }
 
 

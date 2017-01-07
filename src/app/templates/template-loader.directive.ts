@@ -1,7 +1,7 @@
 import { Component, Injectable, Input, OnInit, Directive,ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { TabContentComponent } from './tab-content/tab-content.component';
 import { PanelContentComponent } from './panel-content/panel-content.component';
-import { AbstractContentComponent, AbstractEditorComponent, ContentType, EditorType, ContentData, EditorData } from './abstract-content';
+import { AbstractContentComponent, AbstractEditorComponent, ContentType, EditorType, ContentData, EditorData, DocumentData } from './abstract-content';
 
 class TemplateLoaderRegister {
 
@@ -50,6 +50,7 @@ export function RegisterEditor(type: EditorType) {
 export class TemplateLoaderDirective {
 
   @Input() content: ContentData;
+  @Input() document: DocumentData;
 
   constructor(private vcRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) {
   }
@@ -75,6 +76,7 @@ export class TemplateLoaderDirective {
 export class EditorLoaderDirective {
 
   @Input() editor: EditorData;
+  @Input() document: DocumentData;
 
   constructor(private vcRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) {
   }

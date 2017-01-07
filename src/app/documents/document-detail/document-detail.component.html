@@ -1,6 +1,6 @@
 <div style="margin: 0.5em">
   <h3>{{document.documentName}}</h3>
   <md-card *ngIf="document.template">
-    <template-loader *ngFor="let content of document.template.contents" [content]="content"></template-loader>
+    <template-loader *ngFor="let content of document.template.contents" [document]="document" [content]="content"></template-loader>
   </md-card>
 </div>

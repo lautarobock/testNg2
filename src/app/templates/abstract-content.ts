@@ -41,6 +41,10 @@ export enum EditorType {
     Memo
 }
 
+export class DocumentData {
+
+}
+
 export class EditorData {
     
     constructor(
