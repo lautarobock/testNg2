@@ -13,27 +13,34 @@ export class Document {
 }
 
 export enum DataType {
-  ScalarString
+  ScalarString,
+  ScalarDateTime
 }
 
 export class Value {
 
   constructor(private data: any, private _values: Values) {}
 
-  safeValue(val) {
-    if (arguments.length !== 0) {
-      if ( !this.data.values || this.data.values.length === 0 ) {
-        this.data.values = [{ }]
-      }
-      if ( this.data.values[0].value !== val) {
-        this.data.values[0].value = val;
-        this._values.changeVariable.emit(this.data);
-      }
+  update(val) {
+    if ( !this.data.values || this.data.values.length === 0 ) {
+      this.data.values = [{ }]
     }
+    if ( this.data.values[0].value !== val) {
+      this.data.values[0].value = val;
+      this._values.changeVariable.emit(this.data);
+    }
+  }
+
+  safeValue(val) {
     if ( !this.data.values || this.data.values.length === 0 ) {
       return null
     } else {
-      return this.data.values[0].value
+      if ( this.data.dataType === DataType[DataType.ScalarDateTime]) {
+        this.data.values[0].value;
+      } else {
+        return this.data.values[0].value
+      }
+      
     }
   }
 }

@@ -3,6 +3,6 @@
     #input
     placeholder="{{document.variableDefinitions[editor.variableIds[0]].prompt}}"
     [ngModel]="data.get(editor.variableIds[0]).safeValue()"
-    (blur)="data.get(editor.variableIds[0]).safeValue(input.value)">
+    (blur)="data.get(editor.variableIds[0]).update(input.value)">
   </textarea>
 </md-input-container>

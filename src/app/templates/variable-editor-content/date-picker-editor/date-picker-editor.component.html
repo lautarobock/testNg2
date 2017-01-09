@@ -2,6 +2,6 @@
   <input md-input type="date"
     #input
     placeholder="{{document.variableDefinitions[editor.variableIds[0]].prompt}}" 
-    [ngModel]="data.get(editor.variableIds[0]).safeValue() | date"
-    (blur)="data.get(editor.variableIds[0]).safeValue(input.value)">
+    [ngModel]="data.get(editor.variableIds[0]).safeValue()"
+    (blur)="data.get(editor.variableIds[0]).update(input.value)">
 </md-input-container>
