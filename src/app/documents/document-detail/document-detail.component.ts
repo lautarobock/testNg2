@@ -27,7 +27,10 @@ export class DocumentDetailComponent implements OnInit {
         this.data = new Values(data.data);
         this.data.changeVariable.subscribe(v=> {
           this._documentService.updateFields(this.document,v,'Default')
-            .subscribe(data=>console.log(data))
+          .subscribe(data=>{
+            console.log(data);
+            this.data.update(data);
+          });
         });
       })
     });

@@ -13,6 +13,8 @@ import { VariableEditorContentComponent } from './variable-editor-content/variab
 import { TextBoxEditorComponent } from './variable-editor-content/text-box-editor/text-box-editor.component';
 import { MemoEditorComponent } from './variable-editor-content/memo-editor/memo-editor.component';
 import { AttachmentEditorComponent } from './variable-editor-content/attachment-editor/attachment-editor.component';
+import { MapEditorComponent } from './variable-editor-content/map-editor/map-editor.component';
+import { DatePickerEditorComponent } from './variable-editor-content/date-picker-editor/date-picker-editor.component';
 
 @NgModule({
   imports: [
@@ -36,7 +38,9 @@ import { AttachmentEditorComponent } from './variable-editor-content/attachment-
     VariableEditorContentComponent, 
     TextBoxEditorComponent, 
     MemoEditorComponent, 
-    AttachmentEditorComponent
+    AttachmentEditorComponent, 
+    MapEditorComponent, 
+    DatePickerEditorComponent
   ],
   entryComponents: [
     TabContentComponent, 
@@ -47,7 +51,9 @@ import { AttachmentEditorComponent } from './variable-editor-content/attachment-
     VariableEditorContentComponent,
     TextBoxEditorComponent,
     MemoEditorComponent, 
-    AttachmentEditorComponent
+    AttachmentEditorComponent, 
+    MapEditorComponent, 
+    DatePickerEditorComponent
   ]
 })
 export class TemplatesModule { }

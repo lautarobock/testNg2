@@ -26,7 +26,7 @@ export enum ContentType {
 export enum EditorType {
     CheckBox,
     ComboBox,
-    DateTimePicker,
+    DatePicker,
     Label,
     None,
     Radio,

@@ -48,6 +48,10 @@ export class Values {
     values.forEach(val=>this._paramsMap.set(val.variableId,new Value(val,this)));
   }
 
+  update(values) {
+    values.forEach(val=>this._paramsMap.set(val.variableId,new Value(val,this)));
+  }
+
   get(variableId) {
     return this._paramsMap.get(variableId);
   }
