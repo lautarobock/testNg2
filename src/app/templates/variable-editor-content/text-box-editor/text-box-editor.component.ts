@@ -16,6 +16,8 @@ export class TextBoxEditorComponent extends AbstractEditorComponent implements O
   }
 
   ngOnInit() {
+    // super.data.get()
+    // this.data.get(123).values[0].value;
   }
 
 }

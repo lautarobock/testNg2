@@ -2,7 +2,7 @@ import { Component, Injectable, Input, OnInit, Directive,ViewContainerRef, Refle
 import { TabContentComponent } from './tab-content/tab-content.component';
 import { PanelContentComponent } from './panel-content/panel-content.component';
 import { AbstractContentComponent, AbstractEditorComponent, ContentType, EditorType, ContentData, EditorData } from './abstract-content';
-import { Document } from '../documents/documents.service';
+import { Document, Values } from '../documents/documents.service';
 
 class TemplateLoaderRegister {
 
@@ -52,6 +52,7 @@ export class TemplateLoaderDirective {
 
   @Input() content: ContentData;
   @Input() document: Document;
+  @Input() data: Values;
 
   constructor(private vcRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) {
   }
@@ -67,6 +68,7 @@ export class TemplateLoaderDirective {
     let instance: AbstractContentComponent = <AbstractContentComponent>comp.instance;
     instance.content = this.content;
     instance.document = this.document;  
+    instance.data = this.data;
     // all inputs set? add it to the DOM ..
     this.vcRef.insert(comp.hostView);
   }
@@ -79,6 +81,7 @@ export class EditorLoaderDirective {
 
   @Input() editor: EditorData;
   @Input() document: Document;
+  @Input() data: Values;
 
   constructor(private vcRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) {
   }
@@ -94,6 +97,7 @@ export class EditorLoaderDirective {
     let instance: AbstractEditorComponent = <AbstractEditorComponent>comp.instance;
     instance.editor = this.editor;
     instance.document = this.document;
+    instance.data = this.data;
     // all inputs set? add it to the DOM ..
     this.vcRef.insert(comp.hostView);
   }

@@ -1,13 +1,15 @@
-import { Document } from '../documents/documents.service';
+import { Document, Values } from '../documents/documents.service';
 
 export class AbstractContentComponent {
     public content: ContentData;
     public document: Document;
+    public data: Values;
 }
 
 export class AbstractEditorComponent {
     public editor: EditorData;
     public document: Document;
+    public data: Values;
 }
 
 
