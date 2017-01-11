@@ -1,3 +1,4 @@
+import { HostListener } from '@angular/core';
 import { Document, Values } from '../documents/documents.service';
 
 export class AbstractContentComponent {
@@ -10,6 +11,31 @@ export class AbstractEditorComponent {
     public editor: EditorData;
     public document: Document;
     public data: Values;
+    public isOver: boolean = false;
+
+    variableId() : number {
+        return this.editor.variableIds[0];
+    }
+
+    value() {
+        return this.data.get(this.variableId());
+    }
+
+    expression() {
+        return this.data.get(this.variableId()).expression();
+    }
+
+    comment() {
+        return this.data.get(this.variableId()).comment();
+    }
+
+    @HostListener('mouseenter') onMouseEnter() {
+        this.isOver = true;
+    }
+
+    @HostListener('mouseleave') onMouseLeave() {
+        this.isOver = false;
+    }
 }
 
 

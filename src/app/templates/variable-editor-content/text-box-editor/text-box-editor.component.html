@@ -1,7 +1,15 @@
-<md-input-container style="width: 100%">
+<md-input-container 
+  style="width: 100%" 
+  [ngClass]="{
+    'over': isOver,
+    'dirty': value().state.dirty,
+    'has-expression': expression()
+  }">
   <input md-input 
     #input
-    placeholder="{{document.variableDefinitions[editor.variableIds[0]].prompt}}" 
-    [ngModel]="data.get(editor.variableIds[0]).safeValue()"
-    (blur)="data.get(editor.variableIds[0]).update(input.value)">
+    placeholder="{{document.variableDefinitions[variableId()].prompt}}" 
+    [ngModel]="value().safe()"
+    (blur)="value().update(input.value)">
+  <span class="expression" title="{{expression()}}" [ngClass]="{'fill': expression()}">&fnof;</span>
+  <md-icon class="comment" title="{{comment()}}" [ngClass]="{'fill': comment()}">mode_comment</md-icon>
 </md-input-container>

@@ -1,0 +1,8 @@
+
+:host /deep/ .dirty {
+    background-color: lightblue !important;
+}
+
+:host /deep/ .has-expression {
+    background-color: #DFFFFF  !important;
+}

@@ -18,29 +18,51 @@ export enum DataType {
 }
 
 export class Value {
+  public state = {
+    dirty: false,
+    updated: false
+  };
 
   constructor(private data: any, private _values: Values) {}
 
+  set(data) {
+    this.data.values = data.values;
+    this.state.dirty = true;
+  }
+
   update(val) {
-    if ( !this.data.values || this.data.values.length === 0 ) {
-      this.data.values = [{ }]
-    }
+    // if ( !this.data.values || this.data.values.length === 0 ) {
+    //   this.data.values = [{ }]
+    // }
     if ( this.data.values[0].value !== val) {
-      this.data.values[0].value = val;
-      this._values.changeVariable.emit(this.data);
+    //   this.data.values[0].value = val;
+      this.state.dirty = true;
+      this._values.changeVariable.emit({
+        variableId: this.data.variableId,
+        values: [{
+          value: val
+        }]
+      });
     }
   }
 
-  safeValue(val) {
+  safe() {
     if ( !this.data.values || this.data.values.length === 0 ) {
       return null
     } else {
-      if ( this.data.dataType === DataType[DataType.ScalarDateTime]) {
-        this.data.values[0].value;
-      } else {
-        return this.data.values[0].value
-      }
-      
+        return this.data.values[0].value;
+    }
+  }
+
+  expression () {
+    return this.data.expression;
+  }
+
+  comment() {
+    if ( !this.data.values || this.data.values.length === 0 ) {
+      return null
+    } else {
+        return this.data.values[0].comment;
     }
   }
 }
@@ -56,7 +78,13 @@ export class Values {
   }
 
   update(values) {
-    values.forEach(val=>this._paramsMap.set(val.variableId,new Value(val,this)));
+    values.forEach(val=>{
+      if ( this._paramsMap.has(val.variableId) ) {
+        this._paramsMap.get(val.variableId).set(val);
+      } else {
+        this._paramsMap.set(val.variableId,new Value(val,this))
+      }
+    });
   }
 
   get(variableId) {
