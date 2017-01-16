@@ -34,7 +34,7 @@ export class Value {
     // if ( !this.data.values || this.data.values.length === 0 ) {
     //   this.data.values = [{ }]
     // }
-    if ( this.data.values[0].value !== val) {
+    if ( !this.data.values || this.data.values.length === 0 || this.data.values[0].value !== val) {
     //   this.data.values[0].value = val;
       this.state.dirty = true;
       this._values.changeVariable.emit({

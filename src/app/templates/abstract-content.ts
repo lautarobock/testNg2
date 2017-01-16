@@ -40,37 +40,33 @@ export class AbstractEditorComponent {
 
 
 export enum ContentType {
-    Group, 
-    Panel,
-    RadioPanel,
-    Tab,
-    UniformGrid,
-    VariableEditor,
-    Expander
+    None = 0,
+    Tab = 1,
+    Group = 2,
+    Expander = 3,
+    Panel = 4,
+    VariableEditor = 5,
+    UniformGrid = 6
 }
 
 export enum EditorType {
-    CheckBox,
-    ComboBox,
-    DatePicker,
-    Label,
-    None,
-    Radio,
-    TextBox,
-    TypeAhead,
-    TimeSeriesGrid,
-    LineItemGrid,
-    ScalarGrid,
-    NumericEditor,
-    Image,
-    Spreadsheet,
-    Map,
-    Attachment,
-    Visualization,
-    WebView,
-    WorkingInterestGrid,
-    WellView,
-    Memo
+    None = 0,
+    TextBox = 1,
+    DatePicker = 2,
+    TimeSeriesGrid = 3,
+    LineItemGrid = 4,
+    NumericEditor = 5,
+    CheckBox = 6,
+    Memo = 7,
+    Image = 8,
+    Spreadsheet = 9,
+    Map = 10,
+    Attachment = 11,
+    Visualization = 12,
+    WebView = 13,
+    WorkingInterestGrid = 14,
+    ScalarGrid = 15,
+    WellView = 16
 }
 
 export class EditorData {
