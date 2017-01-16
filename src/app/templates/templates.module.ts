@@ -17,6 +17,15 @@ import { MapEditorComponent } from './variable-editor-content/map-editor/map-edi
 import { DatePickerEditorComponent } from './variable-editor-content/date-picker-editor/date-picker-editor.component';
 import { ImageEditorComponent } from './variable-editor-content/image-editor/image-editor.component';
 import { CheckBoxEditorComponent } from './variable-editor-content/check-box-editor/check-box-editor.component';
+import { NumericEditorComponent } from './variable-editor-content/numeric-editor/numeric-editor.component';
+import { SpreadsheetEditorComponent } from './variable-editor-content/spreadsheet-editor/spreadsheet-editor.component';
+import { VisualizationEditorComponent } from './variable-editor-content/visualization-editor/visualization-editor.component';
+import { WebViewEditorComponent } from './variable-editor-content/web-view-editor/web-view-editor.component';
+import { WorkingInterestGridEditorComponent } from './variable-editor-content/working-interest-grid-editor/working-interest-grid-editor.component';
+import { ScalarGridEditorComponent } from './variable-editor-content/scalar-grid-editor/scalar-grid-editor.component';
+import { WellViewEditorComponent } from './variable-editor-content/well-view-editor/well-view-editor.component';
+import { TimeSeriesGridEditorComponent } from './variable-editor-content/time-series-grid-editor/time-series-grid-editor.component';
+import { LineItemGridEditorComponent } from './variable-editor-content/line-item-grid-editor/line-item-grid-editor.component';
 
 @NgModule({
   imports: [
@@ -44,7 +53,16 @@ import { CheckBoxEditorComponent } from './variable-editor-content/check-box-edi
     MapEditorComponent, 
     DatePickerEditorComponent, 
     ImageEditorComponent, 
-    CheckBoxEditorComponent
+    CheckBoxEditorComponent, 
+    NumericEditorComponent, 
+    SpreadsheetEditorComponent, 
+    VisualizationEditorComponent, 
+    WebViewEditorComponent, 
+    WorkingInterestGridEditorComponent, 
+    ScalarGridEditorComponent,
+    WellViewEditorComponent, 
+    TimeSeriesGridEditorComponent, 
+    LineItemGridEditorComponent
   ],
   entryComponents: [
     TabContentComponent, 
@@ -59,7 +77,16 @@ import { CheckBoxEditorComponent } from './variable-editor-content/check-box-edi
     MapEditorComponent, 
     DatePickerEditorComponent, 
     ImageEditorComponent, 
-    CheckBoxEditorComponent
+    CheckBoxEditorComponent, 
+    NumericEditorComponent, 
+    SpreadsheetEditorComponent, 
+    VisualizationEditorComponent, 
+    WebViewEditorComponent, 
+    WorkingInterestGridEditorComponent, 
+    ScalarGridEditorComponent,
+    WellViewEditorComponent, 
+    TimeSeriesGridEditorComponent, 
+    LineItemGridEditorComponent
   ]
 })
 export class TemplatesModule { }
