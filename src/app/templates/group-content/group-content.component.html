@@ -1,4 +1,4 @@
-<md-card style="margin: 0.2em;">
+<!--<md-card style="margin: 0.2em;">
   <md-card-title *ngIf="content.name">
     {{content.name}}
   </md-card-title>
@@ -8,7 +8,19 @@
   <md-card-content>
     <div *ngFor="let content of content.contents">
       <template-loader [document]="document" [content]="content" [data]="data"></template-loader>
-      <!--{{content.contentType}}({{content.name}})-->
     </div> 
   </md-card-content>
-</md-card>
+</md-card>-->
+<div class="group-panel">
+  <h3 *ngIf="content.name">
+    {{content.name}}
+  </h3>
+  <h4 *ngIf="content.informationText">
+    {{content.informationText}}
+  </h4>
+  <div>
+    <div *ngFor="let content of content.contents">
+      <template-loader [document]="document" [content]="content" [data]="data"></template-loader>
+    </div> 
+  </div>
+</div>

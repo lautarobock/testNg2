@@ -10,11 +10,14 @@ import { RegisterEditor } from '../../template-loader.directive';
 @RegisterEditor(EditorType.Attachment)
 export class AttachmentEditorComponent extends AbstractEditorComponent implements OnInit {
 
+  private _variableId = null;
+
   constructor() { 
     super();
   }
 
   ngOnInit() {
+    this._variableId = this.editor.variableIds.find(variableId => this.data.get(variableId) && this.data.get(variableId).dataType() === 'Attachment');
   }
-
+  
 }

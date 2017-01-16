@@ -46,6 +46,10 @@ export class Value {
     }
   }
 
+  values() {
+    return this.data.values;
+  }
+
   safe() {
     if ( !this.data.values || this.data.values.length === 0 ) {
       return null
@@ -64,6 +68,10 @@ export class Value {
     } else {
         return this.data.values[0].comment;
     }
+  }
+  
+  dataType() {
+    return this.data.dataType;
   }
 }
 
