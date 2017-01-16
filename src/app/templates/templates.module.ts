@@ -16,6 +16,7 @@ import { AttachmentEditorComponent } from './variable-editor-content/attachment-
 import { MapEditorComponent } from './variable-editor-content/map-editor/map-editor.component';
 import { DatePickerEditorComponent } from './variable-editor-content/date-picker-editor/date-picker-editor.component';
 import { ImageEditorComponent } from './variable-editor-content/image-editor/image-editor.component';
+import { CheckBoxEditorComponent } from './variable-editor-content/check-box-editor/check-box-editor.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { ImageEditorComponent } from './variable-editor-content/image-editor/ima
     AttachmentEditorComponent, 
     MapEditorComponent, 
     DatePickerEditorComponent, 
-    ImageEditorComponent
+    ImageEditorComponent, 
+    CheckBoxEditorComponent
   ],
   entryComponents: [
     TabContentComponent, 
@@ -56,7 +58,8 @@ import { ImageEditorComponent } from './variable-editor-content/image-editor/ima
     AttachmentEditorComponent, 
     MapEditorComponent, 
     DatePickerEditorComponent, 
-    ImageEditorComponent
+    ImageEditorComponent, 
+    CheckBoxEditorComponent
   ]
 })
 export class TemplatesModule { }

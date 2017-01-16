@@ -6,6 +6,7 @@
   >
   <input md-input type="date"
     #input
+    [readonly]="expression() ? 'true' : null"
     placeholder="{{document.variableDefinitions[variableId()].prompt}}" 
     [ngModel]="value().safe() | date:'yyyy-MM-dd'"
     (blur)="value().update(input.value)">

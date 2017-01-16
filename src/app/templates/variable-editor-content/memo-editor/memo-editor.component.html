@@ -6,6 +6,7 @@
   >
   <textarea rows="3" md-input 
     #input
+    [readonly]="expression() ? 'true' : null"
     placeholder="{{document.variableDefinitions[variableId()].prompt}}" 
     [ngModel]="value().safe()"
     (blur)="value().update(input.value)">
