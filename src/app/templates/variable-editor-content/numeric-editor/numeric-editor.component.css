@@ -1,0 +1,43 @@
+.over input, .has-expression input {
+    width: calc(100% -  30px);
+    position: relative;
+    left: 30px;
+}
+
+.over .expression {
+    display: block !important;
+}
+
+.over .comment {
+    display: block !important;
+}
+
+.expression {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    font-size: 11px;
+    top: -13px;
+    left: 9px;
+    font-weight: bold;
+}
+
+.comment {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    font-size: 11px;
+    top: 7px;
+    left: 7px;
+    font-weight: bold;
+}
+
+.expression.fill {
+    color: blue;
+    display: block !important;
+}
+
+.comment.fill {
+    color: blue;
+    display: block !important;
+}

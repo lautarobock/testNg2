@@ -17,7 +17,7 @@ export class AbstractEditorComponent {
         return this.editor.variableIds[0];
     }
 
-    value(variableId) {
+    value(variableId?) {
         return this.data.get(variableId || this.variableId());
     }
 

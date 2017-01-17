@@ -3,7 +3,15 @@
         <pre>{{file|json}}</pre>
     </div>-->
     <md-list>
-        <h3 md-subheader>{{document.variableDefinitions[_variableId].prompt}}</h3>
+        <h3 md-subheader>
+            {{document.variableDefinitions[_variableId].prompt}}
+            <button md-icon-button style="float: right">
+                <md-icon>view_list</md-icon>
+            </button>
+            <button md-icon-button style="float: right">
+                <md-icon>view_comfy</md-icon>
+            </button>
+        </h3>
         <md-list-item *ngFor="let file of value(_variableId).safe()">
             <md-icon md-list-avatar>attach_file</md-icon>
             <h4 md-line>{{file.fileName}}</h4>

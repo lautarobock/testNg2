@@ -1,4 +1,4 @@
-.over input, .has-expression input {
+.over input, .has-expression input, .has-comment input {
     width: calc(100% -  30px);
 }
 
