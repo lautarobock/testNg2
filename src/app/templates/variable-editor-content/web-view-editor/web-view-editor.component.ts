@@ -7,7 +7,7 @@ import { RegisterEditor } from '../../template-loader.directive';
   templateUrl: './web-view-editor.component.html',
   styleUrls: ['./web-view-editor.component.css']
 })
-@RegisterEditor(EditorType.Visualization)
+@RegisterEditor(EditorType.WebView)
 export class WebViewEditorComponent extends AbstractEditorComponent implements OnInit {
 
   constructor() { 
@@ -15,6 +15,7 @@ export class WebViewEditorComponent extends AbstractEditorComponent implements O
   }
 
   ngOnInit() {
+
   }
 
 }
