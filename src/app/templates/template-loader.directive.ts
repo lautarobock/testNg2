@@ -82,6 +82,7 @@ export class EditorLoaderDirective {
   @Input() editor: EditorData;
   @Input() document: Document;
   @Input() data: Values;
+  @Input() parent: AbstractContentComponent;
 
   constructor(private vcRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) {
   }
@@ -98,6 +99,7 @@ export class EditorLoaderDirective {
     instance.editor = this.editor;
     instance.document = this.document;
     instance.data = this.data;
+    instance.parent = this.parent;
     // all inputs set? add it to the DOM ..
     this.vcRef.insert(comp.hostView);
   }

@@ -10,9 +10,20 @@ import { RegisterTemplate } from '../template-loader.directive';
 @RegisterTemplate(ContentType.VariableEditor)
 export class VariableEditorContentComponent extends AbstractContentComponent implements OnInit {
 
+  self: AbstractContentComponent;
+
   constructor() {
     super();
-   }
+    this.self = this;
+  }
+
+  width() {
+    return this.jsonProperties().Width;
+  }
+
+  height() {
+    return this.jsonProperties().Height;
+  }
 
   ngOnInit() {
   }

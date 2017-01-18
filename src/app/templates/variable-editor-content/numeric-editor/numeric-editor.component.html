@@ -3,10 +3,9 @@
   [ngClass]="{
     'over': isOver,
     'dirty': value().state.dirty,
-    'has-expression': expression()
+    'has-expression': expression(),
+    'has-comment': comment()
   }">
-  <span class="expression" title="{{expression()}}" [ngClass]="{'fill': expression()}">&fnof;</span>
-  <md-icon class="comment" title="{{comment()}}" [ngClass]="{'fill': comment()}">mode_comment</md-icon>
   <input md-input 
     type="number"
     style="text-align: right;"
@@ -15,4 +14,6 @@
     placeholder="{{document.variableDefinitions[variableId()].prompt}}" 
     [ngModel]="value().safe()"
     (blur)="value().update(input.value)">
+  <span class="expression" title="{{expression()}}" [ngClass]="{'fill': expression()}">&fnof;</span>
+  <md-icon class="comment" title="{{comment()}}" [ngClass]="{'fill': comment()}">mode_comment</md-icon>
 </md-input-container>

@@ -1,7 +1,5 @@
-.over input, .has-expression input {
+input {
     width: calc(100% -  30px);
-    position: relative;
-    left: 30px;
 }
 
 .over .expression {
@@ -18,7 +16,7 @@
     position: absolute;
     font-size: 11px;
     top: -13px;
-    left: 9px;
+    right: 9px;
     font-weight: bold;
 }
 
@@ -28,7 +26,7 @@
     position: absolute;
     font-size: 11px;
     top: 7px;
-    left: 7px;
+    right: -7px;
     font-weight: bold;
 }
 

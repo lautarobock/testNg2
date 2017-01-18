@@ -5,10 +5,23 @@ export class AbstractContentComponent {
     public content: ContentData;
     public document: Document;
     public data: Values;
+
+    private _jsonProperties = undefined;
+    jsonProperties() {
+        if ( !this._jsonProperties ) {
+            if ( this.content.jsonDisplayedProperties ) {
+                this._jsonProperties = eval('(' +this.content.jsonDisplayedProperties + ')')    ;
+            } else {
+                this._jsonProperties = {};
+            }
+        }
+        return this._jsonProperties;
+    }
 }
 
 export class AbstractEditorComponent {
     public editor: EditorData;
+    public parent: AbstractContentComponent;
     public document: Document;
     public data: Values;
     public isOver: boolean = false;
@@ -84,6 +97,7 @@ export class ContentData {
         public name: string,
         public editorType: EditorType,
         public informationText: string,
-        public editors: EditorData[]
+        public editors: EditorData[],
+        public jsonDisplayedProperties: any
     ) {}
 }

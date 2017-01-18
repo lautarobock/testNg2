@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractEditorComponent, EditorType } from '../../abstract-content';
 import { RegisterEditor } from '../../template-loader.directive';
+import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-web-view-editor',
@@ -10,7 +12,7 @@ import { RegisterEditor } from '../../template-loader.directive';
 @RegisterEditor(EditorType.WebView)
 export class WebViewEditorComponent extends AbstractEditorComponent implements OnInit {
 
-  constructor() { 
+  constructor(private _sanitizer: DomSanitizer) { 
     super();
   }
 
@@ -18,4 +20,8 @@ export class WebViewEditorComponent extends AbstractEditorComponent implements O
 
   }
 
+  safeUrl() {
+    return this._sanitizer.bypassSecurityTrustResourceUrl(this.value().safe());
+
+  }
 }
