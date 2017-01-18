@@ -103,3 +103,15 @@ md-sidenav-layout.m2app-dark {
   margin-right: -7px;
 }
 
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    background: rgba(128,128,128,0.8); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(128,128,128,0.4); 
+}
+

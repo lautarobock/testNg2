@@ -1,3 +1,20 @@
-<p>
-  time-series-grid-editor works!
-</p>
+<div style="overflow-x: scroll;">
+  <md-data-table layout-fill>
+    <thead>
+    <tr>
+      <th class="md-text-cell">Category</th>
+      <th class="md-text-cell">Variable</th>
+      <th class="md-text-cell">Unit</th>
+      <th class="md-text-cell" *ngFor="let column of value().data.values">{{column.periodString}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let variableId of editor.variableIds">
+      <td class="md-text-cell">{{document.variableDefinitions[variableId].category.name}}</td>
+      <td class="md-text-cell">{{document.variableDefinitions[variableId].prompt}}</td>
+      <td class="md-text-cell">{{value(variableId).data.unitLabel}}</td>
+      <td class="md-text-cell" *ngFor="let value of value(variableId).data.values">{{ value.value }}</td>
+    </tr>
+    </tbody>
+  </md-data-table>
+</div>
