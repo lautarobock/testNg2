@@ -20,7 +20,9 @@ export class ImageEditorComponent extends AbstractEditorComponent implements OnI
   url() {
     //TODO, read size of json properties, and zoom feature
     let image = this.value().safe();
-    return image ? this._config.get('apiPath') + `/file/image/${image.attachmentId}?imageWidth=600&imageHeight=600` : null;
+    let width = (<any>this.parent).width() || 600;
+    let height = (<any>this.parent).height() || 600;
+    return image ? this._config.get('apiPath') + `/file/image/${image.attachmentId}?imageWidth=${height}&imageHeight=${width}` : null;
   }
 
 }

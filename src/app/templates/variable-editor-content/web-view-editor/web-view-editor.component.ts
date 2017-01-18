@@ -22,6 +22,5 @@ export class WebViewEditorComponent extends AbstractEditorComponent implements O
 
   safeUrl() {
     return this._sanitizer.bypassSecurityTrustResourceUrl(this.value().safe());
-
   }
 }
