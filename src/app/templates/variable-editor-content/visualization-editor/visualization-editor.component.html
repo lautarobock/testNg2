@@ -1,3 +1,11 @@
-<p>
-  visualization-editor works!
-</p>
+<div style="display: block;">
+  <canvas baseChart 
+              [datasets]="chartData"
+              [labels]="chartLabels"
+              [options]="chartOptions"
+              
+              [legend]="chartLegend"
+              [chartType]="chartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+</div>

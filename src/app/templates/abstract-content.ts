@@ -1,5 +1,5 @@
 import { HostListener } from '@angular/core';
-import { Document, Values } from '../documents/documents.service';
+import { Document, Values, Value } from '../documents/documents.service';
 
 export class AbstractContentComponent {
     public content: ContentData;
@@ -30,7 +30,7 @@ export class AbstractEditorComponent {
         return this.editor.variableIds[0];
     }
 
-    value(variableId?) {
+    value(variableId?) : Value {
         return this.data.get(variableId || this.variableId());
     }
 

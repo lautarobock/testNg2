@@ -26,13 +26,15 @@ import { ScalarGridEditorComponent } from './variable-editor-content/scalar-grid
 import { WellViewEditorComponent } from './variable-editor-content/well-view-editor/well-view-editor.component';
 import { TimeSeriesGridEditorComponent } from './variable-editor-content/time-series-grid-editor/time-series-grid-editor.component';
 import { LineItemGridEditorComponent } from './variable-editor-content/line-item-grid-editor/line-item-grid-editor.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     MaterialModule,
-    UtilModule
+    UtilModule,
+    ChartsModule
   ],
   exports: [
     TemplateLoaderDirective,
