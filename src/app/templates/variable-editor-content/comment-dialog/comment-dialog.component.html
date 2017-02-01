@@ -1,0 +1,20 @@
+<h1 md-dialog-title>COMMENT</h1>
+<md-dialog-content>
+  <md-input-container style="width: 100%">
+    <textarea rows="10" md-input 
+      #input
+      placeholder="Write a comment" 
+      [(ngModel)]="comment">
+    </textarea>
+  </md-input-container>
+</md-dialog-content>
+<md-dialog-actions>
+  <button md-button style="float: right" (click)="dialogRef.close(comment)">
+    <md-icon>check</md-icon>
+    OK
+  </button>
+  <button md-button style="float: right" md-dialog-close>
+    <md-icon>cancel</md-icon>
+    CANCEL
+  </button>
+</md-dialog-actions>

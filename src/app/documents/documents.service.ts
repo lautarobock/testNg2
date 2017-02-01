@@ -66,7 +66,7 @@ export class Value {
     if ( !this.data.values || this.data.values.length === 0 ) {
       return null
     } else {
-        return this.data.values[0].comment;
+      return this.data.values[0].comment;
     }
   }
   

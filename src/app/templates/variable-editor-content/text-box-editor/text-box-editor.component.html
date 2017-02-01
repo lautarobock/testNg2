@@ -13,5 +13,5 @@
     [ngModel]="value().safe()"
     (blur)="value().update(input.value)">
   <span class="expression" title="{{expression()}}" [ngClass]="{'fill': expression()}">&fnof;</span>
-  <md-icon class="comment" title="{{comment()}}" [ngClass]="{'fill': comment()}">mode_comment</md-icon>
+  <md-icon class="comment" title="{{comment()}}" (click)="openComment()" [ngClass]="{'fill': comment()}">mode_comment</md-icon>
 </md-input-container>

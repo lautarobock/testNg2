@@ -27,6 +27,7 @@ import { WellViewEditorComponent } from './variable-editor-content/well-view-edi
 import { TimeSeriesGridEditorComponent } from './variable-editor-content/time-series-grid-editor/time-series-grid-editor.component';
 import { LineItemGridEditorComponent } from './variable-editor-content/line-item-grid-editor/line-item-grid-editor.component';
 import { ChartsModule } from 'ng2-charts';
+import { CommentDialogComponent, CommentDialog } from './variable-editor-content/comment-dialog/comment-dialog.component';
 
 @NgModule({
   imports: [
@@ -64,7 +65,8 @@ import { ChartsModule } from 'ng2-charts';
     ScalarGridEditorComponent,
     WellViewEditorComponent, 
     TimeSeriesGridEditorComponent, 
-    LineItemGridEditorComponent
+    LineItemGridEditorComponent, 
+    CommentDialogComponent
   ],
   entryComponents: [
     TabContentComponent, 
@@ -88,7 +90,9 @@ import { ChartsModule } from 'ng2-charts';
     ScalarGridEditorComponent,
     WellViewEditorComponent, 
     TimeSeriesGridEditorComponent, 
-    LineItemGridEditorComponent
-  ]
+    LineItemGridEditorComponent, 
+    CommentDialogComponent
+  ],
+  providers: [CommentDialog]
 })
 export class TemplatesModule { }

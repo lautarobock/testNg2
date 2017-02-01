@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractEditorComponent, EditorType } from '../../abstract-content';
 import { RegisterEditor } from '../../template-loader.directive';
+import { CommentDialog } from '../comment-dialog/comment-dialog.component';
 
 
 @Component({
@@ -11,13 +12,20 @@ import { RegisterEditor } from '../../template-loader.directive';
 @RegisterEditor(EditorType.TextBox)
 export class TextBoxEditorComponent extends AbstractEditorComponent implements OnInit {
 
-  constructor() { 
+  constructor(private commentDialog: CommentDialog) { 
     super();
   }
 
   ngOnInit() {
-    // super.data.get()
-    // this.data.get(123).values[0].value;
+    
+  }
+
+  openComment() {
+    this.commentDialog.open(this.comment()).subscribe(result => {
+      if ( result !==undefined ) {
+        //TODO, update comment
+      }
+    });
   }
 
 }

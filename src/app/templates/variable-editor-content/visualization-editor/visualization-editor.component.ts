@@ -18,7 +18,6 @@ export class VisualizationEditorComponent extends AbstractEditorComponent implem
   public chartLegend:boolean = true;
   public chartType:string = 'line';
 
-
   constructor() { 
     super();
   }
@@ -31,6 +30,7 @@ export class VisualizationEditorComponent extends AbstractEditorComponent implem
         data: this.value(variableId).values().map(v=>v.value)
       }
     });
+    this.chartType = (this.parent.jsonProperties().Type || 'line').toLowerCase();
   }
  
   // events
