@@ -2,14 +2,14 @@
 <md-dialog-content>
   <md-input-container style="width: 100%">
     <textarea rows="10" md-input 
-      #input
+      #inputComment
       placeholder="Write a comment" 
-      [(ngModel)]="comment">
+      [ngModel]="value.comment()">
     </textarea>
   </md-input-container>
 </md-dialog-content>
 <md-dialog-actions>
-  <button md-button style="float: right" (click)="dialogRef.close(comment)">
+  <button md-button style="float: right" (click)="ok(inputComment.value)">
     <md-icon>check</md-icon>
     OK
   </button>

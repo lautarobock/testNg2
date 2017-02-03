@@ -21,7 +21,7 @@ export class TextBoxEditorComponent extends AbstractEditorComponent implements O
   }
 
   openComment() {
-    this.commentDialog.open(this.comment()).subscribe(result => {
+    this.commentDialog.open(this.value()).subscribe(result => {
       if ( result !==undefined ) {
         //TODO, update comment
       }

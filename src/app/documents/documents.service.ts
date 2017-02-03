@@ -31,11 +31,7 @@ export class Value {
   }
 
   update(val) {
-    // if ( !this.data.values || this.data.values.length === 0 ) {
-    //   this.data.values = [{ }]
-    // }
     if ( !this.data.values || this.data.values.length === 0 || this.data.values[0].value !== val) {
-    //   this.data.values[0].value = val;
       this.state.dirty = true;
       this._values.changeVariable.emit({
         variableId: this.data.variableId,
@@ -69,6 +65,15 @@ export class Value {
       return this.data.values[0].comment;
     }
   }
+
+  updateComment(comment) {
+    if ( !this.data.values || this.data.values.length === 0 || this.data.values[0].comment !== comment) {
+      this._values.changeComment.emit({
+        variableId: this.data.variableId,
+        comment: comment
+      });
+    }
+  }
   
   dataType() {
     return this.data.dataType;
@@ -78,6 +83,7 @@ export class Value {
 export class Values {
   
   public changeVariable = new EventEmitter();
+  public changeComment = new EventEmitter();
 
   private _paramsMap: Map<number, Value> = new Map<number, Value>();
 
@@ -118,6 +124,13 @@ export class DocumentsService {
     return this._http.post(
       this._config.get('apiPath') + `/documents/data/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
       { variableId: data.variableId, value: data.values[0].value, period: period, lookup, variableCurrency}
+    ).map(res => res.json());
+  }
+
+  updateComment(document: Document, scenario, variableId, comment, period?, revision = -1) {
+    return this._http.post(
+      this._config.get('apiPath') + `/documents/comment/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
+      { variableId, comment, period }
     ).map(res => res.json());
   }
   
