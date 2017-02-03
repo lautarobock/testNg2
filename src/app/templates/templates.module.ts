@@ -28,6 +28,7 @@ import { TimeSeriesGridEditorComponent } from './variable-editor-content/time-se
 import { LineItemGridEditorComponent } from './variable-editor-content/line-item-grid-editor/line-item-grid-editor.component';
 import { ChartsModule } from 'ng2-charts';
 import { CommentDialogComponent, CommentDialog } from './variable-editor-content/comment-dialog/comment-dialog.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { CommentDialogComponent, CommentDialog } from './variable-editor-content
     FormsModule,
     MaterialModule,
     UtilModule,
-    ChartsModule
+    ChartsModule,
+    FileUploadModule
   ],
   exports: [
     TemplateLoaderDirective,
