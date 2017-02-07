@@ -1,7 +1,18 @@
-<md-checkbox 
+<!--<md-checkbox 
     [disabled]="expression() ? 'true' : null"
     [indeterminate]="true"
     [ngModel]="value().safe()"
     (change)="value().update($event.checked)">
     {{document.variableDefinitions[variableId()].prompt}}
-</md-checkbox>
+</md-checkbox>-->
+<label class="custom-control custom-checkbox">
+  <input type="checkbox" 
+    class="custom-control-input" 
+    indeterminate="true"
+    [disabled]="expression() ? 'true' : null"
+    [ngModel]="value().safe()"
+    (change)="value().update($event.checked)"
+    >
+  <span class="custom-control-indicator"></span>
+  <span class="custom-control-description">{{document.variableDefinitions[variableId()].prompt}}</span>
+</label>

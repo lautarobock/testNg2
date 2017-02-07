@@ -1,4 +1,4 @@
-<md-input-container style="width: 100%"
+<!--<md-input-container style="width: 100%"
   [ngClass]="{
     'dirty': value().state.dirty,
     'has-expression': expression()
@@ -10,4 +10,12 @@
     placeholder="{{document.variableDefinitions[variableId()].prompt}}" 
     [ngModel]="value().safe() | date:'yyyy-MM-dd'"
     (blur)="value().update(input.value)">
-</md-input-container>
+</md-input-container>-->
+<input class="form-control" placeholder="yyyy-mm-dd"
+      name="dp" 
+      [ngModel]="value().safe() | date:'yyyy-MM-dd'" ngbDatepicker #d="ngbDatepicker" 
+      (change)="value().update(input.value)"
+      [readonly]="expression() ? 'true' : null">
+<div class="input-group-addon" (click)="d.toggle()" >
+  <i class="fa fa-calendar" aria-hidden="true"></i>
+</div>
