@@ -1,0 +1,14 @@
+.main-container {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+
+.main-content {
+    width: calc(100% -  230px);
+    float: right;
+}
+
+.main-navigation {
+    width: 230px;
+    float: left;
+}

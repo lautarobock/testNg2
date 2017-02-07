@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MdSnackBar} from '@angular/material';
 import { Router } from '@angular/router';
 import { HierarchyService } from '../hierarchy.service';
 
@@ -20,7 +19,6 @@ export class HierarchyPanelComponent implements OnInit {
 
   constructor(
     private _hierarchyService: HierarchyService, 
-    private _snackbar: MdSnackBar, 
     private router: Router
   ) { }
 
@@ -29,8 +27,8 @@ export class HierarchyPanelComponent implements OnInit {
       data => {
         this.versions = data;
         this.selectedVersion = data[0];
-      },
-      err => this._snackbar.open(err.statusText,'Close')
+        this.loadDocuments();
+      }
     )
   }
 
@@ -40,8 +38,7 @@ export class HierarchyPanelComponent implements OnInit {
 
   loadDocuments() {
     this._hierarchyService.documents(this.selectedVersion.versionId).subscribe(
-      data => this.hierarchy = this.markAsExpanded(data),
-      err => this._snackbar.open(err.statusText,'Close')
+      data => this.hierarchy = this.markAsExpanded(data)
     )
   }
 

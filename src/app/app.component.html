@@ -1,44 +1,20 @@
-<div [class.m2app-dark]="isDarkTheme">
-  <md-toolbar color="primary">
-    <button md-icon-button (click)="sidenav.toggle()">
-      <md-icon>menu</md-icon>
+<div class="container-fluid main-container"> 
+  <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
-    PlanningSpace - Dataflow
-    <span class="app-toolbar-filler"></span>
-    <button md-raised-button  color="accent" (click)="login()">
-      <md-icon>power_settings_new</md-icon>
-      LOGIN
-    </button>
-    <button md-button (click)="isDarkTheme = !isDarkTheme">TOGGLE DARK THEME</button>
-  </md-toolbar>
-  <md-sidenav-container fullscreen style="margin-top: 64px;">
+    <a class="navbar-brand" href="#">PlanningSpace - Dataflow</a>
 
-    <md-sidenav #sidenav mode="side" opened="true" class="app-sidenav" >
-      <app-hierarchy-panel></app-hierarchy-panel>
-      <!--<md-toolbar color="primary">
-        Security
-      </md-toolbar>-->
-      <!--<md-nav-list>
-        <md-list-item routerLink="/users" routerLinkActive="active">
-          <md-icon style="margin-top: 12px;" md-list-avatar>person</md-icon>
-          <a md-line >Users</a>
-        </md-list-item>
-        <md-list-item routerLink="/groups" routerLinkActive="active">
-          <md-icon style="margin-top: 12px;" md-list-avatar>group</md-icon>
-          <a md-line>Groups</a>
-        </md-list-item>
-        <md-list-item routerLink="/variables" routerLinkActive="active">
-          <md-icon style="margin-top: 12px;" md-list-avatar>list</md-icon>
-          <a md-line>Variables</a>
-        </md-list-item>
-        <md-list-item (click)="login()">
-          <md-icon style="margin-top: 12px;"  md-list-avatar>power_settings_new</md-icon>
-          <a md-line>Login</a>
-        </md-list-item>
-      </md-nav-list>-->
-    </md-sidenav>
-
-    <router-outlet></router-outlet>
-    
-  </md-sidenav-container>  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <button type="button" class="btn btn-primary" (click)="login()">Login</button>
+      </form>
+    </div>
+  </nav>
+  <div>
+    <div class="main-navigation"><app-hierarchy-panel></app-hierarchy-panel></div>
+    <div class="main-content"><router-outlet></router-outlet></div>
+  </div>  
 </div>

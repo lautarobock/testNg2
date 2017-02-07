@@ -1,9 +1,9 @@
 <div class="material-design">
-  <md-select [(ngModel)]="selectedVersion" style="width: 100%">
-    <md-option *ngFor="let version of versions" [value]="version" (onSelect)="loadDocuments()">
+  <select [(ngModel)]="selectedVersion" style="width: 100%" class="form-control" style="border-radius: 0;font-weight: bold;">
+    <option *ngFor="let version of versions" [ngValue]="version" (onSelect)="loadDocuments()">
       {{ version.name }}
-    </md-option>
-  </md-select>
+    </option>
+  </select>
   <Tree [nodes]="hierarchy" [options]="options">
     <template #treeNodeTemplate let-node="node" let-index="index">
       <img src="/assets/images/tree/{{node.data.nodeType.imageKey}}.png"
