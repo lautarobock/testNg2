@@ -1,7 +1,7 @@
-<md-tab-group>
-  <md-tab *ngFor="let content of content.contents" label="{{content.name}}">
-    <template-loader [document]="document" [content]="content" [data]="data"></template-loader>
-    <!--{{content.contentType}}-->
-  </md-tab>
-  
-</md-tab-group>
+<ngb-tabset>
+  <ngb-tab *ngFor="let content of content.contents" title="{{content.name}}">
+    <template ngbTabContent>
+      <template-loader [document]="document" [content]="content" [data]="data"></template-loader>
+    </template>
+  </ngb-tab>
+</ngb-tabset>

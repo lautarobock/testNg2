@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule }    from '@angular/forms';
 import { MaterialModule } from '@angular/material';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UtilModule } from '../util/util.module';
 import { TemplateLoaderDirective, EditorLoaderDirective } from './template-loader.directive';
 import { TabContentComponent } from './tab-content/tab-content.component';
@@ -35,6 +36,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     CommonModule,
     FormsModule,
     MaterialModule,
+    NgbModule,
     UtilModule,
     ChartsModule,
     FileUploadModule
