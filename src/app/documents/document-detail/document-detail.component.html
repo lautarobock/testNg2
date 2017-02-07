@@ -1,21 +1,30 @@
 <div style="margin: 0.5em">
-  <md-toolbar>
-    {{document.documentName}}
-    <span class="app-toolbar-filler"></span>
-    <button md-icon-button routerLink="/default">
-      <md-icon>close</md-icon>
+  <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
-    <button md-icon-button>
-      <md-icon>save</md-icon>
-    </button>
-  </md-toolbar>
+    <a class="navbar-brand" href="#">{{document.documentName}}</a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <button type="button" class="btn btn-default">
+          <i class="fa fa-floppy-o" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn btn-default" routerLink="/default" style="margin-left: 1em">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+      </form>
+    </div>
+  </nav>
   <!--<h3>{{document.documentName}}</h3>-->
-  <md-card *ngIf="document.template && data">
+  <div *ngIf="document.template && data">
     <template-loader 
       *ngFor="let content of document.template.contents" 
       [document]="document" 
       [content]="content"
       [data]="data">
     </template-loader>
-  </md-card>
+  </div>
 </div>
