@@ -1,6 +1,6 @@
-.over input, .has-expression input, .has-comment input {
+/*.over input, .has-expression input, .has-comment input {
     width: calc(100% -  30px);
-}
+}*/
 
 .over .expression {
     display: block !important;
@@ -15,8 +15,8 @@
     cursor: pointer;
     position: absolute;
     font-size: 11px;
-    top: -13px;
-    right: 9px;
+    bottom: 0px;
+    right: 3px;
     font-weight: bold;
 }
 
@@ -24,9 +24,9 @@
     display: none;
     cursor: pointer;
     position: absolute;
-    font-size: 11px;
-    top: 7px;
-    right: -7px;
+    font-size: 10px;
+    top: 1px;
+    right: 1px;
     font-weight: bold;
 }
 
@@ -38,4 +38,8 @@
 .comment.fill {
     color: blue;
     display: block !important;
+}
+
+.form-group {
+    margin-bottom: 2px !important;
 }

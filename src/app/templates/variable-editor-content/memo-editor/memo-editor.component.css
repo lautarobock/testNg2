@@ -1,0 +1,45 @@
+/*.over input, .has-expression input, .has-comment input {
+    width: calc(100% -  30px);
+}*/
+
+.over .expression {
+    display: block !important;
+}
+
+.over .comment {
+    display: block !important;
+}
+
+.expression {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    font-size: 11px;
+    top: 10px;
+    right: 3px;
+    font-weight: bold;
+}
+
+.comment {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    font-size: 10px;
+    top: 1px;
+    right: 1px;
+    font-weight: bold;
+}
+
+.expression.fill {
+    color: blue;
+    display: block !important;
+}
+
+.comment.fill {
+    color: blue;
+    display: block !important;
+}
+
+.form-group {
+    margin-bottom: 2px !important;
+}

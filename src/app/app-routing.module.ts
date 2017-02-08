@@ -1,10 +1,9 @@
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MaterialModule } from '@angular/material';
 
 @Component({
   selector: 'default-view',
-  template: '<md-card style="margin: 1em">Welcome to Dataflow</md-card>'
+  template: '<div style="margin: 1em">Welcome to Dataflow</div>'
 })
 export class DefaultComponent {
 }
@@ -19,7 +18,7 @@ const appRoutes: Routes = [{
 }];
 
 @NgModule({
-    imports: [RouterModule.forRoot(appRoutes,{}), MaterialModule],
+    imports: [RouterModule.forRoot(appRoutes,{})],
     declarations: [DefaultComponent],
     exports: [RouterModule]
 })

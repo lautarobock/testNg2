@@ -1,8 +1,8 @@
 
-:host /deep/ .dirty {
+:host /deep/ .dirty input {
     background-color: lightblue !important;
 }
 
-:host /deep/ .has-expression {
+:host /deep/ .has-expression input {
     background-color: #DFFFFF  !important;
 }

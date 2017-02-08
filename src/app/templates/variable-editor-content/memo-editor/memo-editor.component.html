@@ -1,14 +1,21 @@
-<md-input-container style="width: 100%" 
-  [ngClass]="{
+<div class="form-group row no-gutters" [ngClass]="{
+    'over': isOver,
     'dirty': value().state.dirty,
-    'has-expression': expression()
-  }"
-  >
-  <textarea rows="3" md-input 
-    #input
-    [readonly]="expression() ? 'true' : null"
-    placeholder="{{document.variableDefinitions[variableId()].prompt}}" 
-    [ngModel]="value().safe()"
-    (blur)="value().update(input.value)">
-  </textarea>
-</md-input-container>
+    'has-expression': expression(),
+    'has-comment': comment()
+  }">
+  <label class="col-sm-3 col-form-label col-form-label-sm">{{document.variableDefinitions[variableId()].prompt}}</label>
+  <div class="col-sm-9">
+    <textarea
+        #input
+        class="form-control form-control-sm" 
+        [readonly]="expression() ? 'true' : null"
+        placeholder="{{document.variableDefinitions[variableId()].prompt}}" 
+        [ngModel]="value().safe()"
+        (blur)="value().update(input.value)"
+        >
+    </textarea>
+    <i class="fa fa-comment comment" aria-hidden="true"  title="{{comment()}}" (click)="openComment()" [ngClass]="{'fill': comment()}"></i>
+    <span class="expression" title="{{expression()}}" [ngClass]="{'fill': expression()}">&fnof;</span>
+  </div>
+</div>

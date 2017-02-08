@@ -1,5 +1,5 @@
 import { Component, OnInit, Injectable } from '@angular/core';
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Value } from '../../../documents/documents.service';
 
 @Component({
@@ -11,25 +11,29 @@ export class CommentDialogComponent implements OnInit {
 
   value:Value;
 
-  constructor(public dialogRef: MdDialogRef<CommentDialogComponent>) { }
+  constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
   }
 
   ok(comment) {
     this.value.updateComment(comment);
-    this.dialogRef.close(true)
+    this.activeModal.close();
+  }
+
+  cancel() {
+    this.activeModal.dismiss();
   }
 }
 
 @Injectable()
 export class CommentDialog {
 
-  constructor(private dialog: MdDialog) {}
+  constructor(private modalService: NgbModal) {}
 
   open(value: Value) {
-    let ref = this.dialog.open(CommentDialogComponent,{width: '600px'})
+    let ref = this.modalService.open(CommentDialogComponent)
     ref.componentInstance.value  = value;
-    return ref.afterClosed();
+    return ref.result;
   }
 }

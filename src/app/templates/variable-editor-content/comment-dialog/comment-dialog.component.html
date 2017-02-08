@@ -1,20 +1,20 @@
-<h1 md-dialog-title>COMMENT</h1>
-<md-dialog-content>
-  <md-input-container style="width: 100%">
-    <textarea rows="10" md-input 
-      #inputComment
-      placeholder="Write a comment" 
-      [ngModel]="value.comment()">
+<div class="modal-header">
+  <h4 class="modal-title">Comment</h4>
+</div>
+<div class="modal-body">
+  <div class="form-group row no-gutters">
+    <textarea #inputComment
+        placeholder="Write a comment" 
+        [ngModel]="value.comment()"
+        class="form-control">
     </textarea>
-  </md-input-container>
-</md-dialog-content>
-<md-dialog-actions>
-  <button md-button style="float: right" (click)="ok(inputComment.value)">
-    <md-icon>check</md-icon>
-    OK
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-primary" (click)="ok(inputComment.value)">
+    <i class="fa fa-check" aria-hidden="true"></i> Ok
   </button>
-  <button md-button style="float: right" md-dialog-close>
-    <md-icon>cancel</md-icon>
-    CANCEL
+  <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
+    <i class="fa fa-times" aria-hidden="true"></i> Cancel
   </button>
-</md-dialog-actions>
+</div>

@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule }    from '@angular/forms';
-import { MaterialModule } from '@angular/material';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { UtilModule } from '../util/util.module';
 import { TemplateLoaderDirective, EditorLoaderDirective } from './template-loader.directive';
 import { TabContentComponent } from './tab-content/tab-content.component';
 import { PanelContentComponent } from './panel-content/panel-content.component';
@@ -15,7 +13,7 @@ import { TextBoxEditorComponent } from './variable-editor-content/text-box-edito
 import { MemoEditorComponent } from './variable-editor-content/memo-editor/memo-editor.component';
 import { AttachmentEditorComponent } from './variable-editor-content/attachment-editor/attachment-editor.component';
 import { MapEditorComponent } from './variable-editor-content/map-editor/map-editor.component';
-import { DatePickerEditorComponent } from './variable-editor-content/date-picker-editor/date-picker-editor.component';
+import { DatePickerEditorComponent, Date2Model } from './variable-editor-content/date-picker-editor/date-picker-editor.component';
 import { ImageEditorComponent } from './variable-editor-content/image-editor/image-editor.component';
 import { CheckBoxEditorComponent } from './variable-editor-content/check-box-editor/check-box-editor.component';
 import { NumericEditorComponent } from './variable-editor-content/numeric-editor/numeric-editor.component';
@@ -35,9 +33,7 @@ import { FileUploadModule } from 'ng2-file-upload';
   imports: [
     CommonModule,
     FormsModule,
-    MaterialModule,
     NgbModule,
-    UtilModule,
     ChartsModule,
     FileUploadModule
   ],
@@ -70,7 +66,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     WellViewEditorComponent, 
     TimeSeriesGridEditorComponent, 
     LineItemGridEditorComponent, 
-    CommentDialogComponent
+    CommentDialogComponent,
+    Date2Model
   ],
   entryComponents: [
     TabContentComponent, 

@@ -1,21 +1,20 @@
-<!--<md-input-container style="width: 100%"
-  [ngClass]="{
+<div class="form-group row no-gutters" [ngClass]="{
+    'over': isOver,
     'dirty': value().state.dirty,
-    'has-expression': expression()
-  }"
-  >
-  <input md-input type="date"
-    #input
-    [readonly]="expression() ? 'true' : null"
-    placeholder="{{document.variableDefinitions[variableId()].prompt}}" 
-    [ngModel]="value().safe() | date:'yyyy-MM-dd'"
-    (blur)="value().update(input.value)">
-</md-input-container>-->
-<input class="form-control" placeholder="yyyy-mm-dd"
-      name="dp" 
-      [ngModel]="value().safe() | date:'yyyy-MM-dd'" ngbDatepicker #d="ngbDatepicker" 
-      (change)="value().update(input.value)"
-      [readonly]="expression() ? 'true' : null">
-<div class="input-group-addon" (click)="d.toggle()" >
-  <i class="fa fa-calendar" aria-hidden="true"></i>
+    'has-expression': expression(),
+    'has-comment': comment()
+  }">
+  <label class="col-sm-3 col-form-label col-form-label-sm">{{document.variableDefinitions[variableId()].prompt}}</label>
+  <div class="col-sm-9">
+    <div class="input-group input-group-sm">
+      <input class="form-control form-control-sm" placeholder="dd-mm-yyyy"
+            name="dp" 
+            [ngModel]="value().safe()|date2Model" ngbDatepicker #d="ngbDatepicker" 
+            (ngModelChange)="change($event)"
+            [readonly]="expression() ? 'true' : null">
+      <div class="input-group-addon" (click)="d.toggle()" style="cursor: pointer">
+        <i class="fa fa-calendar" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
 </div>

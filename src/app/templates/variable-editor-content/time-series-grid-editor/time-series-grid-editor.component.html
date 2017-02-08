@@ -1,20 +1,20 @@
 <div style="overflow-x: scroll;">
-  <md-data-table layout-fill>
+  <table class="table table-condensed table-bordered">
     <thead>
     <tr>
-      <th class="md-text-cell">Category</th>
-      <th class="md-text-cell">Variable</th>
-      <th class="md-text-cell">Unit</th>
-      <th class="md-text-cell" *ngFor="let column of value().data.values">{{column.periodString}}</th>
+      <th>Category</th>
+      <th>Variable</th>
+      <th>Unit</th>
+      <th *ngFor="let column of value().data.values">{{column.periodString}}</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let variableId of editor.variableIds">
-      <td class="md-text-cell">{{document.variableDefinitions[variableId].category.name}}</td>
-      <td class="md-text-cell">{{document.variableDefinitions[variableId].prompt}}</td>
-      <td class="md-text-cell">{{value(variableId).data.unitLabel}}</td>
-      <td class="md-text-cell" *ngFor="let value of value(variableId).data.values">{{ value.value }}</td>
+      <td>{{document.variableDefinitions[variableId].category.name}}</td>
+      <td>{{document.variableDefinitions[variableId].prompt}}</td>
+      <td>{{value(variableId).data.unitLabel}}</td>
+      <td *ngFor="let value of value(variableId).data.values">{{ value.value }}</td>
     </tr>
     </tbody>
-  </md-data-table>
+  </table>
 </div>
