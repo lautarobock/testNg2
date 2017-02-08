@@ -5,6 +5,7 @@
       <th>Category</th>
       <th>Variable</th>
       <th>Unit</th>
+      <th>Factor</th>
       <th *ngFor="let column of value().data.values">{{column.periodString}}</th>
     </tr>
     </thead>
@@ -13,7 +14,10 @@
       <td>{{document.variableDefinitions[variableId].category.name}}</td>
       <td>{{document.variableDefinitions[variableId].prompt}}</td>
       <td>{{value(variableId).data.unitLabel}}</td>
-      <td *ngFor="let value of value(variableId).data.values">{{ value.value }}</td>
+      <td>{{unit(variableId)|json}}</td>
+      <td *ngFor="let value of value(variableId).data.values">
+        {{ value.value }}
+      </td>
     </tr>
     </tbody>
   </table>
