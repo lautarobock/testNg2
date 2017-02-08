@@ -78,6 +78,10 @@ export class Value {
   dataType() {
     return this.data.dataType;
   }
+
+  unit() {
+    return this.data.unitLabel;
+  }
 }
 
 export class Values {

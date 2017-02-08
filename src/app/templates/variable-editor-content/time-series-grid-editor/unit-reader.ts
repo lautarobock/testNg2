@@ -1,3 +1,5 @@
+import * as _ from "lodash";
+
 export class UnitReader {
 
     // private types = ['imperial', 'metric', 'continental'];
@@ -29,5 +31,9 @@ export class UnitReader {
             }
         }
         return units;
+    }
+
+    unique() {
+        return _.uniqBy(this.all(), 'display');
     }
 }

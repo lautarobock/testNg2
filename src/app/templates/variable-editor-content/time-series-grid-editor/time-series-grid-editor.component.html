@@ -2,21 +2,25 @@
   <table class="table table-condensed table-bordered">
     <thead>
     <tr>
-      <th>Category</th>
-      <th>Variable</th>
-      <th>Unit</th>
-      <th>Factor</th>
+      <th style="min-width: 100px">Category</th>
+      <th style="min-width: 250px">Variable</th>
+      <th style="min-width: 140px">Unit</th>
       <th *ngFor="let column of value().data.values">{{column.periodString}}</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let variableId of editor.variableIds">
+    <tr *ngFor="let variableId of editor.variableIds; let idx=index">
       <td>{{document.variableDefinitions[variableId].category.name}}</td>
       <td>{{document.variableDefinitions[variableId].prompt}}</td>
-      <td>{{value(variableId).data.unitLabel}}</td>
-      <td>{{unit(variableId)|json}}</td>
-      <td *ngFor="let value of value(variableId).data.values">
-        {{ value.value }}
+      <td>
+        <select [(ngModel)]="selectedUnitsByRow[idx]" class="form-control form-control-sm" style="border-radius: 0;">
+          <option *ngFor="let unit of unitsByRow[idx]" [ngValue]="unit">
+            {{ unit.display }}
+          </option>
+        </select>
+      </td>
+      <td *ngFor="let value of value(variableId).data.values" style="text-align: right;">
+        {{ computedValue(value.value, selectedUnitsByRow[idx]) | number:numberFormat }}
       </td>
     </tr>
     </tbody>
