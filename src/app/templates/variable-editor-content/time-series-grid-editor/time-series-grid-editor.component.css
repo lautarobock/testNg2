@@ -1,0 +1,37 @@
+.over .expression {
+    display: block !important;
+}
+
+.over .comment {
+    display: inline-block !important;
+}
+
+.expression {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    font-size: 11px;
+    bottom: 0px;
+    right: 3px;
+    font-weight: bold;
+}
+
+.comment {
+    position: relative !important;
+    display: none;
+    cursor: pointer;
+    font-size: 10px;
+    /*top: -26px;*/
+    font-weight: bold;
+    /*margin-top: -26px;*/
+}
+
+.expression.fill {
+    color: blue;
+    display: block !important;
+}
+
+.comment.fill {
+    color: blue;
+    display: inline-block !important;
+}

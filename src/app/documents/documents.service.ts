@@ -61,11 +61,15 @@ export class Value {
     return this.data.expression;
   }
 
-  comment() {
+  comment(period) {
     if ( !this.data.values || this.data.values.length === 0 ) {
       return null
     } else {
-      return this.data.values[0].comment;
+      let idx = 0;
+      if ( period ) {
+        idx = this.data.values.findIndex(value=>value.periodString === period);
+      }
+      return this.data.values[idx].comment;
     }
   }
 
@@ -112,7 +116,7 @@ export class Values {
     });
   }
 
-  get(variableId) {
+  get(variableId) : Value {
     return this._paramsMap.get(variableId);
   }
 

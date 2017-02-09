@@ -38,8 +38,8 @@ export class AbstractEditorComponent {
         return this.data.get(this.variableId()).expression();
     }
 
-    comment() {
-        return this.data.get(this.variableId()).comment();
+    comment(variableId, period) {
+        return this.data.get(variableId || this.variableId()).comment(period);
     }
 
     @HostListener('mouseenter') onMouseEnter() {

@@ -16,6 +16,7 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
   decimalPlaces = 2;
   numberFormat = '1.2-2';
   displayZeroValuesAs = 0;
+  mouseover = {};
 
   constructor() { 
     super();

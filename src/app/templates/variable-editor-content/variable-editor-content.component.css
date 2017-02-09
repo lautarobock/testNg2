@@ -3,6 +3,10 @@
     background-color: lightblue !important;
 }
 
+:host /deep/ tr.dirty {
+    background-color: lightblue !important;
+}
+
 :host /deep/ .has-expression input {
     background-color: #DFFFFF  !important;
 }
