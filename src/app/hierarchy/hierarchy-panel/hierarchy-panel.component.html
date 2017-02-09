@@ -1,4 +1,4 @@
-<div class="material-design">
+<div class="material-design" style="overflow-x: scroll;">
   <select [(ngModel)]="selectedVersion" style="width: 100%" class="form-control" style="border-radius: 0;font-weight: bold;">
     <option *ngFor="let version of versions" [ngValue]="version" (onSelect)="loadDocuments()">
       {{ version.name }}

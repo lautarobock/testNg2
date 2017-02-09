@@ -1,6 +1,6 @@
 <div class="form-group row no-gutters" [ngClass]="{
     'over': isOver,
-    'dirty': value().state.dirty,
+    'dirty': value()?.state.dirty,
     'has-expression': expression(),
     'has-comment': comment()
   }">
