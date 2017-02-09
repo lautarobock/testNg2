@@ -10,3 +10,7 @@
 :host /deep/ .has-expression input {
     background-color: #DFFFFF  !important;
 }
+
+:host /deep/ tr.has-expression {
+    background-color: #DFFFFF  !important;
+}

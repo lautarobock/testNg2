@@ -35,8 +35,7 @@ export class DocumentDetailComponent implements OnInit {
       .subscribe((data: any) =>{
         this.data = new Values(data.data);
         this.data.changeVariable.subscribe(v=> {
-          this._documentService.updateFields(this.document,v,this.selectedScenario.name)
-          .subscribe(data=> this.data.update(data));
+          this._documentService.updateFields(this.document,v,this.selectedScenario.name).subscribe(data=> this.data.update(data));
         });
         this.data.changeComment.subscribe(v=> {
           this._documentService.updateComment(this.document,this.selectedScenario.name,v.documentId,v.comment)

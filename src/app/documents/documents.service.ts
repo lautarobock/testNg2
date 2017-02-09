@@ -45,6 +45,14 @@ export class Value {
     }
   }
 
+  updateAll(values) {
+    this.state.dirty = true;
+    this._values.changeVariable.emit({
+      variableId: this.data.variableId,
+      values: values
+    });
+  }
+
   values() {
     return this.data.values;
   }
@@ -59,6 +67,14 @@ export class Value {
 
   expression () {
     return this.data.expression;
+  }
+
+  periodicExpression() {
+    if ( this.data.lineItems.length !==0 ) {
+      return this.data.lineItems[0].expression;
+    } else {
+      return null;
+    }
   }
 
   comment(period) {
@@ -139,11 +155,24 @@ export class DocumentsService {
   }
 
   updateFields(document: Document, data, scenario, revision = -1, period?, lookup?, variableCurrency?) {
-    //documentId, version, scenario, revision, variableId, value, period, lookup, variableCurrency
-    return this._http.post(
-      this._config.get('apiPath') + `/documents/data/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
-      { variableId: data.variableId, value: data.values[0].value, period: period, lookup, variableCurrency}
-    ).map(res => res.json());
+    if ( data.values.length === 1) {
+      return this._http.post(
+        this._config.get('apiPath') + `/documents/data/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
+        { variableId: data.variableId, value: data.values[0].value, period: period, lookup, variableCurrency}
+      ).map(res => res.json());
+    } else {
+      return this._http.post(
+        this._config.get('apiPath') + `/documents/multipledata/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
+        data.values.map(value=> {
+          return {
+            variableId: data.variableId,
+            period: value.periodString,
+            value: value.value,
+            lookup: value.lookup
+          }
+        })
+      ).map(res => res.json());
+    }
   }
 
   updateComment(document: Document, scenario, variableId, comment, period?, revision = -1) {

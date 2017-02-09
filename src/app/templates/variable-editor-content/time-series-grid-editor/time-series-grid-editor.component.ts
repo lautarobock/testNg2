@@ -17,6 +17,9 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
   numberFormat = '1.2-2';
   displayZeroValuesAs = 0;
   mouseover = {};
+  editionIdx = null;
+  tmpValues = [];
+  editTimeout;
 
   constructor() { 
     super();
@@ -36,6 +39,30 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
     this.decimalPlaces = this.parent.jsonProperties().DecimalPlaces || 2;
     this.numberFormat = `1.${this.decimalPlaces}-${this.decimalPlaces}`;
     this.displayZeroValuesAs = this.parent.jsonProperties().DisplayZeroValuesAs || 0;
+  }
+
+  edit(idx) {
+    if ( this.editionIdx !== null ) return;
+    this.editionIdx = idx;
+    this.tmpValues =  JSON.parse(JSON.stringify(this.value(this.editor.variableIds[idx]).values()));
+    this.tmpValues.forEach(value=>value.value = value.value * this.selectedUnitsByRow[idx].factor);
+  }
+
+  focus() {
+    if ( this.editTimeout ) {
+      clearTimeout(this.editTimeout);
+      this.editTimeout = null;
+    }
+  }
+
+  blur() {
+    this.editTimeout = setTimeout(()=>{
+      this.tmpValues.forEach(value=>value.value = value.value / this.selectedUnitsByRow[this.editionIdx].factor);
+      this.value(this.editor.variableIds[this.editionIdx]).updateAll(this.tmpValues);
+      this.tmpValues=[];
+      this.editionIdx=null;
+
+    },1000);
   }
 
   unit(variableId) {

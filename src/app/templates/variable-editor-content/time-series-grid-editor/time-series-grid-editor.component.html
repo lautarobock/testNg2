@@ -9,7 +9,10 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let variableId of editor.variableIds; let idx=index" [ngClass]="{'dirty': value(variableId).state.dirty}">
+    <tr *ngFor="let variableId of editor.variableIds; let idx=index" [ngClass]="{
+        'dirty': value(variableId).state.dirty,
+        'has-expression': value(variableId).periodicExpression()
+      }">
       <td>{{document.variableDefinitions[variableId].category.name}}</td>
       <td>{{document.variableDefinitions[variableId].prompt}}</td>
       <td>
@@ -19,14 +22,20 @@
           </option>
         </select>
       </td>
-      <td *ngFor="let value of value(variableId).data.values" style="text-align: right;">
-        <span (mouseover)="mouseover[idx+value.periodString]=true" (mouseout)="mouseover[idx+value.periodString]=false" [ngClass]="{
+      <td *ngFor="let value of value(variableId).data.values; let periodIdx = index" style="text-align: right;" (click)="edit(idx)">
+        <!--<span (mouseover)="mouseover[idx+value.periodString]=true" (mouseout)="mouseover[idx+value.periodString]=false" [ngClass]="{
             'over': mouseover[idx+value.periodString],
             'has-comment': comment(variableId, value.periodString)
-          }">
-          <span >{{ computedValue(value.value, selectedUnitsByRow[idx]) | number:numberFormat }}</span>
+          }">-->
+          <span *ngIf="editionIdx!==idx">{{ computedValue(value.value, selectedUnitsByRow[idx]) | number:numberFormat }}</span>
+          <input *ngIf="editionIdx===idx" (focus)="focus()" (focusout)="blur()"
+            type="number" style="min-width:130px;text-align: right;background: white !important;"
+            class="form-control form-control-sm" 
+            [(ngModel)]="tmpValues[periodIdx].value"
+            
+            >
           <!--<i class="fa fa-comment comment" aria-hidden="true"  title="{{comment(variableId, value.periodString)}}" (click)="openComment()" [ngClass]="{'fill': comment(variableId, value.periodString)}"></i>-->
-        </span>
+        <!--</span>-->
       </td>
     </tr>
     </tbody>
