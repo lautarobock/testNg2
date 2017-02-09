@@ -17,6 +17,7 @@ export class DocumentDetailComponent implements OnInit {
   @Input() versionId: number;
   document: Document = <Document>{};
   data: Values;
+  selectedScenario: any;
 
   constructor(
     private _documentService: DocumentsService, 
@@ -28,16 +29,17 @@ export class DocumentDetailComponent implements OnInit {
     this._documentService.get(this.documentId, this.versionId)
     .subscribe((documentData: Document) => {
       this.document = this.postProcess(documentData);
+      this.selectedScenario = _.find(this.document.conceptDefinition.concepts, (concept:any) => concept.name === this.document.conceptDefinition.currentConceptName);
       let allVariables = this.document.templateVariables.map(variable => variable.id);
-      this._documentService.variables(this.document.documentId,this.document.versionId,'Default',-1,allVariables)
+      this._documentService.variables(this.document.documentId,this.document.versionId,this.selectedScenario.name,-1,allVariables)
       .subscribe((data: any) =>{
         this.data = new Values(data.data);
         this.data.changeVariable.subscribe(v=> {
-          this._documentService.updateFields(this.document,v,'Default')
+          this._documentService.updateFields(this.document,v,this.selectedScenario.name)
           .subscribe(data=> this.data.update(data));
         });
         this.data.changeComment.subscribe(v=> {
-          this._documentService.updateComment(this.document,'Default',v.documentId,v.comment)
+          this._documentService.updateComment(this.document,this.selectedScenario.name,v.documentId,v.comment)
           .subscribe(data=> this.data.update([data]));
         });
       })
@@ -60,12 +62,21 @@ export class DocumentDetailComponent implements OnInit {
     this.saveDocumentDialog.open(this.document)
     .then(result => this._documentService.save(this.document, result.text, result.tags).toPromise())
     .then(result => {
+      this.data.clearDirties();
       this.toastyService.success({
         title: 'Save',
         msg: 'Document Saved!',
         timeout: 1000
       });
     });
+  }
+
+  changeScenario() {
+    let allVariables = this.document.templateVariables.map(variable => variable.id);
+    this._documentService.variables(this.document.documentId,this.document.versionId,this.selectedScenario.name,-1,allVariables)
+    .subscribe((data: any) =>{
+      this.data.update(data.data);
+    })
   }
 }
 

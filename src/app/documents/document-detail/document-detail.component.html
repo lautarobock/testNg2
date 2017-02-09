@@ -4,8 +4,16 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <!--<a class="navbar-brand">{{document.documentName}}</a>-->
-
+    
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="form-inline"  *ngIf="document.conceptDefinition">
+        <label class="col-form-label-sm">Scenario</label>
+        <select [(ngModel)]="selectedScenario" class="form-control form-control-sm" style="margin-left: 1em" (change)="changeScenario()">
+          <option *ngFor="let scenario of document.conceptDefinition.concepts" [ngValue]="scenario">
+            {{scenario.name}}
+          </option>
+        </select>
+      </div>
       <ul class="navbar-nav mr-auto">
       </ul>
       <form class="form-inline my-2 my-lg-0">

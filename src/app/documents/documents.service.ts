@@ -10,7 +10,8 @@ export class Document {
     public variableDefinitions: any,
     public versionId: number,
     public hasExclusiveLock: boolean,
-    public documentLock: any
+    public documentLock: any,
+    public conceptDefinition: any
   ) {}
 }
 
@@ -29,7 +30,7 @@ export class Value {
 
   set(data) {
     this.data.values = data.values;
-    this.state.dirty = true;
+    // this.state.dirty = true;
   }
 
   update(val) {
@@ -117,6 +118,10 @@ export class Values {
 
   clear() {
     this._paramsMap.clear();
+  }
+  
+  clearDirties() {
+    this._paramsMap.forEach(v=>v.state.dirty = false);
   }
 }
 
