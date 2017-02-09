@@ -5,7 +5,7 @@ import { DocumentsRoutingModule } from './documents-routing.module';
 import { DocumentDetailComponent } from './document-detail/document-detail.component';
 import { DocumentsService } from './documents.service';
 import { TemplatesModule } from '../templates/templates.module';
-import { SaveDocumentDialogComponent } from './save-document-dialog/save-document-dialog.component';
+import { SaveDocumentDialogComponent, SaveDocumentDialog } from './save-document-dialog/save-document-dialog.component';
 
 @NgModule({
   imports: [
@@ -15,8 +15,9 @@ import { SaveDocumentDialogComponent } from './save-document-dialog/save-documen
     TemplatesModule
   ],
   declarations: [DocumentDetailComponent, SaveDocumentDialogComponent],
+  entryComponents: [SaveDocumentDialogComponent],
   exports: [DocumentDetailComponent],
-  providers: [DocumentsService],
+  providers: [DocumentsService, SaveDocumentDialog],
   
 })
 export class DocumentsModule { }

@@ -8,7 +8,9 @@ export class Document {
     public documentName: string,
     public templateVariables: any[],
     public variableDefinitions: any,
-    public versionId: number
+    public versionId: number,
+    public hasExclusiveLock: boolean,
+    public documentLock: any
   ) {}
 }
 
@@ -151,5 +153,23 @@ export class DocumentsService {
         search: search
       }
     ).map(res => res.json());
+  }
+
+  save(document: Document, comment, revisionTagIds) {
+      return this._http.post(
+        this._config.get('apiPath') + `/documents/save/${document.documentId}/${document.versionId}/-1`,
+        { comment, revisionTagIds }
+      );
+  };
+
+  release(document: Document) {
+    return this._http.post(
+      this._config.get('apiPath') + `/documents/UnlockDocument/${document.documentId}/${document.versionId}`,
+      { 
+        lockKey: document.documentLock.lockKey,
+        isForceUnlock: true,
+        requestLock: true
+      }
+    );
   }
 }

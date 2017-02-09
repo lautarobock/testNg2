@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Directive,ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DocumentsService, Document, Values } from '../documents.service';
+import { SaveDocumentDialog } from '../save-document-dialog/save-document-dialog.component';
 import * as _ from "lodash";
 
 
@@ -16,7 +17,7 @@ export class DocumentDetailComponent implements OnInit {
   document: Document = <Document>{};
   data: Values;
 
-  constructor(private _documentService: DocumentsService) { }
+  constructor(private _documentService: DocumentsService, private saveDocumentDialog: SaveDocumentDialog) { }
 
   ngOnInit() {
     this._documentService.get(this.documentId, this.versionId)
@@ -40,11 +41,20 @@ export class DocumentDetailComponent implements OnInit {
 
   ngOnDestroy() {
     console.log('DESTROY', this.documentId);
+    if ( this.document.hasExclusiveLock ) {
+        this._documentService.release(this.document).subscribe(result => console.log('document released', result));
+    }
   }
 
   postProcess(doc: Document) {
     doc.variableDefinitions = _.keyBy(doc.templateVariables,'id');
     return doc;
+  }
+
+  save() {
+    this.saveDocumentDialog.open(this.document)
+    .then(result => this._documentService.save(this.document, result.text, result.tags).toPromise())
+    .then(result => console.log(result));
   }
 }
 
