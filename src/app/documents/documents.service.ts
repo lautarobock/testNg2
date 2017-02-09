@@ -82,6 +82,10 @@ export class Value {
   unit() {
     return this.data.unitLabel;
   }
+
+  currencyLabel(size) {
+    return this.data[size+'CurrencyLabel'];
+  }
 }
 
 export class Values {
