@@ -1,15 +1,14 @@
 import * as _ from "lodash";
 
-export class UnitReader {
-
+class BaseReader {
     constructor(
         private unit:any,
-        private labelProvider = null,
-        private types = ['imperial', 'metric', 'continental'],
-        private sizes = ['small', 'medium', 'large'],
-        private displayLabel = 'Display') {}
+        private labelProvider,
+        private types,
+        private sizes,
+        private displayLabel) {}
 
-    all() {
+     all() {
         var units = [];
         for (var i = 0; i < this.types.length; i++) {
             var type = this.unit[this.types[i]];
@@ -30,6 +29,19 @@ export class UnitReader {
 
     unique() {
         return _.uniqBy(this.all(), 'display');
+    }   
+}
+
+export class UnitReader extends BaseReader {
+
+    constructor(
+        unit:any,
+        labelProvider = null,
+        types = ['imperial', 'metric', 'continental'],
+        sizes = ['small', 'medium', 'large'],
+        displayLabel = 'Display'
+    ) {
+        super(unit,labelProvider,types,sizes,displayLabel);
     }
 }
 
@@ -42,68 +54,15 @@ class UnitLabelProvider {
     }
 }
 
-export class CurrencyReader {
+export class CurrencyReader extends BaseReader {
 
     constructor(
-        private unit:any,
-        private labelProvider,
-        private types = ['imperial'],
-        private sizes = ['small', 'medium', 'large'],
-        private displayLabel = 'CurrencyLabel'
-        ) {}
-
-    all() {
-        var units = [];
-        for (var i = 0; i < this.types.length; i++) {
-            var type = this.unit[this.types[i]];
-            for (var j = 0; j < this.sizes.length; j++) {
-                var actualLabelProvider = this.labelProvider || new UnitLabelProvider(type);
-                var display = actualLabelProvider.currencyLabel(this.sizes[j]);
-                var factor = type[this.sizes[j] + 'Factor'];
-                units.push({
-                    display: display,
-                    factor: factor,
-                    type: type,
-                    size: this.sizes[j]
-                });
-            }
-        }
-        return units;
+        unit:any,
+        labelProvider,
+        types = ['imperial'],
+        sizes = ['small', 'medium', 'large'],
+        displayLabel = 'CurrencyLabel'
+    ) {
+        super(unit,labelProvider,types,sizes,displayLabel);
     }
-
-    unique() {
-        return _.uniqBy(this.all(), 'display');
-    }
-}
-
-class BaseReader {
-    constructor(
-        private unit:any,
-        private labelProvider,
-        private types,
-        private sizes,
-        private displayLabel) {}
-
-     all() {
-        var units = [];
-        for (var i = 0; i < this.types.length; i++) {
-            var type = this.unit[this.types[i]];
-            for (var j = 0; j < this.sizes.length; j++) {
-                var actualLabelProvider = this.labelProvider || new UnitLabelProvider(type);
-                var display = actualLabelProvider.currencyLabel(this.sizes[j]);
-                var factor = type[this.sizes[j] + 'Factor'];
-                units.push({
-                    display: display,
-                    factor: factor,
-                    type: type,
-                    size: this.sizes[j]
-                });
-            }
-        }
-        return units;
-    }
-
-    unique() {
-        return _.uniqBy(this.all(), 'display');
-    }   
 }

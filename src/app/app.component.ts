@@ -10,7 +10,6 @@ import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 export class AppComponent implements OnInit {
   isDarkTheme: boolean = false;
 
-  @ViewChild('tab') tab: NgbTabset;
   documents: Array<any> = [];
   activeIdx: string;
 
@@ -21,12 +20,7 @@ export class AppComponent implements OnInit {
     
   }
 
-  ngAfterViewInit() {
-
-  }
-
   open(params) {
-    console.log('OPEN',params);
     let idx = this.documents.findIndex(p => p.documentId === params.documentId && p.versionId === params.versionId);
     if ( idx === -1 ) {
       params.idx = Math.random().toString();

@@ -11,18 +11,19 @@ import * as _ from "lodash";
 })
 export class DocumentDetailComponent implements OnInit {
 
-  @Input() variableId: number;
+  @Input() documentId: number;
+  @Input() versionId: number;
   document: Document = <Document>{};
   data: Values;
 
   constructor(private _documentService: DocumentsService) { }
 
   ngOnInit() {
-    this._documentService.get(this.variableId)
+    this._documentService.get(this.documentId, this.versionId)
     .subscribe((documentData: Document) => {
       this.document = this.postProcess(documentData);
       let allVariables = this.document.templateVariables.map(variable => variable.id);
-      this._documentService.variables(this.document.documentId,1,'Default',-1,allVariables)
+      this._documentService.variables(this.document.documentId,this.document.versionId,'Default',-1,allVariables)
       .subscribe((data: any) =>{
         this.data = new Values(data.data);
         this.data.changeVariable.subscribe(v=> {
@@ -30,7 +31,7 @@ export class DocumentDetailComponent implements OnInit {
           .subscribe(data=> this.data.update(data));
         });
         this.data.changeComment.subscribe(v=> {
-          this._documentService.updateComment(this.document,'Default',v.variableId,v.comment)
+          this._documentService.updateComment(this.document,'Default',v.documentId,v.comment)
           .subscribe(data=> this.data.update([data]));
         });
       })
@@ -38,7 +39,7 @@ export class DocumentDetailComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    console.log('DESTROY', this.variableId);
+    console.log('DESTROY', this.documentId);
   }
 
   postProcess(doc: Document) {
@@ -47,17 +48,17 @@ export class DocumentDetailComponent implements OnInit {
   }
 }
 
-@Component({
-  selector: 'app-document-detail-route',
-  template: '<app-document-detail [variableId]="variableId"></app-document-detail>'
-})
-export class DocumentDetailRouteDecorator {
+// @Component({
+//   selector: 'app-document-detail-route',
+//   template: '<app-document-detail [documentId]="documentId"></app-document-detail>'
+// })
+// export class DocumentDetailRouteDecorator {
 
-  variableId:number;
+//   documentId:number;
 
-  constructor(private route: ActivatedRoute) { }
+//   constructor(private route: ActivatedRoute) { }
 
-  ngOnInit() {
-    this.route.params.subscribe((params: Params) => this.variableId=(+params['id']));
-  }
-}
+//   ngOnInit() {
+//     this.route.params.subscribe((params: Params) => this.documentId=(+params['id']));
+//   }
+// }

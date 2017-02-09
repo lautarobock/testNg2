@@ -83,7 +83,7 @@ export class Value {
     return this.data.unitLabel;
   }
 
-  currencyLabel(size) {
+  label(size) {
     return this.data[size+'CurrencyLabel'];
   }
 }
@@ -123,8 +123,8 @@ export class DocumentsService {
 
   constructor(private _http: Http, private _config: Config) { }
 
-  get(documentId) {
-    return this._http.get(this._config.get('apiPath') + `/documents/Data/${documentId}/1/-1`).map(res => res.json());
+  get(documentId,versionId) {
+    return this._http.get(this._config.get('apiPath') + `/documents/Data/${documentId}/${versionId}/-1`).map(res => res.json());
   }
 
   updateFields(document: Document, data, scenario, revision = -1, period?, lookup?, variableCurrency?) {

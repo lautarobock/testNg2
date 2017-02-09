@@ -33,7 +33,7 @@
         </li>
       </ul>
       <div *ngFor="let document of documents" [hidden]="activeIdx !== document.idx">
-        <app-document-detail [variableId]="document.documentId"></app-document-detail>
+        <app-document-detail [documentId]="document.documentId" [versionId]="document.versionId"></app-document-detail>
       </div>
       
     </div>
