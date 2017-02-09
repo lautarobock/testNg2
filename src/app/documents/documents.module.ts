@@ -10,10 +10,11 @@ import { TemplatesModule } from '../templates/templates.module';
   imports: [
     CommonModule,
     FormsModule,
-    DocumentsRoutingModule,
+    // DocumentsRoutingModule,
     TemplatesModule
   ],
   declarations: [DocumentDetailComponent, DocumentDetailRouteDecorator],
+  exports: [DocumentDetailComponent],
   providers: [DocumentsService],
   
 })

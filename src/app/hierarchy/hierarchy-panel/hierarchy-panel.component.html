@@ -1,4 +1,4 @@
-<div class="material-design" style="overflow-x: scroll;">
+<div class="hierarchy" style="overflow-x: scroll;border: solid 1px lightgray;">
   <select [(ngModel)]="selectedVersion" style="width: 100%" class="form-control" style="border-radius: 0;font-weight: bold;">
     <option *ngFor="let version of versions" [ngValue]="version" (onSelect)="loadDocuments()">
       {{ version.name }}
@@ -7,7 +7,7 @@
   <Tree [nodes]="hierarchy" [options]="options">
     <template #treeNodeTemplate let-node="node" let-index="index">
       <img src="/assets/images/tree/{{node.data.nodeType.imageKey}}.png"
-                 style="position: relative;;width: 17px;height: 17px;top:3px" />
+                 style="position: relative;;width: 17px;height: 17px;top:-2px" />
       <span (click)="select(node.data)">{{ node.data.name }}</span>
     </template>
     <template #treeNodeFullTemplate
@@ -28,7 +28,7 @@
         </TreeNodeDropSlot>
 
         <div class="node-wrapper" [style.padding-left]="node.getNodePadding()">
-          <TreeNodeExpander [node]="node"></TreeNodeExpander>
+          <TreeNodeExpander style="width: 18px" [node]="node"></TreeNodeExpander>
           <div class="node-content-wrapper" 
             (click)="node.mouseAction('click', $event)"
             (dblclick)="node.mouseAction('dblClick', $event)"

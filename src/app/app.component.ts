@@ -1,5 +1,6 @@
-import {Component, Optional, OnInit} from '@angular/core';
+import {Component, Optional, OnInit, ViewChild } from '@angular/core';
 import {Http, Response } from '@angular/http';
+import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +10,43 @@ import {Http, Response } from '@angular/http';
 export class AppComponent implements OnInit {
   isDarkTheme: boolean = false;
 
+  @ViewChild('tab') tab: NgbTabset;
+  documents: Array<any> = [];
+  activeIdx: string;
+
   constructor(public http: Http) {
   }
 
   ngOnInit() {
     
+  }
+
+  ngAfterViewInit() {
+
+  }
+
+  open(params) {
+    console.log('OPEN',params);
+    let idx = this.documents.findIndex(p => p.documentId === params.documentId && p.versionId === params.versionId);
+    if ( idx === -1 ) {
+      params.idx = Math.random().toString();
+      this.documents.push(params);
+      idx = this.documents.length-1;
+    }
+    this.activeIdx = this.documents[idx].idx;
+  }
+
+  closeTab(idx, documentIndex) {
+    if (idx === this.activeIdx) {
+        if (documentIndex === 0 && this.documents.length>1) {
+            this.activeIdx = this.documents[1].idx;
+        } else if (documentIndex === 0) {
+            this.activeIdx = null;
+        } else {
+            this.activeIdx = this.documents[documentIndex - 1].idx;
+        }
+    }
+    this.documents.splice(documentIndex,1);
   }
 
   login() {

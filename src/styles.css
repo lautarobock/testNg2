@@ -2,47 +2,10 @@ body {
   margin: 0;
 }
 
-@font-face {
-   font-family: 'Material Icons';
-   font-style: normal;
-   font-weight: 400;
-   src: url(iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
-   src: local('Material Icons'),
-        local('MaterialIcons-Regular'),
-        url(iconfont/MaterialIcons-Regular.woff2) format('woff2'),
-        url(iconfont/MaterialIcons-Regular.woff) format('woff'),
-        url(iconfont/MaterialIcons-Regular.ttf) format('truetype');
-}
-
-.material-icons {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;  /* Preferred icon size */
-  display: inline-block;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
-
-  /* Support for all WebKit browsers. */
-  -webkit-font-smoothing: antialiased;
-  /* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
-
-  /* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
-
-  /* Support for IE. */
-  font-feature-settings: 'liga';
-}
-
-.active a {
+/*.active a {
   font-weight: 600 !important;
 }
-
+*/
 form .p50 {
     width: 49%
 }
@@ -84,13 +47,13 @@ md-sidenav-layout.m2app-dark {
   white-space: nowrap !important;
 }
 
-.material-design .toggle-children {
+.hierarchy .toggle-children {
   background-image: url('/assets/images/tree/ic_chevron_right_black_24px.svg');
   width: 24px;
   height: 24px;
 }
 
-.material-design .toggle-children-wrapper {
+.hierarchy .toggle-children-wrapper {
   padding-right: 0px;
   margin-right: -7px;
 }

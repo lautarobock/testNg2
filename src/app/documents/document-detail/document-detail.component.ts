@@ -15,7 +15,7 @@ export class DocumentDetailComponent implements OnInit {
   document: Document = <Document>{};
   data: Values;
 
-  constructor(private route: ActivatedRoute, private _documentService: DocumentsService) { }
+  constructor(private _documentService: DocumentsService) { }
 
   ngOnInit() {
     this._documentService.get(this.variableId)
@@ -35,6 +35,10 @@ export class DocumentDetailComponent implements OnInit {
         });
       })
     });
+  }
+
+  ngOnDestroy() {
+    console.log('DESTROY', this.variableId);
   }
 
   postProcess(doc: Document) {

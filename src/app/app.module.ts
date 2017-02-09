@@ -20,13 +20,13 @@ import 'rxjs/Rx';
     FormsModule,
     HttpModule,
     NgbModule.forRoot(),
-    AppRoutingModule,
+    // AppRoutingModule,
     HierarchyModule,
     ConfigModule,
     DocumentsModule
   ],
   providers: [
-    RouterModule
+    // RouterModule
   ],
   bootstrap: [AppComponent]
 })

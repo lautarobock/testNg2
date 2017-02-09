@@ -14,8 +14,29 @@
     </div>
   </nav>
   <div>
-    <div class="main-navigation"><app-hierarchy-panel></app-hierarchy-panel></div>
-    <div class="main-content"><router-outlet></router-outlet></div>
+    <div class="main-navigation"><app-hierarchy-panel (onSelect)="open($event)"></app-hierarchy-panel></div>
+    <div class="main-content">
+      <!-- waiting for https://github.com/ng-bootstrap/ng-bootstrap/issues/1161 -->
+      <!--<ngb-tabset #tab>
+        <ngb-tab *ngFor="let document of documents; let idx = index" title="{{document.name}}" id="main_{{idx}}">
+          <template ngbTabContent>
+            <app-document-detail [variableId]="document.documentId"></app-document-detail>
+          </template>
+        </ngb-tab>
+      </ngb-tabset>-->
+      <ul class="nav nav-tabs">
+        <li class="nav-item" *ngFor="let document of documents; let documentIndex=index">
+          <a class="nav-link" [class.active]="activeIdx === document.idx" href="javascript:void(0)" (click)="activeIdx = document.idx">{{document.name}}</a>
+          <button (click)="closeTab(document.idx, documentIndex)" type="button" class="close" data-dismiss="modal" aria-label="Close" style="position: relative;top: -45px;height: 0;right: 1px;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </li>
+      </ul>
+      <div *ngFor="let document of documents" [hidden]="activeIdx !== document.idx">
+        <app-document-detail [variableId]="document.documentId"></app-document-detail>
+      </div>
+      
+    </div>
   </div>  
 </div>
 <!-- placeholder for model container -->

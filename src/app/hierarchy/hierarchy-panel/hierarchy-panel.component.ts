@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+// import { Router } from '@angular/router';
 import { HierarchyService } from '../hierarchy.service';
 
 @Component({
@@ -9,6 +9,8 @@ import { HierarchyService } from '../hierarchy.service';
 })
 export class HierarchyPanelComponent implements OnInit {
 
+  // @Input() documents: Array<any>;
+  @Output() onSelect = new EventEmitter();
   versions: any[];
   selectedVersion: any;
   hierarchy: any[];
@@ -18,8 +20,9 @@ export class HierarchyPanelComponent implements OnInit {
   };
 
   constructor(
-    private _hierarchyService: HierarchyService, 
-    private router: Router
+    private _hierarchyService: HierarchyService
+    // , 
+    // private router: Router
   ) { }
 
   ngOnInit() {
@@ -33,7 +36,9 @@ export class HierarchyPanelComponent implements OnInit {
   }
 
   select(doc) {
-    this.router.navigate(['/document', doc.id]);
+    // this.router.navigate(['/document', doc.id]);
+    // this.documents.push({documentId:doc.id, version: this.selectedVersion.versionId, name: doc.name})
+    this.onSelect.emit({documentId:doc.id, versionId: this.selectedVersion.versionId, name: doc.name});
   }
 
   loadDocuments() {
