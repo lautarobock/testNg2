@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Directive,ViewContainerRef, ReflectiveInjecto
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DocumentsService, Document, Values } from '../documents.service';
 import { SaveDocumentDialog } from '../save-document-dialog/save-document-dialog.component';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 import * as _ from "lodash";
 
 
@@ -17,7 +18,11 @@ export class DocumentDetailComponent implements OnInit {
   document: Document = <Document>{};
   data: Values;
 
-  constructor(private _documentService: DocumentsService, private saveDocumentDialog: SaveDocumentDialog) { }
+  constructor(
+    private _documentService: DocumentsService, 
+    private saveDocumentDialog: SaveDocumentDialog, 
+    private toastyService: ToastyService
+  ) { }
 
   ngOnInit() {
     this._documentService.get(this.documentId, this.versionId)
@@ -54,7 +59,13 @@ export class DocumentDetailComponent implements OnInit {
   save() {
     this.saveDocumentDialog.open(this.document)
     .then(result => this._documentService.save(this.document, result.text, result.tags).toPromise())
-    .then(result => console.log(result));
+    .then(result => {
+      this.toastyService.success({
+        title: 'Save',
+        msg: 'Document Saved!',
+        timeout: 1000
+      });
+    });
   }
 }
 

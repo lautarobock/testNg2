@@ -1,6 +1,8 @@
 import {Component, Optional, OnInit, ViewChild } from '@angular/core';
-import {Http, Response } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { ToastyConfig } from 'ng2-toasty';
+
 
 @Component({
   selector: 'app-root',
@@ -13,7 +15,8 @@ export class AppComponent implements OnInit {
   documents: Array<any> = [];
   activeIdx: string;
 
-  constructor(public http: Http) {
+  constructor(public http: Http, private toastyConfig: ToastyConfig) {
+    this.toastyConfig.theme = 'bootstrap';
   }
 
   ngOnInit() {
