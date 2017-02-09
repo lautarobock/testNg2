@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Directive,ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DocumentsService, Document, Values } from '../documents.service';
-// import * as _ from "lodash";
+import * as _ from "lodash";
 
 
 @Component({
@@ -11,17 +11,17 @@ import { DocumentsService, Document, Values } from '../documents.service';
 })
 export class DocumentDetailComponent implements OnInit {
 
+  @Input() variableId: number;
   document: Document = <Document>{};
   data: Values;
 
   constructor(private route: ActivatedRoute, private _documentService: DocumentsService) { }
 
   ngOnInit() {
-    this.route.params
-    .switchMap((params:Params) => this._documentService.get(+params['id']))
+    this._documentService.get(this.variableId)
     .subscribe((documentData: Document) => {
-      let allVariables = [];
-      this.document = this.postProcess(documentData, allVariables);
+      this.document = this.postProcess(documentData);
+      let allVariables = this.document.templateVariables.map(variable => variable.id);
       this._documentService.variables(this.document.documentId,1,'Default',-1,allVariables)
       .subscribe((data: any) =>{
         this.data = new Values(data.data);
@@ -37,15 +37,23 @@ export class DocumentDetailComponent implements OnInit {
     });
   }
 
-  postProcess(doc: Document, allVariables) {
-    // doc.variableDefinitions = _.keyBy(doc.templateVariables,'id');
-    doc.variableDefinitions = {};
-    doc.templateVariables.forEach(function(variable) {
-      doc.variableDefinitions[variable.id] = variable;
-      allVariables.push(variable.id);
-    });
+  postProcess(doc: Document) {
+    doc.variableDefinitions = _.keyBy(doc.templateVariables,'id');
     return doc;
   }
 }
 
+@Component({
+  selector: 'app-document-detail-route',
+  template: '<app-document-detail [variableId]="variableId"></app-document-detail>'
+})
+export class DocumentDetailRouteDecorator {
 
+  variableId:number;
+
+  constructor(private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.route.params.subscribe((params: Params) => this.variableId=(+params['id']));
+  }
+}

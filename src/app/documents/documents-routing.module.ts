@@ -1,10 +1,10 @@
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DocumentDetailComponent } from './document-detail/document-detail.component';
+import { DocumentDetailRouteDecorator } from './document-detail/document-detail.component';
 
 const appRoutes: Routes = [{
     path: 'document/:id',
-    component: DocumentDetailComponent
+    component: DocumentDetailRouteDecorator
 }];
 
 @NgModule({
