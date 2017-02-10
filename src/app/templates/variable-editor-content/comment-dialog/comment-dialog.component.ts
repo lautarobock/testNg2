@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, Directive, ElementRef, Input, HostListener } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Value } from '../../../documents/documents.service';
 
@@ -35,5 +35,19 @@ export class CommentDialog {
     let ref = this.modalService.open(CommentDialogComponent)
     ref.componentInstance.value  = value;
     return ref.result;
+  }
+}
+
+@Directive({selector: '[open-comment]'})
+export class OpenComment {
+ 
+  @Input('open-comment') value: Value;
+
+  constructor(el: ElementRef, private commentDialog: CommentDialog) {
+
+  }
+
+  @HostListener('click') onClick() {
+    this.commentDialog.open(this.value).then(result => console.log('ok',result)).catch(reason => console.log('cancel',reason));
   }
 }

@@ -13,7 +13,7 @@
         [ngModel]="value().safe()"
         (blur)="value().update(input.value)"
         >
-    <i class="fa fa-comment comment" aria-hidden="true"  title="{{comment()}}" (click)="openComment()" [ngClass]="{'fill': comment()}"></i>
+    <i class="fa fa-comment comment" aria-hidden="true"  title="{{comment()}}" [open-comment]="value()" [ngClass]="{'fill': comment()}"></i>
     <span class="expression" title="{{expression()}}" [ngClass]="{'fill': expression()}">&fnof;</span>
   </div>
   
