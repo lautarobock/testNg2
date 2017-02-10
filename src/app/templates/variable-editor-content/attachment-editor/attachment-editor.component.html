@@ -1,102 +1,51 @@
-<div *ngIf="_variableId">
-    <!--<div *ngFor="let file of value(_variableId).safe()">
-        <pre>{{file|json}}</pre>
-    </div>-->
-     <div ng2FileDrop
+<div *ngIf="_variableId" ng2FileDrop
         [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
         (fileOver)="fileOverBase($event)"
-        [uploader]="uploader"
-        class="well my-drop-zone">
-        Base drop zone
-    </div>
-    <div >
-        <p>Queue length: {{ uploader?.queue?.length }}</p>
-
-        <table class="table">
-            <thead>
-            <tr>
-                <th width="50%">Name</th>
-                <th>Size</th>
-                <th>Progress</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let item of uploader.queue">
-                <td><strong>{{ item?.file?.name }}</strong></td>
-                <td  nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-                <td >
-                    <ngb-progressbar
-                        type="info"
-                        [value]="item.progress">
-                    </ngb-progressbar>
-                </td>
-                <td class="text-center">
-                    <span *ngIf="item.isSuccess"><i class="fa fa-check" aria-hidden="true"></i></span>
-                    <span *ngIf="item.isCancel"><i class="fa fa-ban" aria-hidden="true"></i></span>
-                    <span *ngIf="item.isError"><i class="fa fa-trash" aria-hidden="true"></i></span>
-                </td>
-                <td nowrap>
-                    <button type="button" class="btn btn-default btn-sm" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
-                        <i class="fa fa-upload" aria-hidden="true"></i> Upload
-                    </button>
-                    <button type="button" class="btn btn-warning btn-sm" (click)="item.cancel()" [disabled]="!item.isUploading">
-                        <i class="fa fa-ban" aria-hidden="true"></i> Cancel
-                    </button>
-                    <button type="button" class="btn btn-danger btn-sm" (click)="item.remove()">
-                        <i class="fa fa-trash" aria-hidden="true"></i> Remove
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
+        [uploader]="uploader">
+    <div [hidden]="!uploader.isUploading">
         <div>
             <div>
-                Queue progress:
-                <ngb-progressbar
-                    class="example-margin"
-                    type="info"
-                    [value]="uploader.progress">
-                </ngb-progressbar>
+                <ngb-progressbar class="example-margin" type="info" [value]="uploader.progress"></ngb-progressbar>
             </div>
-            <button type="button" class="btn btn-default btn-sm" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-                <i class="fa fa-upload" aria-hidden="true"></i> Upload all
-            </button>
-            <button type="button" class="btn btn-warning btn-sm" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+            <!-- TODO cancel -->
+            <!--<button type="button" class="btn btn-warning btn-sm" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading" style="margin-left: 1em;">
                 <i class="fa fa-ban" aria-hidden="true"></i> Cancel all
-            </button>
-            <button type="button" class="btn btn-danger btn-sm" type="button" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                <i class="fa fa-trash" aria-hidden="true"></i> Remove all
-            </button>
+            </button>-->
         </div>
 
     </div>
-    <ul class="list-unstyled">
+    <!--<ul class="list-unstyled">
         <li class="media" *ngFor="let file of value(_variableId).safe()">
-            <!--<img class="d-flex mr-3" src="..." alt="Generic placeholder image">-->
             <i style="font-size: 30px;" class="fa fa-paperclip d-flex mr-3" aria-hidden="true"></i>
             <div class="media-body">
                 <h5 class="mt-0 mb-1">{{file.fileName}}</h5>
                 {{file.saveInDbAsText}}
             </div>
         </li>
-    </ul>
-    <!--<ul class="list-group">
-        <h3 md-subheader>
-            {{document.variableDefinitions[_variableId].prompt}}
-            <button md-icon-button style="float: right">
-                <md-icon>view_list</md-icon>
-            </button>
-            <button md-icon-button style="float: right">
-                <md-icon>view_comfy</md-icon>
-            </button>
-        </h3>
-        <md-list-item *ngFor="let file of value(_variableId).safe()">
-            <md-icon md-list-avatar>attach_file</md-icon>
-            <h4 md-line>{{file.fileName}}</h4>
-            <p md-line> {{file.saveInDbAsText}} </p>
-        </md-list-item>
     </ul>-->
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th></th>
+                <th>File Name</th>
+                <th>Location</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let file of value(_variableId).safe()">
+                <td>
+                    <i class="fa fa-file" aria-hidden="true"></i>
+                </td>
+                <td>{{file.fileName}}</td>
+                <td>{{file.fullName}}</td>
+                <td></td>
+                <td>
+                    <i class="fa fa-download" aria-hidden="true"></i>
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

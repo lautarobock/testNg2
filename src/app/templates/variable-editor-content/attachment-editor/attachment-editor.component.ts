@@ -18,7 +18,6 @@ export class AttachmentEditorComponent extends AbstractEditorComponent implement
     autoUpload: true
   });
   public hasBaseDropZoneOver:boolean = false;
-  public hasAnotherDropZoneOver:boolean = false;
   private uploadedFiles = [];
 
   constructor(private config: Config) { 
@@ -40,14 +39,10 @@ export class AttachmentEditorComponent extends AbstractEditorComponent implement
         hideFullPath: false,
         isWebLink: false
       })
-      // console.log('FINISHED');
-      // console.log('item',item);
-      // console.log('response', response);
-      // console.log('status', status);
-      // console.log('headers', headers);
     };
     this.uploader.onCompleteAll = () => {
-      this.value().update(this.uploadedFiles);
+      let all = this.value(this._variableId).safe().concat(this.uploadedFiles)
+      this.value().update(new AttachmentsSerializer(all).toXML());
     };
   }
   
@@ -55,7 +50,28 @@ export class AttachmentEditorComponent extends AbstractEditorComponent implement
     this.hasBaseDropZoneOver = e;
   }
 
-  public fileOverAnother(e:any):void {
-    this.hasAnotherDropZoneOver = e;
+}
+
+class AttachmentsSerializer {
+
+  constructor(private files) {
+
+  }
+
+  toXML() {
+    let xml = '<?xml version="1.0" encoding="utf-16"?> <Attachments xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> ';
+    xml += this.files.map(file => {
+      let fileXML = '<Attachment> ';
+      if (file.fullName!==null) fileXML += `<FullName>${file.fullName}</FullName> `;
+      if (file.fileName !== null) fileXML += `<FileName>${file.fileName}</FileName> `;
+      if (file.saveInDB !== null) fileXML += `<SaveInDB>${file.saveInDB}</SaveInDB> `;
+      if (file.hideFullPath !== null) fileXML += `<HideFullPath>${file.hideFullPath}</HideFullPath> `;
+      if (file.attachmentId !== null) fileXML += `<AttachmentId>${file.attachmentId}</AttachmentId> `;
+      if (file.isWebLink !== null) fileXML += `<IsWebLink>${file.isWebLink}</IsWebLink> `;
+      fileXML += '</Attachment>';
+      return fileXML
+    }).join('');
+    xml += ' </Attachments>';
+    return xml;
   }
 }
