@@ -28,6 +28,7 @@ import { LineItemGridEditorComponent } from './variable-editor-content/line-item
 import { ChartsModule } from 'ng2-charts';
 import { CommentDialogComponent, CommentDialog, OpenComment } from './variable-editor-content/comment-dialog/comment-dialog.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { UtilModule } from '../util/util.module';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     FormsModule,
     NgbModule,
     ChartsModule,
-    FileUploadModule
+    FileUploadModule,
+    UtilModule
   ],
   exports: [
     TemplateLoaderDirective,

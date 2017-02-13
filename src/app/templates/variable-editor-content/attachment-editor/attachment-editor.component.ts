@@ -3,6 +3,9 @@ import { AbstractEditorComponent, EditorType } from '../../abstract-content';
 import { RegisterEditor } from '../../template-loader.directive';
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { Config } from '../../../config/config';
+import { ConfirmationDialog } from '../../../util/confirmation-dialog/confirmation-dialog.component';
+import { PromptDialog } from '../../../util/prompt-dialog/prompt-dialog.component';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-attachment-editor',
@@ -20,7 +23,7 @@ export class AttachmentEditorComponent extends AbstractEditorComponent implement
   public hasBaseDropZoneOver:boolean = false;
   private uploadedFiles = [];
 
-  constructor(private config: Config) { 
+  constructor(private config: Config, private confirmationDialog: ConfirmationDialog, private promptDialog: PromptDialog) { 
     super();
   }
 
@@ -45,9 +48,46 @@ export class AttachmentEditorComponent extends AbstractEditorComponent implement
       this.value().update(new AttachmentsSerializer(all).toXML());
     };
   }
+
+  uploadFiles($event) {
+    console.log($event.srcElement.files);
+  }
   
   public fileOverBase(e:any):void {
     this.hasBaseDropZoneOver = e;
+  }
+
+  saveLink() {
+    this.promptDialog.open('Save Link','http://')
+      .then( (link) => {
+        let files = this.value(this._variableId).safe();
+        files.push({
+          fullName: link,
+          fileName: link,
+          attachmentId: null,
+          saveInDB: false,
+          hideFullPath: false,
+          isWebLink: true
+        });
+        this.value().update(new AttachmentsSerializer(files).toXML());
+      })
+      .catch( () => console.log('cancel'))
+  }
+
+  downloadURL (file) {
+      return this.config.get('apiPath') + `/file/download/${file.attachmentId}?fileName=${file.fileName}`;
+  };
+
+  removeFile(file) {
+    this.confirmationDialog.open(`Are you sure to remove "${file.fileName}?"`,'Remove file')
+      .then( () => {
+        if (file.saveInDB) {
+          let files = this.value(this._variableId).safe();
+          _.remove(files, (item: any) => item.attachmentId === file.attachmentId);
+          this.value().update(new AttachmentsSerializer(files).toXML());
+        }
+      })
+      .catch( () => console.log('no'))
   }
 
 }

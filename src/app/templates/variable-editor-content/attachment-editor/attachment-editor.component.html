@@ -2,6 +2,21 @@
         [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
         (fileOver)="fileOverBase($event)"
         [uploader]="uploader">
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">       
+        <div class="collapse navbar-collapse">
+            <form class="form-inline my-2 my-lg-0">
+                <button type="button" class="btn btn-sm btn-secondary" (click)="saveLink()">
+                    <i class="fa fa-paperclip" aria-hidden="true"></i> Save Link
+                </button>
+                <label for="selectFiles" style="margin-left: 1em">
+                    <span class="btn btn-sm btn-secondary">
+                        <i class="fa fa-upload" aria-hidden="true"></i> Upload
+                    </span>
+                    <input id="selectFiles" ng2FileSelect [uploader]="uploader" type="file" style="opacity: 0" multiple/>
+                </label>
+            </form>
+        </div>
+    </nav>
     <div [hidden]="!uploader.isUploading">
         <div>
             <div>
@@ -30,20 +45,25 @@
                 <th>File Name</th>
                 <th>Location</th>
                 <th>Description</th>
-                <th>Actions</th>
+                <th style="text-align: center">Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let file of value(_variableId).safe()">
                 <td>
-                    <i class="fa fa-file" aria-hidden="true"></i>
+                    <i [hidden]="!file.saveInDB" class="fa fa-file" aria-hidden="true"></i>
+                    <a [hidden]="!file.isWebLink" [href]="file.fileName" target="_blank"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
                 </td>
-                <td>{{file.fileName}}</td>
+                <td>
+                    <a [href]="downloadURL(file)" [hidden]="!file.saveInDB">{{file.fileName}}</a>
+                    <a [href]="file.fileName" target="_blank" [hidden]="!file.isWebLink">{{file.fileName}}</a>
+                </td>
                 <td>{{file.fullName}}</td>
                 <td></td>
-                <td>
-                    <i class="fa fa-download" aria-hidden="true"></i>
-                    <i class="fa fa-trash" aria-hidden="true"></i>
+                <td style="text-align: center">
+                    <a [href]="downloadURL(file)" [hidden]="!file.saveInDB"><i class="fa fa-download" aria-hidden="true"></i></a>
+                    <a [href]="file.fileName" target="_blank" [hidden]="!file.isWebLink"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
+                    <i class="fa fa-trash" aria-hidden="true" style="cursor: pointer; margin-left: 0.5em" (click)="removeFile(file)"></i>
                 </td>
             </tr>
         </tbody>

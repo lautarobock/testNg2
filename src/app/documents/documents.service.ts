@@ -13,6 +13,10 @@ export class Document {
     public documentLock: any,
     public conceptDefinition: any
   ) {}
+
+  readonly () {
+    return !this.hasExclusiveLock;
+  }
 }
 
 export enum DataType {

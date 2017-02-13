@@ -1,0 +1,14 @@
+<div class="modal-header" [hidden]="!title">
+  <h4 class="modal-title">{{title}}</h4>
+</div>
+<div class="modal-body">
+  {{text}}
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-primary" (click)="ok()">
+    <i class="fa fa-check" aria-hidden="true"></i> Ok
+  </button>
+  <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
+    <i class="fa fa-times" aria-hidden="true"></i> Cancel
+  </button>
+</div>
