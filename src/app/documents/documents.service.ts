@@ -3,6 +3,9 @@ import { Http } from '@angular/http';
 import { Config } from '../config/config';
 
 export class Document {
+  
+  public readonly:boolean = false;
+
   constructor(
     public documentId: number,
     public documentName: string,
@@ -14,9 +17,6 @@ export class Document {
     public conceptDefinition: any
   ) {}
 
-  readonly () {
-    return !this.hasExclusiveLock;
-  }
 }
 
 export enum DataType {
@@ -47,6 +47,14 @@ export class Value {
         }]
       });
     }
+  }
+
+  clear() {
+    this.state.dirty = true;
+    this._values.changeVariable.emit({
+      variableId: this.data.variableId,
+      values: []
+    });
   }
 
   updateAll(values) {
@@ -159,12 +167,7 @@ export class DocumentsService {
   }
 
   updateFields(document: Document, data, scenario, revision = -1, period?, lookup?, variableCurrency?) {
-    if ( data.values.length === 1) {
-      return this._http.post(
-        this._config.get('apiPath') + `/documents/data/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
-        { variableId: data.variableId, value: data.values[0].value, period: period, lookup, variableCurrency}
-      ).map(res => res.json());
-    } else {
+    if ( data.values.length > 1) {
       return this._http.post(
         this._config.get('apiPath') + `/documents/multipledata/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
         data.values.map(value=> {
@@ -175,6 +178,11 @@ export class DocumentsService {
             lookup: value.lookup
           }
         })
+      ).map(res => res.json());
+    } else {
+      return this._http.post(
+        this._config.get('apiPath') + `/documents/data/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
+        { variableId: data.variableId, value: data.values[0].value, period, lookup, variableCurrency}
       ).map(res => res.json());
     }
   }

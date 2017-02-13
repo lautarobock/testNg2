@@ -1,3 +1,64 @@
-<p style="overflow: hidden;">
-  <img src="{{url()}}" style="cursor: -webkit-zoom-in;" />
-</p>
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded" [hidden]="value().safe()?.attachmentId" ng2FileDrop
+        [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+        (fileOver)="fileOverBase($event)"
+        [uploader]="uploader">
+    <div class="collapse navbar-collapse">
+        <form class="form-inline my-2 my-lg-0">
+          <label for="selectFiles">
+              <span class="btn btn-sm btn-secondary">
+                  <i class="fa fa-picture-o" aria-hidden="true"></i> Upload
+              </span>
+              <input id="selectFiles" ng2FileSelect [uploader]="uploader" type="file" style="opacity: 0"/>
+          </label>
+            <!--<button type="button" class="btn btn-sm btn-secondary" (click)="saveLink()">
+                <i class="fa fa-paperclip" aria-hidden="true"></i> Save Link
+            </button>
+            <label for="selectFiles" style="margin-left: 1em">
+                <span class="btn btn-sm btn-secondary">
+                    <i class="fa fa-upload" aria-hidden="true"></i> Upload
+                </span>
+                <input id="selectFiles" ng2FileSelect [uploader]="uploader" type="file" style="opacity: 0" multiple/>
+            </label>-->
+        </form>
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <button [hidden]="!comment()" 
+                title="{{comment()}}"
+                [open-comment]="value()" 
+                type="button"
+                class="fill animate-show btn btn-secondary btn-sm comment">
+              <i class="fa fa-comment "></i>
+          </button>
+        </form>
+    </div>
+</nav>
+<div style="overflow: hidden;position: relative">
+  <div style="top: 0.5em;right: 0.5em;z-index: 1000;position:absolute">
+      <button [hidden]="!(isOver&&value().safe()?.attachmentId&&!document.readonly)" [disabled]="!value().safe()?.attachmentId || document.readonly"
+              type="button"
+              class="animate-show btn btn-secondary btn-sm"
+              (click)="remove()">
+          <i style="color: red" class="fa fa-trash"></i>
+      </button>
+      <button [hidden]="!(isOver&&value().safe()?.attachmentId||comment())" 
+              [ngClass]="{
+                  'fill':comment()
+              }"
+              title="{{comment()}}"
+              [open-comment]="value()" 
+              type="button"
+              class="animate-show btn btn-secondary btn-sm comment">
+          <i class="fa fa-comment "></i>
+      </button>
+  </div>
+  <div [hidden]="!uploader.isUploading">
+      <div>
+          <div>
+              <ngb-progressbar class="example-margin" type="info" [value]="uploader.progress"></ngb-progressbar>
+          </div>
+      </div>
+
+  </div>  
+  <img *ngIf="value().safe()?.attachmentId" src="{{url()}}" style="cursor: -webkit-zoom-in;" />
+</div>

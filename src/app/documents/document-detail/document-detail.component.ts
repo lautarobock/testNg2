@@ -54,6 +54,7 @@ export class DocumentDetailComponent implements OnInit {
 
   postProcess(doc: Document) {
     doc.variableDefinitions = _.keyBy(doc.templateVariables,'id');
+    doc.readonly = !doc.hasExclusiveLock;
     return doc;
   }
 

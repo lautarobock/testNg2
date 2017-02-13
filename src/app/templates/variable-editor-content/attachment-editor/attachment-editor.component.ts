@@ -5,6 +5,7 @@ import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { Config } from '../../../config/config';
 import { ConfirmationDialog } from '../../../util/confirmation-dialog/confirmation-dialog.component';
 import { PromptDialog } from '../../../util/prompt-dialog/prompt-dialog.component';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 import * as _ from 'lodash';
 
 @Component({
@@ -23,7 +24,7 @@ export class AttachmentEditorComponent extends AbstractEditorComponent implement
   public hasBaseDropZoneOver:boolean = false;
   private uploadedFiles = [];
 
-  constructor(private config: Config, private confirmationDialog: ConfirmationDialog, private promptDialog: PromptDialog) { 
+  constructor(private config: Config, private confirmationDialog: ConfirmationDialog, private promptDialog: PromptDialog, private toastyService: ToastyService) { 
     super();
   }
 
@@ -44,8 +45,14 @@ export class AttachmentEditorComponent extends AbstractEditorComponent implement
       })
     };
     this.uploader.onCompleteAll = () => {
-      let all = this.value(this._variableId).safe().concat(this.uploadedFiles)
+      let prev = this.value(this._variableId).safe() || [];
+      let all = prev.concat(this.uploadedFiles)
       this.value().update(new AttachmentsSerializer(all).toXML());
+      this.toastyService.success({
+        title: 'Upload Successful',
+        msg: 'Document Uploaded Successfuly',
+        timeout: 2000
+      });
     };
   }
 
