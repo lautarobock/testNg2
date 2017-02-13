@@ -46,6 +46,7 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
     this.editionIdx = idx;
     this.tmpValues =  JSON.parse(JSON.stringify(this.value(this.editor.variableIds[idx]).values()));
     this.tmpValues.forEach(value=>value.value = value.value * this.selectedUnitsByRow[idx].factor);
+    setTimeout(()=> document.getElementById('input-grid-0').focus() ,50);
   }
 
   focus() {

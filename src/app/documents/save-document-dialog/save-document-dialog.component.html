@@ -2,7 +2,12 @@
   <h3 class="modal-title">Change Record &lt;{{document.documentName}}&gt; </h3>
 </div>
 <div class="modal-body">
-    <textarea class="form-control" [(ngModel)]="text" style="height:130px; margin-bottom: 1em;"></textarea>
+    <textarea #inputText
+        (focus)="inputText.select()"
+        class="form-control" 
+        [(ngModel)]="text" 
+        style="height:130px; margin-bottom: 1em;">
+    </textarea>
     <!--<div class="input-group-sm input-group">
         <span class="form-control">
             <span ng-hide="tagsApplied.length>0" style="color: gray">Revision Tag</span>

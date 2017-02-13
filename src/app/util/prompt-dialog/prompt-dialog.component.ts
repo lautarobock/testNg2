@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -9,12 +9,17 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class PromptDialogComponent implements OnInit {
 
+  @ViewChild('input') input: ElementRef;
   title: string;
   text: string = '';
 
   constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
+  }
+  
+  ngAfterViewInit() {
+    setTimeout(()=>this.input.nativeElement.focus(),50);
   }
 
   ok() {

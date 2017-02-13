@@ -28,7 +28,7 @@
             'has-comment': comment(variableId, value.periodString)
           }">-->
           <span *ngIf="editionIdx!==idx">{{ computedValue(value.value, selectedUnitsByRow[idx]) | number:numberFormat }}</span>
-          <input *ngIf="editionIdx===idx" (focus)="focus()" (focusout)="blur()"
+          <input *ngIf="editionIdx===idx" (focus)="focus()" (focusout)="blur()" id="input-grid-{{periodIdx}}" onfocus="this.select()"
             type="number" style="min-width:130px;text-align: right;background: white !important;"
             class="form-control form-control-sm" 
             [(ngModel)]="tmpValues[periodIdx].value"

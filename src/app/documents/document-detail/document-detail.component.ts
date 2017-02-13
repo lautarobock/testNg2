@@ -68,7 +68,8 @@ export class DocumentDetailComponent implements OnInit {
         msg: 'Document Saved!',
         timeout: 1000
       });
-    });
+    })
+    .catch(err => console.log(err));
   }
 
   changeScenario() {

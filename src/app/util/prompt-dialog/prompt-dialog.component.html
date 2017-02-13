@@ -2,7 +2,8 @@
   <h4 class="modal-title">{{title}}</h4>
 </div>
 <div class="modal-body">
-  <input type="text" 
+  <input type="text" #input
+    (focus)="input.select()"
     class="form-control"
     [(ngModel)]="text"
     >

@@ -1,4 +1,4 @@
-import {Component, Optional, OnInit, ViewChild } from '@angular/core';
+import {Component, Optional, OnInit } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { ToastyConfig } from 'ng2-toasty';
@@ -10,7 +10,6 @@ import { ToastyConfig } from 'ng2-toasty';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  isDarkTheme: boolean = false;
 
   documents: Array<any> = [];
   activeIdx: string;

@@ -4,7 +4,7 @@
 <div class="modal-body">
   <div class="form-group row no-gutters">
     <textarea #inputComment
-        placeholder="Write a comment" 
+        (focus)="inputComment.select()"
         [ngModel]="value.comment()"
         class="form-control">
     </textarea>

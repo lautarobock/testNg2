@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable, Directive, ElementRef, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Injectable, Directive, ElementRef, Input, HostListener, ViewChild } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Value } from '../../../documents/documents.service';
 
@@ -10,10 +10,15 @@ import { Value } from '../../../documents/documents.service';
 export class CommentDialogComponent implements OnInit {
 
   value:Value;
+  @ViewChild('inputComment') inputComment: ElementRef;
 
   constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    setTimeout(()=>this.inputComment.nativeElement.focus(),50);
   }
 
   ok(comment) {

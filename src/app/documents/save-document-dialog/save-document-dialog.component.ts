@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document } from '../documents.service';
 
@@ -9,12 +9,17 @@ import { Document } from '../documents.service';
 })
 export class SaveDocumentDialogComponent implements OnInit {
 
+  @ViewChild('inputText') inputText: ElementRef;
   text: string = '';
   document: Document;
 
   constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    setTimeout(()=>this.inputText.nativeElement.focus(),50);
   }
 
   ok() {

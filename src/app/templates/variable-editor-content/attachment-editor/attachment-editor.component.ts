@@ -88,11 +88,13 @@ export class AttachmentEditorComponent extends AbstractEditorComponent implement
   removeFile(file) {
     this.confirmationDialog.open(`Are you sure to remove "${file.fileName}?"`,'Remove file')
       .then( () => {
+        let files = this.value(this._variableId).safe();
         if (file.saveInDB) {
-          let files = this.value(this._variableId).safe();
           _.remove(files, (item: any) => item.attachmentId === file.attachmentId);
-          this.value().update(new AttachmentsSerializer(files).toXML());
+        } else if ( file.isWebLink ) {
+          _.remove(files, (item: any) => item.fileName === file.fileName);
         }
+        this.value().update(new AttachmentsSerializer(files).toXML());
       })
       .catch( () => console.log('no'))
   }
