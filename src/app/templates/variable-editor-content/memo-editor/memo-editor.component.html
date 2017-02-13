@@ -10,7 +10,6 @@
         #input
         class="form-control form-control-sm" 
         [readonly]="expression() ? 'true' : null"
-        placeholder="{{document.variableDefinitions[variableId()].prompt}}" 
         [ngModel]="value().safe()"
         (blur)="value().update(input.value)"
         >

@@ -32,7 +32,7 @@
           </button>
         </li>
       </ul>
-      <div *ngFor="let document of documents" [hidden]="activeIdx !== document.idx">
+      <div *ngFor="let document of documents" [hidden]="activeIdx !== document.idx" >
         <app-document-detail [documentId]="document.documentId" [versionId]="document.versionId"></app-document-detail>
       </div>
       

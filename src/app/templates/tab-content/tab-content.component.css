@@ -1,0 +1,19 @@
+:host /deep/ .tab-content {
+    background: rgb(245, 245, 245) !important;
+    margin-top: -1px !important;
+}
+
+:host /deep/ .nav.nav-tabs {
+    background: #5bc0de !important;
+    padding-top: 3px;
+}
+
+:host /deep/ .nav-tabs .nav-item a.active {
+    background: #f5f5f5 !important;
+    color: black !important;
+    border-bottom: #f5f5f5 !important;
+}
+
+:host /deep/ .nav-tabs .nav-item a {
+    color: white !important;
+}

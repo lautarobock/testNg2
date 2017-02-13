@@ -10,11 +10,16 @@ import { RegisterTemplate } from '../template-loader.directive';
 @RegisterTemplate(ContentType.Expander)
 export class ExpanderContentComponent extends AbstractContentComponent implements OnInit {
 
+  isExpanded: boolean = true;
+  
   constructor() {
     super();
    }
 
   ngOnInit() {
+    let tmp = this.jsonProperties().IsExpanded;
+    if ( tmp === null || tmp === undefined ) tmp = true;
+    this.isExpanded = tmp;
   }
 
 }

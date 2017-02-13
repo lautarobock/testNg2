@@ -7,7 +7,7 @@
   <label class="col-sm-3 col-form-label col-form-label-sm">{{document.variableDefinitions[variableId()].prompt}}</label>
   <div class="col-sm-9">
     <div class="input-group input-group-sm">
-      <input class="form-control form-control-sm" placeholder="dd-mm-yyyy"
+      <input class="form-control form-control-sm" 
             name="dp" 
             [ngModel]="value().safe()|date2Model" ngbDatepicker #d="ngbDatepicker" 
             (ngModelChange)="change($event)"
