@@ -29,6 +29,7 @@ import { ChartsModule } from 'ng2-charts';
 import { CommentDialogComponent, CommentDialog, OpenComment } from './variable-editor-content/comment-dialog/comment-dialog.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { UtilModule } from '../util/util.module';
+import { ExpressionDialogComponent, ExpressionComment, ExpressionDialog } from './variable-editor-content/expression-dialog/expression-dialog.component';
 
 @NgModule({
   imports: [
@@ -70,7 +71,9 @@ import { UtilModule } from '../util/util.module';
     LineItemGridEditorComponent, 
     CommentDialogComponent,
     Date2Model,
-    OpenComment
+    OpenComment,
+    ExpressionDialogComponent,
+    ExpressionComment
   ],
   entryComponents: [
     TabContentComponent, 
@@ -95,8 +98,9 @@ import { UtilModule } from '../util/util.module';
     WellViewEditorComponent, 
     TimeSeriesGridEditorComponent, 
     LineItemGridEditorComponent, 
-    CommentDialogComponent
+    CommentDialogComponent,
+    ExpressionDialogComponent
   ],
-  providers: [CommentDialog]
+  providers: [CommentDialog, ExpressionDialog]
 })
 export class TemplatesModule { }

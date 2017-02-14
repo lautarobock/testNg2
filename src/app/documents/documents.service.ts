@@ -34,8 +34,8 @@ export class Value {
   constructor(private data: any, private _values: Values) {}
 
   set(data) {
-    this.data.values = data.values;
-    // this.state.dirty = true;
+    // this.data.values = data.values;
+    this.data = data;
   }
 
   update(val) {
@@ -80,6 +80,13 @@ export class Value {
 
   expression () {
     return this.data.expression;
+  }
+
+  updateExpression(expression) {
+    this._values.changeExpression.emit({
+      variableId: this.data.variableId,
+      expression
+    });
   }
 
   periodicExpression() {
@@ -128,6 +135,7 @@ export class Values {
   
   public changeVariable = new EventEmitter();
   public changeComment = new EventEmitter();
+  public changeExpression = new EventEmitter();
 
   private _paramsMap: Map<number, Value> = new Map<number, Value>();
 
@@ -192,6 +200,13 @@ export class DocumentsService {
     return this._http.post(
       this._config.get('apiPath') + `/documents/comment/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
       { variableId, comment, period }
+    ).map(res => res.json());
+  }
+
+  updateExpression(document: Document, scenario, variableId, expression, revision = -1) {
+    return this._http.post(
+      this._config.get('apiPath') + `/documents/expression/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
+      { variableId, expression }
     ).map(res => res.json());
   }
   

@@ -45,6 +45,10 @@ export class DocumentDetailComponent implements OnInit {
           this._documentService.updateComment(this.document,this.selectedScenario.name,v.variableId,v.comment)
           .subscribe(data=> this.data.update([data]));
         });
+        this.data.changeExpression.subscribe(v=>{
+          this._documentService.updateExpression(this.document,this.selectedScenario.name, v.variableId,v.expression)
+          .subscribe(data=> this.data.update(data));
+        });
       })
     });
   }
@@ -105,6 +109,10 @@ export class DocumentDetailComponent implements OnInit {
         this.data.changeComment.subscribe(v=> {
           this._documentService.updateComment(this.document,this.selectedScenario.name,v.variableId,v.comment)
           .subscribe(data=> this.data.update([data]));
+        });
+        this.data.changeExpression.subscribe(v=>{
+          this._documentService.updateExpression(this.document,this.selectedScenario.name, v.variableId,v.expression)
+          .subscribe(data=> this.data.update(data));
         });
       })
     });

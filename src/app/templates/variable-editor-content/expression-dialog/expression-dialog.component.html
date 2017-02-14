@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h4 class="modal-title">Expression Editor</h4>
+</div>
+<div class="modal-body">
+  <div class="form-group row no-gutters">
+    <textarea #inputExpression
+        (focus)="inputExpression.select()"
+        [ngModel]="value.expression()"
+        [readonly]="readonly"
+        class="form-control">
+    </textarea>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-primary" (click)="ok(inputExpression.value)" [hidden]="readonly">
+    <i class="fa fa-check" aria-hidden="true"></i> Ok
+  </button>
+  <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
+    <i class="fa fa-times" aria-hidden="true"></i>
+    <span [hidden]="readonly">Cancel</span>
+    <span [hidden]="!readonly">Close</span>
+  </button>
+</div>
