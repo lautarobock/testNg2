@@ -10,6 +10,7 @@ import { Value } from '../../../documents/documents.service';
 export class CommentDialogComponent implements OnInit {
 
   value:Value;
+  readonly: boolean;
   @ViewChild('inputComment') inputComment: ElementRef;
 
   constructor(public activeModal: NgbActiveModal) { }
@@ -36,9 +37,10 @@ export class CommentDialog {
 
   constructor(private modalService: NgbModal) {}
 
-  open(value: Value) {
+  open(value: Value, readonly: boolean) {
     let ref = this.modalService.open(CommentDialogComponent)
     ref.componentInstance.value  = value;
+    ref.componentInstance.readonly = readonly;
     return ref.result;
   }
 }
@@ -47,12 +49,13 @@ export class CommentDialog {
 export class OpenComment {
  
   @Input('open-comment') value: Value;
+  @Input('readonly') readonly: boolean;
 
   constructor(el: ElementRef, private commentDialog: CommentDialog) {
 
   }
 
   @HostListener('click') onClick() {
-    this.commentDialog.open(this.value).then(result => console.log('ok',result)).catch(reason => console.log('cancel',reason));
+    this.commentDialog.open(this.value, this.readonly).then(result => console.log('ok',result)).catch(reason => console.log('cancel',reason));
   }
 }

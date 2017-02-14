@@ -18,6 +18,8 @@ export class DocumentDetailComponent implements OnInit {
   document: Document = <Document>{};
   data: Values;
   selectedScenario: any;
+  selectedRevision: any;
+  revisions: Array<any>;
 
   constructor(
     private _documentService: DocumentsService, 
@@ -30,8 +32,10 @@ export class DocumentDetailComponent implements OnInit {
     .subscribe((documentData: Document) => {
       this.document = this.postProcess(documentData);
       this.selectedScenario = _.find(this.document.conceptDefinition.concepts, (concept:any) => concept.name === this.document.conceptDefinition.currentConceptName);
+      this.revisions = new RevisionList(this.document.revisions);
+      this.selectedRevision = this.revisions[0];
       let allVariables = this.document.templateVariables.map(variable => variable.id);
-      this._documentService.variables(this.document.documentId,this.document.versionId,this.selectedScenario.name,-1,allVariables)
+      this._documentService.variables(this.document.documentId,this.document.versionId,this.selectedScenario.name,this.selectedRevision.revision,allVariables)
       .subscribe((data: any) =>{
         this.data = new Values(data.data);
         this.data.changeVariable.subscribe(v=> {
@@ -79,19 +83,44 @@ export class DocumentDetailComponent implements OnInit {
       this.data.update(data.data);
     })
   }
+
+  changeRevision() {
+    this.document = <Document>{};
+    this.data = null;
+    this.selectedScenario = null;
+    this.revisions = null;
+    this._documentService.get(this.documentId, this.versionId, this.selectedRevision.revision)
+    .subscribe((documentData: Document) => {
+      this.document = this.postProcess(documentData);
+      this.selectedScenario = _.find(this.document.conceptDefinition.concepts, (concept:any) => concept.name === this.document.conceptDefinition.currentConceptName);
+      this.revisions = new RevisionList(this.document.revisions);
+      this.selectedRevision = this.revisions.find(rev => rev.revision === this.selectedRevision.revision);
+      let allVariables = this.document.templateVariables.map(variable => variable.id);
+      this._documentService.variables(this.document.documentId,this.document.versionId,this.selectedScenario.name,this.selectedRevision.revision,allVariables)
+      .subscribe((data: any) =>{
+        this.data = new Values(data.data);
+        this.data.changeVariable.subscribe(v=> {
+          this._documentService.updateFields(this.document,v,this.selectedScenario.name).subscribe(data=> this.data.update(data));
+        });
+        this.data.changeComment.subscribe(v=> {
+          this._documentService.updateComment(this.document,this.selectedScenario.name,v.variableId,v.comment)
+          .subscribe(data=> this.data.update([data]));
+        });
+      })
+    });
+  }
 }
 
-// @Component({
-//   selector: 'app-document-detail-route',
-//   template: '<app-document-detail [documentId]="documentId"></app-document-detail>'
-// })
-// export class DocumentDetailRouteDecorator {
+class RevisionList extends Array {
+  
+  public static readonly LASTEST = {
+      description: '<Latest>',
+      revision: -1
+  };
 
-//   documentId:number;
-
-//   constructor(private route: ActivatedRoute) { }
-
-//   ngOnInit() {
-//     this.route.params.subscribe((params: Params) => this.documentId=(+params['id']));
-//   }
-// }
+  constructor(list: Array<any>) {
+    super(list.length+1);
+    this.push(RevisionList.LASTEST);
+    Array.prototype.push.apply(this,list);
+  }
+}

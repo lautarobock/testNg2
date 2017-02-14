@@ -22,7 +22,8 @@
           </option>
         </select>
       </td>
-      <td *ngFor="let value of value(variableId).data.values; let periodIdx = index" style="text-align: right;" (click)="edit(idx)">
+      <td *ngFor="let value of value(variableId).data.values; let periodIdx = index" style="text-align: right;" 
+          [style.cursor]="cellCursor(idx)" (click)="edit(idx)">
         <!--<span (mouseover)="mouseover[idx+value.periodString]=true" (mouseout)="mouseover[idx+value.periodString]=false" [ngClass]="{
             'over': mouseover[idx+value.periodString],
             'has-comment': comment(variableId, value.periodString)

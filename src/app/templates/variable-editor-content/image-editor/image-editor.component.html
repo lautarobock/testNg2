@@ -1,6 +1,6 @@
 {{document.variableDefinitions[variableId()].prompt}}
 <br/>
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded" [hidden]="value().safe()?.attachmentId" ng2FileDrop
+<nav *ngIf="!document.readonly" class="navbar navbar-toggleable-md navbar-light bg-faded" [hidden]="value().safe()?.attachmentId" ng2FileDrop
         [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
         (fileOver)="fileOverBase($event)"
         [uploader]="uploader">
@@ -21,6 +21,7 @@
           <button [hidden]="!comment()" 
                 title="{{comment()}}"
                 [open-comment]="value()" 
+                [readonly]="document.readonly"
                 type="button"
                 class="fill animate-show btn btn-secondary btn-sm comment">
               <i class="fa fa-comment "></i>
@@ -42,6 +43,7 @@
               }"
               title="{{comment()}}"
               [open-comment]="value()" 
+              [readonly]="document.readonly"
               type="button"
               class="animate-show btn btn-secondary btn-sm comment">
           <i class="fa fa-comment "></i>

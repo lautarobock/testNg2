@@ -6,15 +6,18 @@
     <textarea #inputComment
         (focus)="inputComment.select()"
         [ngModel]="value.comment()"
+        [readonly]="readonly"
         class="form-control">
     </textarea>
   </div>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-outline-primary" (click)="ok(inputComment.value)">
+  <button type="button" class="btn btn-outline-primary" (click)="ok(inputComment.value)" [hidden]="readonly">
     <i class="fa fa-check" aria-hidden="true"></i> Ok
   </button>
   <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
-    <i class="fa fa-times" aria-hidden="true"></i> Cancel
+    <i class="fa fa-times" aria-hidden="true"></i>
+    <span [hidden]="readonly">Cancel</span>
+    <span [hidden]="!readonly">Close</span>
   </button>
 </div>

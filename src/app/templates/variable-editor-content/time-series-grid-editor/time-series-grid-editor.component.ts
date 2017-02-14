@@ -41,7 +41,16 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
     this.displayZeroValuesAs = this.parent.jsonProperties().DisplayZeroValuesAs || 0;
   }
 
+  cellCursor(idx) {
+    if ( this.document.readonly || this.value(this.editor.variableIds[idx]).periodicExpression() ) {
+      return 'not-allowed';
+    } else {
+      return 'pointer';
+    }
+  }
+
   edit(idx) {
+    if ( this.document.readonly || this.value(this.editor.variableIds[idx]).periodicExpression() ) return;
     if ( this.editionIdx !== null ) return;
     this.editionIdx = idx;
     this.tmpValues =  JSON.parse(JSON.stringify(this.value(this.editor.variableIds[idx]).values()));

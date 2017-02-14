@@ -10,11 +10,12 @@
         #input
         class="form-control form-control-sm" 
         [readonly]="expression() ? 'true' : null"
+        [disabled]="document.readonly"
         [ngModel]="value().safe()"
         (blur)="value().update(input.value)"
         >
     </textarea>
-    <i class="fa fa-comment comment" aria-hidden="true"  title="{{comment()}}" [open-comment]="value()" [ngClass]="{'fill': comment()}"></i>
+    <i class="fa fa-comment comment" aria-hidden="true" [readonly]="document.readonly" title="{{comment()}}" [open-comment]="value()" [ngClass]="{'fill': comment()}"></i>
     <span class="expression" title="{{expression()}}" [ngClass]="{'fill': expression()}">&fnof;</span>
   </div>
 </div>

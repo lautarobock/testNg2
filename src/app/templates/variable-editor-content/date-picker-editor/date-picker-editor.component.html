@@ -11,8 +11,9 @@
             name="dp" 
             [ngModel]="value().safe()|date2Model" ngbDatepicker #d="ngbDatepicker" 
             (ngModelChange)="change($event)"
+            [disabled]="document.readonly"
             [readonly]="expression() ? 'true' : null">
-      <div class="input-group-addon" (click)="d.toggle()" style="cursor: pointer">
+      <div class="input-group-addon" (click)="!document.readonly && d.toggle()" [style.cursor]="document.readonly?'not-allowed':'pointer'">
         <i class="fa fa-calendar" aria-hidden="true"></i>
       </div>
     </div>

@@ -8,7 +8,7 @@
     <template #treeNodeTemplate let-node="node" let-index="index">
       <img src="/assets/images/tree/{{node.data.nodeType.imageKey}}.png"
                  style="position: relative;;width: 17px;height: 17px;top:-2px" />
-      <span (click)="select(node.data)">{{ node.data.name }}</span>
+      <span>{{ node.data.name }}</span>
     </template>
     <template #treeNodeFullTemplate
           let-node="node"
@@ -38,7 +38,7 @@
             [treeDrag]="node"
             [treeDragEnabled]="node.allowDrag()">
 
-            <TreeNodeContent [node]="node" [index]="index" [template]="templates.treeNodeTemplate">
+            <TreeNodeContent  (click)="select(node.data)" [node]="node" [index]="index" [template]="templates.treeNodeTemplate">
             </TreeNodeContent>
           </div>
         </div>

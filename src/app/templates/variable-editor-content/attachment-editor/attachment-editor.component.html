@@ -1,5 +1,6 @@
-<div *ngIf="_variableId" ng2FileDrop
+<div *ngIf="_variableId && !document.readonly" ng2FileDrop
         [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+        
         (fileOver)="fileOverBase($event)"
         [uploader]="uploader">
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded" style="border-radius: 5px">
@@ -25,34 +26,34 @@
             </div>
         </div>
     </div>
-    <table class="table table-sm" style="margin-top: 5px">
-        <thead>
-            <tr>
-                <th></th>
-                <th>File Name</th>
-                <th>Location</th>
-                <th>Description</th>
-                <th style="text-align: center">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let file of value(_variableId).safe()">
-                <td>
-                    <i [hidden]="!file.saveInDB" class="fa fa-file" aria-hidden="true"></i>
-                    <a [hidden]="!file.isWebLink" [href]="file.fileName" target="_blank"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
-                </td>
-                <td>
-                    <a [href]="downloadURL(file)" [hidden]="!file.saveInDB">{{file.fileName}}</a>
-                    <a [href]="file.fileName" target="_blank" [hidden]="!file.isWebLink">{{file.fileName}}</a>
-                </td>
-                <td>{{file.fullName}}</td>
-                <td></td>
-                <td style="text-align: center">
-                    <a [href]="downloadURL(file)" [hidden]="!file.saveInDB"><i class="fa fa-download" aria-hidden="true"></i></a>
-                    <a [href]="file.fileName" target="_blank" [hidden]="!file.isWebLink"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
-                    <i class="fa fa-trash" aria-hidden="true" style="cursor: pointer; margin-left: 0.5em" (click)="removeFile(file)"></i>
-                </td>
-            </tr>
-        </tbody>
-    </table>
 </div>
+<table class="table table-sm" style="margin-top: 5px" *ngIf="_variableId">
+    <thead>
+        <tr>
+            <th></th>
+            <th>File Name</th>
+            <th>Location</th>
+            <th>Description</th>
+            <th style="text-align: center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let file of value(_variableId).safe()">
+            <td>
+                <i [hidden]="!file.saveInDB" class="fa fa-file" aria-hidden="true"></i>
+                <a [hidden]="!file.isWebLink" [href]="file.fileName" target="_blank"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
+            </td>
+            <td>
+                <a [href]="downloadURL(file)" [hidden]="!file.saveInDB">{{file.fileName}}</a>
+                <a [href]="file.fileName" target="_blank" [hidden]="!file.isWebLink">{{file.fileName}}</a>
+            </td>
+            <td>{{file.fullName}}</td>
+            <td></td>
+            <td style="text-align: center">
+                <a [href]="downloadURL(file)" [hidden]="!file.saveInDB"><i class="fa fa-download" aria-hidden="true"></i></a>
+                <a [href]="file.fileName" target="_blank" [hidden]="!file.isWebLink"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                <i class="fa fa-trash" aria-hidden="true" [hidden]="document.readonly" style="cursor: pointer; margin-left: 0.5em;color:red" (click)="removeFile(file)"></i>
+            </td>
+        </tr>
+    </tbody>
+</table>

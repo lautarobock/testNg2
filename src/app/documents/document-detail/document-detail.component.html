@@ -3,14 +3,18 @@
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <!--<a class="navbar-brand">{{document.documentName}}</a>-->
-    
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <div class="form-inline"  *ngIf="document.conceptDefinition">
         <label class="col-form-label-sm">Scenario</label>
         <select [(ngModel)]="selectedScenario" class="form-control form-control-sm" style="margin-left: 1em" (change)="changeScenario()">
           <option *ngFor="let scenario of document.conceptDefinition.concepts" [ngValue]="scenario">
             {{scenario.name}}
+          </option>
+        </select>
+        <label style="margin-left: 1em" class="col-form-label-sm">Revisions</label>
+        <select [(ngModel)]="selectedRevision" class="form-control form-control-sm" style="margin-left: 1em" (change)="changeRevision()">
+          <option *ngFor="let revision of revisions" [ngValue]="revision">
+            {{revision.description}}
           </option>
         </select>
       </div>
