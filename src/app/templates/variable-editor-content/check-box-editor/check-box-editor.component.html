@@ -1,10 +1,11 @@
 <label class="custom-control custom-checkbox">
   <input type="checkbox" 
+    #input
     class="custom-control-input" 
-    indeterminate="true"
-    [disabled]="expression() ? 'true' : null"
+    [ngClass]="{'indeterminate':value().safe()===null}"
+    [disabled]="document.readonly"
     [ngModel]="value().safe()"
-    (change)="value().update($event.checked)"
+    (change)="value().update(input.checked)"
     >
   <span class="custom-control-indicator"></span>
   <span class="custom-control-description">{{document.variableDefinitions[variableId()].prompt}}</span>
