@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DocumentsService, Document, Values } from '../documents.service';
 import { SaveDocumentDialog } from '../save-document-dialog/save-document-dialog.component';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import * as _ from "lodash";
 
 
@@ -20,16 +21,16 @@ export class DocumentDetailComponent implements OnInit {
   selectedScenario: any;
   selectedRevision: any;
   revisions: Array<any>;
-  saving: boolean = false;
-  loadProgress: number = 0;
 
   constructor(
     private _documentService: DocumentsService, 
     private saveDocumentDialog: SaveDocumentDialog, 
-    private toastyService: ToastyService
+    private toastyService: ToastyService,
+    private loadingService: SlimLoadingBarService
   ) { }
 
   ngOnInit() {
+    this.loadingService.start();
     this._documentService.get(this.documentId, this.versionId)
     .subscribe((documentData: Document) => {
       this.document = this.postProcess(documentData);
@@ -37,30 +38,37 @@ export class DocumentDetailComponent implements OnInit {
       this.revisions = new RevisionList(this.document.revisions);
       this.selectedRevision = this.revisions[0];
       let allVariables = this.document.templateVariables.map(variable => variable.id);
-      this.loadProgress = 50;
+      this.loadingService.progress = 50;
       this._documentService.variables(this.document.documentId,this.document.versionId,this.selectedScenario.name,this.selectedRevision.revision,allVariables)
       .subscribe((data: any) =>{
-        this.loadProgress = 100;
+        this.loadingService.complete();
         this.data = new Values(data.data);
         this.data.changeVariable.subscribe(v=> {
-          this._documentService.updateFields(this.document,v,this.selectedScenario.name).subscribe(data=> this.data.update(data));
+          this.loadingService.start();
+          this._documentService.updateFields(this.document,v,this.selectedScenario.name).toPromise()
+            .then(data => this.data.update(data))
+            .then(() => this.loadingService.complete());
         });
         this.data.changeComment.subscribe(v=> {
-          this._documentService.updateComment(this.document,this.selectedScenario.name,v.variableId,v.comment)
-          .subscribe(data=> this.data.update([data]));
+          this.loadingService.start();
+          this._documentService.updateComment(this.document,this.selectedScenario.name,v.variableId,v.comment).toPromise()
+            .then(data=> this.data.update([data]))
+            .then(() => this.loadingService.complete());
         });
         this.data.changeExpression.subscribe(v=>{
-          this._documentService.updateExpression(this.document,this.selectedScenario.name, v.variableId,v.expression)
-          .subscribe(data=> this.data.update(data));
+          this.loadingService.start();
+          this._documentService.updateExpression(this.document,this.selectedScenario.name, v.variableId,v.expression).toPromise()
+            .then(data=> this.data.update(data))
+            .then(() => this.loadingService.complete());
         });
       })
     });
   }
 
   ngOnDestroy() {
-    console.log('DESTROY', this.documentId);
     if ( this.document.hasExclusiveLock ) {
-        this._documentService.release(this.document).subscribe(result => console.log('document released', result));
+      this.loadingService.start();
+      this._documentService.release(this.document).subscribe(result => this.loadingService.complete());
     }
   }
 
@@ -73,27 +81,29 @@ export class DocumentDetailComponent implements OnInit {
   save() {
     this.saveDocumentDialog.open(this.document)
     .then(result => {
-      this.saving = true;
+      this.loadingService.start();
       return result;
     })
     .then(result => this._documentService.save(this.document, result.text, result.tags).toPromise())
     .then(result => {
       this.data.clearDirties();
-      this.saving  = false;
+      this.loadingService.complete();
       this.toastyService.success('Document Saved!'  );
     })
     .catch(err => {
-      this.saving  = false;
+      this.loadingService.reset();
       this.toastyService.error(err.message);
     });
   }
 
   changeScenario() {
+    this.loadingService.start();
     let allVariables = this.document.templateVariables.map(variable => variable.id);
     this._documentService.variables(this.document.documentId,this.document.versionId,this.selectedScenario.name,-1,allVariables)
-    .subscribe((data: any) =>{
-      this.data.update(data.data);
-    })
+      .subscribe((data: any) =>{
+        this.data.update(data.data);
+        this.loadingService.complete();
+      });
   }
 
   changeRevision() {

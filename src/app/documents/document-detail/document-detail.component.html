@@ -22,16 +22,12 @@
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <button type="button" class="btn btn-primary" (click)="save()">
-          <i [hidden]="!saving" class='fa fa-circle-o-notch fa-spin'></i> 
-          <i [hidden]="saving" class="fa fa-floppy-o" ></i>
+          <i [hidden]="loadingService.progress === 0" class='fa fa-circle-o-notch fa-spin'></i> 
+          <i [hidden]="loadingService.progress !== 0" class="fa fa-floppy-o" ></i>
         </button>
       </form>
     </div>
   </nav>
-  <!--<h3>{{document.documentName}}</h3>-->
-  <div style="margin-top: 2em" *ngIf="!(document.template && data)">
-    <ngb-progressbar type="success" [value]="loadProgress"></ngb-progressbar>
-  </div>
   <div *ngIf="document.template && data" style="background: rgb(245, 245, 245)">
     <template-loader 
       *ngFor="let content of document.template.contents" 

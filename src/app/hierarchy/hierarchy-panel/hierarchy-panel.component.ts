@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-// import { Router } from '@angular/router';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { HierarchyService } from '../hierarchy.service';
 
 @Component({
@@ -9,7 +9,6 @@ import { HierarchyService } from '../hierarchy.service';
 })
 export class HierarchyPanelComponent implements OnInit {
 
-  // @Input() documents: Array<any>;
   @Output() onSelect = new EventEmitter();
   versions: any[];
   selectedVersion: any;
@@ -20,31 +19,36 @@ export class HierarchyPanelComponent implements OnInit {
   };
 
   constructor(
-    private _hierarchyService: HierarchyService
-    // , 
-    // private router: Router
+    private _hierarchyService: HierarchyService,
+    private loadingService: SlimLoadingBarService
   ) { }
 
   ngOnInit() {
+    this.loadingService.start();
     this._hierarchyService.versions().subscribe(
       data => {
         this.versions = data;
         this.selectedVersion = data[0];
+        this.loadingService.progress = 50;
         this.loadDocuments();
       }
     )
   }
 
   select(doc) {
-    // this.router.navigate(['/document', doc.id]);
-    // this.documents.push({documentId:doc.id, version: this.selectedVersion.versionId, name: doc.name})
     this.onSelect.emit({documentId:doc.id, versionId: this.selectedVersion.versionId, name: doc.name});
   }
 
   loadDocuments() {
-    this._hierarchyService.documents(this.selectedVersion.versionId).subscribe(
-      data => this.hierarchy = this.markAsExpanded(data)
-    )
+    this._hierarchyService.documents(this.selectedVersion.versionId).subscribe(data => {
+      this.hierarchy = this.markAsExpanded(data);
+      this.loadingService.complete();
+    })
+  }
+
+  changeVersion() {
+    this.loadingService.start();
+    this.loadDocuments();
   }
 
   markAsExpanded(data) {

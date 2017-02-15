@@ -1,6 +1,6 @@
 <div class="hierarchy" style="overflow-x: scroll;border: solid 1px lightgray;">
   <select [(ngModel)]="selectedVersion" style="width: 100%" class="form-control" style="border-radius: 0;font-weight: bold;">
-    <option *ngFor="let version of versions" [ngValue]="version" (onSelect)="loadDocuments()">
+    <option *ngFor="let version of versions" [ngValue]="version" (onSelect)="changeVersion()">
       {{ version.name }}
     </option>
   </select>
