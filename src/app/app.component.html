@@ -28,7 +28,7 @@
         <li class="nav-item" *ngFor="let document of documents; let documentIndex=index">
           <a class="nav-link" [class.active]="activeIdx === document.idx" href="javascript:void(0)" (click)="activeIdx = document.idx">{{document.name}}</a>
           <button (click)="closeTab(document.idx, documentIndex)" type="button" class="close" data-dismiss="modal" aria-label="Close" style="position: relative;top: -45px;height: 0;right: 1px;">
-            <span aria-hidden="true">&times;</span>
+            <span >&times;</span>
           </button>
         </li>
       </ul>

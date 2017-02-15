@@ -20,6 +20,8 @@ export class DocumentDetailComponent implements OnInit {
   selectedScenario: any;
   selectedRevision: any;
   revisions: Array<any>;
+  saving: boolean = false;
+  loadProgress: number = 0;
 
   constructor(
     private _documentService: DocumentsService, 
@@ -35,8 +37,10 @@ export class DocumentDetailComponent implements OnInit {
       this.revisions = new RevisionList(this.document.revisions);
       this.selectedRevision = this.revisions[0];
       let allVariables = this.document.templateVariables.map(variable => variable.id);
+      this.loadProgress = 50;
       this._documentService.variables(this.document.documentId,this.document.versionId,this.selectedScenario.name,this.selectedRevision.revision,allVariables)
       .subscribe((data: any) =>{
+        this.loadProgress = 100;
         this.data = new Values(data.data);
         this.data.changeVariable.subscribe(v=> {
           this._documentService.updateFields(this.document,v,this.selectedScenario.name).subscribe(data=> this.data.update(data));
@@ -68,16 +72,20 @@ export class DocumentDetailComponent implements OnInit {
 
   save() {
     this.saveDocumentDialog.open(this.document)
+    .then(result => {
+      this.saving = true;
+      return result;
+    })
     .then(result => this._documentService.save(this.document, result.text, result.tags).toPromise())
     .then(result => {
       this.data.clearDirties();
-      this.toastyService.success({
-        title: 'Save',
-        msg: 'Document Saved!',
-        timeout: 1000
-      });
+      this.saving  = false;
+      this.toastyService.success('Document Saved!'  );
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      this.saving  = false;
+      this.toastyService.error(err.message);
+    });
   }
 
   changeScenario() {
@@ -103,6 +111,7 @@ export class DocumentDetailComponent implements OnInit {
       this._documentService.variables(this.document.documentId,this.document.versionId,this.selectedScenario.name,this.selectedRevision.revision,allVariables)
       .subscribe((data: any) =>{
         this.data = new Values(data.data);
+        //TODO do not subscribe if is a readonly revision
         this.data.changeVariable.subscribe(v=> {
           this._documentService.updateFields(this.document,v,this.selectedScenario.name).subscribe(data=> this.data.update(data));
         });

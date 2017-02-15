@@ -6,13 +6,15 @@ import { DocumentDetailComponent } from './document-detail/document-detail.compo
 import { DocumentsService } from './documents.service';
 import { TemplatesModule } from '../templates/templates.module';
 import { SaveDocumentDialogComponent, SaveDocumentDialog } from './save-document-dialog/save-document-dialog.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     // DocumentsRoutingModule,
-    TemplatesModule
+    TemplatesModule,
+    NgbModule
   ],
   declarations: [DocumentDetailComponent, SaveDocumentDialogComponent],
   entryComponents: [SaveDocumentDialogComponent],

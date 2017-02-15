@@ -7,11 +7,11 @@
         <div class="collapse navbar-collapse">
             <form class="form-inline my-2 my-lg-0">
                 <button type="button" class="btn btn-sm btn-secondary" (click)="saveLink()">
-                    <i class="fa fa-paperclip" aria-hidden="true"></i> Save Link
+                    <i class="fa fa-paperclip" ></i> Save Link
                 </button>
                 <label for="selectFiles" style="margin-left: 1em">
                     <span class="btn btn-sm btn-secondary">
-                        <i class="fa fa-upload" aria-hidden="true"></i> Upload
+                        <i class="fa fa-upload" ></i> Upload
                     </span>
                     <input id="selectFiles" ng2FileSelect [uploader]="uploader" type="file" style="position: absolute; top: -10000px" multiple/>
                 </label>
@@ -22,7 +22,7 @@
     <div [hidden]="!uploader.isUploading">
         <div>
             <div>
-                <ngb-progressbar class="example-margin" type="info" [value]="uploader.progress"></ngb-progressbar>
+                <ngb-progressbar type="info" [value]="uploader.progress"></ngb-progressbar>
             </div>
         </div>
     </div>
@@ -40,8 +40,8 @@
     <tbody>
         <tr *ngFor="let file of value(_variableId).safe()">
             <td>
-                <i [hidden]="!file.saveInDB" class="fa fa-file" aria-hidden="true"></i>
-                <a [hidden]="!file.isWebLink" [href]="file.fileName" target="_blank"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
+                <i [hidden]="!file.saveInDB" class="fa fa-file" ></i>
+                <a [hidden]="!file.isWebLink" [href]="file.fileName" target="_blank"><i class="fa fa-paperclip" ></i></a>
             </td>
             <td>
                 <a [href]="downloadURL(file)" [hidden]="!file.saveInDB">{{file.fileName}}</a>
@@ -50,9 +50,9 @@
             <td>{{file.fullName}}</td>
             <td></td>
             <td style="text-align: center">
-                <a [href]="downloadURL(file)" [hidden]="!file.saveInDB"><i class="fa fa-download" aria-hidden="true"></i></a>
-                <a [href]="file.fileName" target="_blank" [hidden]="!file.isWebLink"><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                <i class="fa fa-trash" aria-hidden="true" [hidden]="document.readonly" style="cursor: pointer; margin-left: 0.5em;color:red" (click)="removeFile(file)"></i>
+                <a [href]="downloadURL(file)" [hidden]="!file.saveInDB"><i class="fa fa-download" ></i></a>
+                <a [href]="file.fileName" target="_blank" [hidden]="!file.isWebLink"><i class="fa fa-external-link" ></i></a>
+                <i class="fa fa-trash"  [hidden]="document.readonly" style="cursor: pointer; margin-left: 0.5em;color:red" (click)="removeFile(file)"></i>
             </td>
         </tr>
     </tbody>

@@ -1,8 +1,8 @@
 <ngb-accordion #acc="ngbAccordion" activeIds="{{isExpanded?'main-panel':''}}">
   <ngb-panel id="main-panel">
     <template ngbPanelTitle>
-       <i [hidden]="acc.activeIds.length!==0" class="fa fa-chevron-right" aria-hidden="true" style="width: 16px;"></i>
-       <i [hidden]="acc.activeIds.length===0" class="fa fa-chevron-down" aria-hidden="true" style="width: 16px;"></i>
+       <i [hidden]="acc.activeIds.length!==0" class="fa fa-chevron-right"  style="width: 16px;"></i>
+       <i [hidden]="acc.activeIds.length===0" class="fa fa-chevron-down"  style="width: 16px;"></i>
        {{content.name}}
     </template>
     <template ngbPanelContent>
