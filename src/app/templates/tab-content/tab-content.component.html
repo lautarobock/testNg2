@@ -1,7 +1,7 @@
 <ngb-tabset>
   <ngb-tab *ngFor="let content of content.contents; let idx = index" title="{{content.name}}" id="{{document.documentId}}_{{idx}}">
     <template ngbTabContent>
-      <template-loader [document]="document" [content]="content" [data]="data"></template-loader>
+      <template-loader [document]="document" [content]="content" [data]="data" [scenario]="scenario"></template-loader>
     </template>
   </ngb-tab>
 </ngb-tabset>

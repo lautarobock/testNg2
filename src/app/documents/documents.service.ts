@@ -129,6 +129,10 @@ export class Value {
   label(size) {
     return this.data[size+'CurrencyLabel'];
   }
+
+  variableId() {
+    return this.data.variableId;
+  }
 }
 
 export class Values {
@@ -237,5 +241,12 @@ export class DocumentsService {
         requestLock: true
       }
     );
+  }
+
+  validateExpression(document: Document, scenarioName: string, variableId: number, expression: string) {
+    return this._http.post(
+      this._config.get('apiPath') + `/documents/validateexpression/${document.documentId}/${document.versionId}`,
+      { variableId, expression, scenarioName }
+    ).map(res => res.json());
   }
 }

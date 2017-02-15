@@ -70,3 +70,7 @@ md-sidenav-layout.m2app-dark {
 	background: rgba(128,128,128,0.4); 
 }
 
+.modal-xl>div {
+    width: 90% !important;
+    max-width: 1100px;
+}

@@ -5,6 +5,7 @@ export class AbstractContentComponent {
     public content: ContentData;
     public document: Document;
     public data: Values;
+    public scenario: any;
 
     private _jsonProperties = undefined;
     jsonProperties() {
@@ -24,6 +25,7 @@ export class AbstractEditorComponent {
     public parent: AbstractContentComponent;
     public document: Document;
     public data: Values;
+    public scenario: any;
     public isOver: boolean = false;
 
     variableId() : number {

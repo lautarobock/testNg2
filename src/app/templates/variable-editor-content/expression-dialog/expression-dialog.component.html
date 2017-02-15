@@ -1,14 +1,88 @@
 <div class="modal-header">
   <h4 class="modal-title">Expression Editor</h4>
 </div>
-<div class="modal-body">
+<div class="modal-body" style="padding-top: 5px;font-size: 12px;">
+  <div class="row">
+    <div class="col-12 col-xl-6" style="height: 320px; overflow: auto">
+      <table class="table table-sm">
+          <thead>
+          <tr>
+              <th>Variable</th>
+              <th>Type</th>
+              <th>Unit</th>
+              <th>Category</th>
+              <th>Add</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let arg of document.templateVariables">
+              <td>{{arg.prompt}}</td>
+              <td>{{arg.variableDataType}}</td>
+              <td>{{arg.unit.name}}</td>
+              <td>{{arg.category.name}}</td>
+              <td>
+                  <button type="button" class="btn btn-sm btn-success" (click)="add(arg)">
+                      <i class="fa fa-plus-circle"></i>
+                  </button>
+              </td>
+          </tr>
+          </tbody>
+      </table>
+    </div>
+    <div class="col-12 col-xl-6" style="height: 320px; overflow: auto">
+      <table class="table table-sm">
+          <thead>
+          <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Add</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let fn of functions">
+              <td>
+                  <i style="cursor: help" class="fa fa-question-circle" title="{{fn.helpText}}"></i>
+                  {{fn.functionName}}
+              </td>
+              <td>{{fn.category}}</td>
+              <td>
+                  <button type="button" class="btn btn-sm btn-success" (click)="addFn(fn)">
+                      <i class="fa fa-plus-circle"></i>
+                  </button>
+              </td>
+          </tr>
+          </tbody>
+      </table>
+    </div>
+  </div>
+  <nav class="navbar navbar-toggleable-md navbar-light bg-faded" style="margin-bottom: 4px;">
+      <div class="collapse navbar-collapse">
+        <i [hidden]="error.longMessageText" style="color: green;font-size: 27px;" class="fa fa-check-circle-o"></i>
+        <i [hidden]="!error.longMessageText" style="color: red;font-size: 27px;" class="fa fa-times-circle-o"></i>
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <button type="button" class="btn btn-sm btn-secondary" (click)="expression = '';inputExpression.focus()">
+              Clear Expression <i style="color: red;" class="fa fa-times"></i>
+          </button>
+          <button type="button" class="btn btn-sm btn-secondary" style="margin-left: 1em" (click)="validate(inputExpression.value)">
+              Validate <i style="color: green;" class="fa fa-check-circle-o"></i>
+          </button>
+        </form>
+      </div>
+  </nav>
   <div class="form-group row no-gutters">
     <textarea #inputExpression
-        (focus)="inputExpression.select()"
-        [ngModel]="value.expression()"
+        style="height: 100px "
+        [(ngModel)]="expression"
         [readonly]="readonly"
         class="form-control">
     </textarea>
+  </div>
+  <div *ngIf="error.longMessageText">
+    <ngb-alert [dismissible]="false" [type]="'danger'">
+      <strong>Error!</strong> {{error.longMessageText}}
+    </ngb-alert>
   </div>
 </div>
 <div class="modal-footer">

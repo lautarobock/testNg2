@@ -53,6 +53,7 @@ export class TemplateLoaderDirective {
   @Input() content: ContentData;
   @Input() document: Document;
   @Input() data: Values;
+  @Input() scenario: any;
 
   constructor(private vcRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) {
   }
@@ -69,6 +70,7 @@ export class TemplateLoaderDirective {
     instance.content = this.content;
     instance.document = this.document;  
     instance.data = this.data;
+    instance.scenario = this.scenario;
     // all inputs set? add it to the DOM ..
     this.vcRef.insert(comp.hostView);
   }
@@ -82,6 +84,7 @@ export class EditorLoaderDirective {
   @Input() editor: EditorData;
   @Input() document: Document;
   @Input() data: Values;
+  @Input() scenario: any;
   @Input() parent: AbstractContentComponent;
 
   constructor(private vcRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) {
@@ -100,6 +103,7 @@ export class EditorLoaderDirective {
     instance.document = this.document;
     instance.data = this.data;
     instance.parent = this.parent;
+    instance.scenario = this.scenario;
     // all inputs set? add it to the DOM ..
     this.vcRef.insert(comp.hostView);
   }
