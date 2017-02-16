@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 export class Config {
 
     private _config = {
-        apiPath: '/api/v1'
+        apiPath: '../../api/v1'
     }
 
     constructor() {}

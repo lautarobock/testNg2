@@ -21,9 +21,9 @@
       <ul class="navbar-nav mr-auto">
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <button type="button" class="btn btn-primary" (click)="save()">
-          <i [hidden]="loadingService.progress === 0" class='fa fa-circle-o-notch fa-spin'></i> 
-          <i [hidden]="loadingService.progress !== 0" class="fa fa-floppy-o" ></i>
+        <button type="button" class="btn btn-primary" (click)="save()" [disabled]="document.readonly">
+          <i [hidden]="!saving" class='fa fa-circle-o-notch fa-spin'></i> 
+          <i [hidden]="saving" class="fa fa-floppy-o" ></i>
         </button>
       </form>
     </div>

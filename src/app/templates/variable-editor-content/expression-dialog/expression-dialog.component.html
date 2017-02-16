@@ -2,7 +2,7 @@
   <h4 class="modal-title">Expression Editor</h4>
 </div>
 <div class="modal-body" style="padding-top: 5px;font-size: 12px;">
-  <div class="row">
+  <div class="row" *ngIf="!document.readonly">
     <div class="col-12 col-xl-6" style="height: 320px; overflow: auto">
       <table class="table table-sm">
           <thead>
@@ -61,7 +61,7 @@
         <i [hidden]="!error.longMessageText" style="color: red;font-size: 27px;" class="fa fa-times-circle-o"></i>
         <ul class="navbar-nav mr-auto">
         </ul>
-        <form class="form-inline my-2 my-lg-0">
+        <form class="form-inline my-2 my-lg-0" *ngIf="!document.readonly">
           <button type="button" class="btn btn-sm btn-secondary" (click)="expression = '';inputExpression.focus()">
               Clear Expression <i style="color: red;" class="fa fa-times"></i>
           </button>

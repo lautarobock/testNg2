@@ -15,7 +15,18 @@ export class HierarchyPanelComponent implements OnInit {
   hierarchy: any[];
   options = {
     childrenField: 'nodes',
-    isExpandedField: 'expanded'
+    isExpandedField: 'expanded',
+    actionMapping: {
+      mouse: {
+        click: (tree,node) => {
+          this.onSelect.emit({
+            documentId:node.data.id, 
+            versionId: this.selectedVersion.versionId, 
+            name: node.data.name
+          });
+        }
+      }
+    }
   };
 
   constructor(
@@ -33,10 +44,6 @@ export class HierarchyPanelComponent implements OnInit {
         this.loadDocuments();
       }
     )
-  }
-
-  select(doc) {
-    this.onSelect.emit({documentId:doc.id, versionId: this.selectedVersion.versionId, name: doc.name});
   }
 
   loadDocuments() {

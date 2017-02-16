@@ -21,6 +21,7 @@ export class DocumentDetailComponent implements OnInit {
   selectedScenario: any;
   selectedRevision: any;
   revisions: Array<any>;
+  saving: boolean = false;
 
   constructor(
     private _documentService: DocumentsService, 
@@ -30,39 +31,8 @@ export class DocumentDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadingService.start();
-    this._documentService.get(this.documentId, this.versionId)
-    .subscribe((documentData: Document) => {
-      this.document = this.postProcess(documentData);
-      this.selectedScenario = _.find(this.document.conceptDefinition.concepts, (concept:any) => concept.name === this.document.conceptDefinition.currentConceptName);
-      this.revisions = new RevisionList(this.document.revisions);
-      this.selectedRevision = this.revisions[0];
-      let allVariables = this.document.templateVariables.map(variable => variable.id);
-      this.loadingService.progress = 50;
-      this._documentService.variables(this.document.documentId,this.document.versionId,this.selectedScenario.name,this.selectedRevision.revision,allVariables)
-      .subscribe((data: any) =>{
-        this.loadingService.complete();
-        this.data = new Values(data.data);
-        this.data.changeVariable.subscribe(v=> {
-          this.loadingService.start();
-          this._documentService.updateFields(this.document,v,this.selectedScenario.name).toPromise()
-            .then(data => this.data.update(data))
-            .then(() => this.loadingService.complete());
-        });
-        this.data.changeComment.subscribe(v=> {
-          this.loadingService.start();
-          this._documentService.updateComment(this.document,this.selectedScenario.name,v.variableId,v.comment).toPromise()
-            .then(data=> this.data.update([data]))
-            .then(() => this.loadingService.complete());
-        });
-        this.data.changeExpression.subscribe(v=>{
-          this.loadingService.start();
-          this._documentService.updateExpression(this.document,this.selectedScenario.name, v.variableId,v.expression).toPromise()
-            .then(data=> this.data.update(data))
-            .then(() => this.loadingService.complete());
-        });
-      })
-    });
+    this.selectedRevision = RevisionList.LASTEST;
+    this.loadDocument();
   }
 
   ngOnDestroy() {
@@ -70,6 +40,45 @@ export class DocumentDetailComponent implements OnInit {
       this.loadingService.start();
       this._documentService.release(this.document).subscribe(result => this.loadingService.complete());
     }
+  }
+
+  loadDocument() {
+    this.loadingService.start();
+    this._documentService.get(this.documentId, this.versionId, this.selectedRevision.revision)
+    .subscribe((documentData: Document) => {
+      this.document = this.postProcess(documentData);
+      this.selectedScenario = _.find(this.document.conceptDefinition.concepts, (concept:any) => concept.name === this.document.conceptDefinition.currentConceptName);
+      this.revisions = new RevisionList(this.document.revisions);
+      this.selectedRevision = this.revisions.find(rev => rev.revision === this.selectedRevision.revision);
+      let allVariables = this.document.templateVariables.map(variable => variable.id);
+      this.loadingService.progress = 50;
+      this._documentService.variables(this.document.documentId,this.document.versionId,this.selectedScenario.name,this.selectedRevision.revision,allVariables)
+      .subscribe((data: any) =>{
+        this.loadingService.complete();
+        this.data = new Values(data.data);
+        //Only subscribe to events if it is not readonly
+        if ( this.selectedRevision.revision === -1 ) {
+          this.data.changeVariable.subscribe(v=> {
+            this.loadingService.start();
+            this._documentService.updateFields(this.document,v,this.selectedScenario.name).toPromise()
+              .then(data => this.data.update(data))
+              .then(() => this.loadingService.complete());
+          });
+          this.data.changeComment.subscribe(v=> {
+            this.loadingService.start();
+            this._documentService.updateComment(this.document,this.selectedScenario.name,v.variableId,v.comment).toPromise()
+              .then(data=> this.data.update([data]))
+              .then(() => this.loadingService.complete());
+          });
+          this.data.changeExpression.subscribe(v=>{
+            this.loadingService.start();
+            this._documentService.updateExpression(this.document,this.selectedScenario.name, v.variableId,v.expression).toPromise()
+              .then(data=> this.data.update(data))
+              .then(() => this.loadingService.complete());
+          });
+        } 
+      })
+    });
   }
 
   postProcess(doc: Document) {
@@ -82,16 +91,19 @@ export class DocumentDetailComponent implements OnInit {
     this.saveDocumentDialog.open(this.document)
     .then(result => {
       this.loadingService.start();
+      this.saving = true;
       return result;
     })
     .then(result => this._documentService.save(this.document, result.text, result.tags).toPromise())
     .then(result => {
       this.data.clearDirties();
       this.loadingService.complete();
+      this.saving = false;
       this.toastyService.success('Document Saved!'  );
     })
     .catch(err => {
       this.loadingService.reset();
+      this.saving = false;
       this.toastyService.error(err.message);
     });
   }
@@ -111,30 +123,7 @@ export class DocumentDetailComponent implements OnInit {
     this.data = null;
     this.selectedScenario = null;
     this.revisions = null;
-    this._documentService.get(this.documentId, this.versionId, this.selectedRevision.revision)
-    .subscribe((documentData: Document) => {
-      this.document = this.postProcess(documentData);
-      this.selectedScenario = _.find(this.document.conceptDefinition.concepts, (concept:any) => concept.name === this.document.conceptDefinition.currentConceptName);
-      this.revisions = new RevisionList(this.document.revisions);
-      this.selectedRevision = this.revisions.find(rev => rev.revision === this.selectedRevision.revision);
-      let allVariables = this.document.templateVariables.map(variable => variable.id);
-      this._documentService.variables(this.document.documentId,this.document.versionId,this.selectedScenario.name,this.selectedRevision.revision,allVariables)
-      .subscribe((data: any) =>{
-        this.data = new Values(data.data);
-        //TODO do not subscribe if is a readonly revision
-        this.data.changeVariable.subscribe(v=> {
-          this._documentService.updateFields(this.document,v,this.selectedScenario.name).subscribe(data=> this.data.update(data));
-        });
-        this.data.changeComment.subscribe(v=> {
-          this._documentService.updateComment(this.document,this.selectedScenario.name,v.variableId,v.comment)
-          .subscribe(data=> this.data.update([data]));
-        });
-        this.data.changeExpression.subscribe(v=>{
-          this._documentService.updateExpression(this.document,this.selectedScenario.name, v.variableId,v.expression)
-          .subscribe(data=> this.data.update(data));
-        });
-      })
-    });
+    this.loadDocument();
   }
 }
 
