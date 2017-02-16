@@ -16,6 +16,7 @@ import { LoginDialog } from './login/login-dialog/login-dialog.component';
 import { SessionHttpService, SessionEmitter } from './http/session-http.service';
 import { ToastyModule } from 'ng2-toasty';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+
 import 'rxjs/Rx';
 
 @NgModule({

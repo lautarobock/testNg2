@@ -10,11 +10,18 @@ import { RegisterEditor } from '../../template-loader.directive';
 @RegisterEditor(EditorType.Map)
 export class MapEditorComponent extends AbstractEditorComponent implements OnInit {
 
+  width: string;
+  height: string;
+
   constructor() {
     super();
    }
 
   ngOnInit() {
+    if ( (<any>this.parent).width() && (<any>this.parent).width() !==0 ) {
+      this.width = (<any>this.parent).width() + 'px';
+    }
+    this.height = ((<any>this.parent).height() || 600) + 'px';
   }
 
 }

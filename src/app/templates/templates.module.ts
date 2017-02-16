@@ -30,6 +30,7 @@ import { CommentDialogComponent, CommentDialog, OpenComment } from './variable-e
 import { FileUploadModule } from 'ng2-file-upload';
 import { UtilModule } from '../util/util.module';
 import { ExpressionDialogComponent, ExpressionComment, ExpressionDialog } from './variable-editor-content/expression-dialog/expression-dialog.component';
+import { AngularOpenlayersModule } from 'angular2-openlayers';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { ExpressionDialogComponent, ExpressionComment, ExpressionDialog } from '
     NgbModule,
     ChartsModule,
     FileUploadModule,
-    UtilModule
+    UtilModule,
+    AngularOpenlayersModule
   ],
   exports: [
     TemplateLoaderDirective,
