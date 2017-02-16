@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractEditorComponent, EditorType } from '../../abstract-content';
 import { RegisterEditor } from '../../template-loader.directive';
-import { UnitReader, CurrencyReader } from './unit-reader';
+import { UnitReader, CurrencyReader } from '../../../documents/unit-reader';
 
 @Component({
   selector: 'app-time-series-grid-editor',
@@ -75,6 +75,7 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
     },1000);
   }
 
+  //@Deprecated
   unit(variableId) {
     let units = new UnitReader(this.document.variableDefinitions[variableId].unit).unique();
     return units.find(u=> u.display === this.value(variableId).unit()).factor;

@@ -6,16 +6,25 @@
   }">
   <label class="col-sm-3 col-form-label col-form-label-sm">{{document.variableDefinitions[variableId()].prompt}}</label>
   <div class="col-sm-9">
-    <input type="number" 
+    <div class="input-group">
+      <span class="input-group-btn">
+        <select [(ngModel)]="selectedUnit" class="btn btn-sm btn-secondary" style="background-color: white !important">
+          <option *ngFor="let unit of units" [ngValue]="unit">
+            {{ unit.display }}
+          </option>
+        </select>
+      </span>
+      <input type="number" 
         #input
         style="text-align: right"
         class="form-control form-control-sm" 
         [readonly]="expression() ? 'true' : null"
         [disabled]="document.readonly"
         placeholder="{{document.variableDefinitions[variableId()].prompt}}" 
-        [ngModel]="value().safe()"
-        (blur)="value().update(input.value)"
-        >
+        [ngModel]="safeWithFactor()"
+        (blur)="blurWithFactor(input.value)">
+       
+    </div>
     <i class="fa fa-comment comment"  [readonly]="document.readonly" title="{{comment()}}" [open-comment]="value()" [ngClass]="{'fill': comment()}"></i>
     <span class="expression" title="{{expression()}}" [ngClass]="{'fill': expression()}">&fnof;</span>
   </div>  
