@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable, Directive, ElementRef, Input, HostListener, ViewChild } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Value } from '../../../documents/documents.service';
+import { Value } from '../../../documents/value.model';
 
 @Component({
   selector: 'app-comment-dialog',

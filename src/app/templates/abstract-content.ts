@@ -1,5 +1,6 @@
 import { HostListener } from '@angular/core';
-import { Values, Value } from '../documents/documents.service';
+import { Value } from '../documents/value.model';
+import { Values } from '../documents/values.model';
 import { Document } from '../documents/documents.model';
 
 export class AbstractContentComponent {

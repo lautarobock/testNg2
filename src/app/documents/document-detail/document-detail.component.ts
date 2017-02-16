@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Directive,ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { DocumentsService, Values } from '../documents.service';
+import { DocumentsService } from '../documents.service';
+import { Values } from '../values.model';
 import { Document, DocumentStatus } from '../documents.model';
 import { SaveDocumentDialog } from '../save-document-dialog/save-document-dialog.component';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';

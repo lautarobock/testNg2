@@ -9,11 +9,11 @@
                 <button type="button" class="btn btn-sm btn-secondary" (click)="saveLink()">
                     <i class="fa fa-paperclip" ></i> Save Link
                 </button>
-                <label for="selectFiles" style="margin-left: 1em">
+                <label for="selectFiles{{_variableId}}" style="margin-left: 1em">
                     <span class="btn btn-sm btn-secondary">
                         <i class="fa fa-upload" ></i> Upload
                     </span>
-                    <input id="selectFiles" ng2FileSelect [uploader]="uploader" type="file" style="position: absolute; top: -10000px" multiple/>
+                    <input id="selectFiles{{_variableId}}" ng2FileSelect [uploader]="uploader" type="file" style="position: absolute; top: -10000px" multiple/>
                 </label>
                 <span style="margin-left: 1em">Or drop files here!</span>
             </form>

@@ -47,7 +47,7 @@ export class AttachmentEditorComponent extends AbstractEditorComponent implement
     this.uploader.onCompleteAll = () => {
       let prev = this.value(this._variableId).safe() || [];
       let all = prev.concat(this.uploadedFiles)
-      this.value().update(new AttachmentsSerializer(all).toXML());
+      this.value(this._variableId).update(new AttachmentsSerializer(all).toXML());
       this.toastyService.success({
         title: 'Upload Successful',
         msg: 'Document Uploaded Successfuly',
@@ -76,7 +76,7 @@ export class AttachmentEditorComponent extends AbstractEditorComponent implement
           hideFullPath: false,
           isWebLink: true
         });
-        this.value().update(new AttachmentsSerializer(files).toXML());
+        this.value(this._variableId).update(new AttachmentsSerializer(files).toXML());
       })
       .catch( () => console.log('cancel'))
   }
@@ -94,7 +94,7 @@ export class AttachmentEditorComponent extends AbstractEditorComponent implement
         } else if ( file.isWebLink ) {
           _.remove(files, (item: any) => item.fileName === file.fileName);
         }
-        this.value().update(new AttachmentsSerializer(files).toXML());
+        this.value(this._variableId).update(new AttachmentsSerializer(files).toXML());
       })
       .catch( () => console.log('no'))
   }
