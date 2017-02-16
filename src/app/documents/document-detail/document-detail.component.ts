@@ -1,9 +1,11 @@
 import { Component, Input, OnInit, Directive,ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { DocumentsService, Document, Values } from '../documents.service';
+import { DocumentsService, Values } from '../documents.service';
+import { Document, DocumentStatus } from '../documents.model';
 import { SaveDocumentDialog } from '../save-document-dialog/save-document-dialog.component';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import { DocumentStatusDialog } from '../document-status/document-status.component';
 import * as _ from "lodash";
 
 
@@ -22,12 +24,16 @@ export class DocumentDetailComponent implements OnInit {
   selectedRevision: any;
   revisions: Array<any>;
   saving: boolean = false;
+  hideAlert: boolean = false;
+  status: DocumentStatus = new DocumentStatus();
+
 
   constructor(
     private _documentService: DocumentsService, 
     private saveDocumentDialog: SaveDocumentDialog, 
     private toastyService: ToastyService,
-    private loadingService: SlimLoadingBarService
+    private loadingService: SlimLoadingBarService,
+    private documentStatusDialog: DocumentStatusDialog
   ) { }
 
   ngOnInit() {
@@ -51,11 +57,14 @@ export class DocumentDetailComponent implements OnInit {
       this.revisions = new RevisionList(this.document.revisions);
       this.selectedRevision = this.revisions.find(rev => rev.revision === this.selectedRevision.revision);
       let allVariables = this.document.templateVariables.map(variable => variable.id);
-      this.loadingService.progress = 50;
+      this.loadingService.progress = 33;
       this._documentService.variables(this.document.documentId,this.document.versionId,this.selectedScenario.name,this.selectedRevision.revision,allVariables)
       .subscribe((data: any) =>{
-        this.loadingService.complete();
+        this.loadingService.progress = 66;
         this.data = new Values(data.data);
+        this._documentService.status(this.document,this.selectedScenario.name,this.selectedRevision.revision).toPromise()
+          .then(data => this.status = new DocumentStatus(data.activeWorkflows,data.issues))
+          .then(() => this.loadingService.complete())
         //Only subscribe to events if it is not readonly
         if ( this.selectedRevision.revision === -1 ) {
           this.data.changeVariable.subscribe(v=> {
@@ -124,6 +133,10 @@ export class DocumentDetailComponent implements OnInit {
     this.selectedScenario = null;
     this.revisions = null;
     this.loadDocument();
+  }
+
+  showStatus() {
+    this.documentStatusDialog.open(this.document,this.status);
   }
 }
 

@@ -8,6 +8,7 @@ import { TemplatesModule } from '../templates/templates.module';
 import { SaveDocumentDialogComponent, SaveDocumentDialog } from './save-document-dialog/save-document-dialog.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MathService } from './math.service';
+import { DocumentStatusComponent, DocumentStatusDialog } from './document-status/document-status.component';
 
 @NgModule({
   imports: [
@@ -17,10 +18,10 @@ import { MathService } from './math.service';
     TemplatesModule,
     NgbModule
   ],
-  declarations: [DocumentDetailComponent, SaveDocumentDialogComponent],
-  entryComponents: [SaveDocumentDialogComponent],
+  declarations: [DocumentDetailComponent, SaveDocumentDialogComponent, DocumentStatusComponent],
+  entryComponents: [SaveDocumentDialogComponent, DocumentStatusComponent],
   exports: [DocumentDetailComponent],
-  providers: [DocumentsService, SaveDocumentDialog, MathService],
+  providers: [DocumentsService, SaveDocumentDialog, MathService, DocumentStatusDialog],
   
 })
 export class DocumentsModule { }

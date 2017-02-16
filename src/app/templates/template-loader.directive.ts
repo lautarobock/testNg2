@@ -2,7 +2,8 @@ import { Component, Injectable, Input, OnInit, Directive,ViewContainerRef, Refle
 import { TabContentComponent } from './tab-content/tab-content.component';
 import { PanelContentComponent } from './panel-content/panel-content.component';
 import { AbstractContentComponent, AbstractEditorComponent, ContentType, EditorType, ContentData, EditorData } from './abstract-content';
-import { Document, Values } from '../documents/documents.service';
+import { Values } from '../documents/documents.service';
+import { Document } from '../documents/documents.model';
 
 class TemplateLoaderRegister {
 

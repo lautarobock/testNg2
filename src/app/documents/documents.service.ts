@@ -1,30 +1,31 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
 import { Config } from '../config/config';
+import { Document } from './documents.model';
 
-export class Document {
+// export class Document {
   
-  public readonly:boolean = false;
+//   public readonly:boolean = false;
 
-  constructor(
-    public documentId: number,
-    public documentName: string,
-    public templateVariables: any[],
-    public variableDefinitions: any,
-    public versionId: number,
-    public hasExclusiveLock: boolean,
-    public documentLock: any,
-    public conceptDefinition: any,
-    public revisions: any[],
-    public template: any
-  ) {}
+//   constructor(
+//     public documentId: number,
+//     public documentName: string,
+//     public templateVariables: any[],
+//     public variableDefinitions: any,
+//     public versionId: number,
+//     public hasExclusiveLock: boolean,
+//     public documentLock: any,
+//     public conceptDefinition: any,
+//     public revisions: any[],
+//     public template: any
+//   ) {}
 
-}
+// }
 
-export enum DataType {
-  ScalarString,
-  ScalarDateTime
-}
+// export enum DataType {
+//   ScalarString,
+//   ScalarDateTime
+// }
 
 export class Value {
   public state = {
@@ -178,6 +179,10 @@ export class DocumentsService {
 
   get(documentId,versionId,revision = -1) {
     return this._http.get(this._config.get('apiPath') + `/documents/Data/${documentId}/${versionId}/${revision}`).map(res => res.json());
+  }
+
+  status(document: Document, scenario, revision = -1) {
+    return this._http.get(this._config.get('apiPath') + `/documents/status/${document.documentId}/${document.versionId}/${revision}/${scenario}`).map(res => res.json());
   }
 
   updateFields(document: Document, data, scenario, revision = -1, period?, lookup?, variableCurrency?) {

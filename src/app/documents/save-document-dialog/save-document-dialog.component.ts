@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document } from '../documents.service';
+import { Document } from '../documents.model';
 
 @Component({
   selector: 'app-save-document-dialog',

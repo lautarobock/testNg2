@@ -1,6 +1,7 @@
 import { Component, OnInit, Injectable, Directive, ElementRef, Input, HostListener, ViewChild } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Value, Document, DocumentsService } from '../../../documents/documents.service';
+import { Value, DocumentsService } from '../../../documents/documents.service';
+import { Document } from '../../../documents/documents.model';
 import { MathService } from '../../../documents/math.service';
 import { ToastyService } from 'ng2-toasty';
 

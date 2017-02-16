@@ -17,6 +17,36 @@
             {{revision.description}}
           </option>
         </select>
+        <ngb-alert [type]="'warning'" *ngIf="document && document.documentLock && !document.hasExclusiveLock && !hideAlert" (close)="hideAlert=true">
+            <i class="fa fa-lock"></i>
+            <strong>Document Locked:</strong> This document is currently being used by {{document.documentLock.userDisplayName}}
+            <button [hidden]="!document.canUnlock" type="button" class="btn btn-sm btn-warning" (click)="unlock()">Unlock Document</button>
+        </ngb-alert>
+        <button type="button" class="btn btn-danger btn-sm" style="margin-left: 1em" *ngIf="status.errors().length!==0" (click)="showStatus()">
+            <i class="fa fa-times"></i>
+            <span [ngPlural]="status.errors().length">
+              <template ngPluralCase="=0">0 Errors</template>
+              <template ngPluralCase="=1">1 Error</template>
+              <template ngPluralCase="few">{{status.errors().length}} Errors</template>
+            </span>
+        </button>
+        <button type="button" class="btn btn-warning btn-sm" style="margin-left: 1em" *ngIf="status.warnings().length!==0" (click)="showStatus()">
+            <i class="fa fa-exclamation" aria-hidden="true"></i>
+            <span [ngPlural]="status.warnings().length">
+              <template ngPluralCase="=0">0 Warnings</template>
+              <template ngPluralCase="=1">1 Warning</template>
+              <template ngPluralCase="few">{{status.warnings().length}} Warnings</template>
+            </span>
+        </button>
+        <button type="button" class="btn btn-info btn-sm" style="margin-left: 1em" *ngIf="status.informations().length!==0" (click)="showStatus()">
+            <i class="fa fa-info" aria-hidden="true"></i>
+            {{status.informations().length}}
+            <span [ngPlural]="status.informations().length">
+              <template ngPluralCase="=0">0 Informations</template>
+              <template ngPluralCase="=1">1 Information</template>
+              <template ngPluralCase="few">{{status.warnings().length}} Informations</template>
+            </span>
+        </button>
       </div>
       <ul class="navbar-nav mr-auto">
       </ul>

@@ -1,0 +1,12 @@
+:host /deep/ .alert {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    top: 3px;
+    position: relative;
+    margin-left: 1em;
+    margin-bottom: 0;
+}
+
+:host /deep/ .alert.alert-dismissible .close {
+    padding-bottom: 0 !important;
+}

@@ -42,7 +42,8 @@ export class HierarchyPanelComponent implements OnInit {
         this.selectedVersion = data[0];
         this.loadingService.progress = 50;
         this.loadDocuments();
-      }
+      },
+      err => this.loadingService.reset()
     )
   }
 

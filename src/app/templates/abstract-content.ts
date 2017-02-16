@@ -1,5 +1,6 @@
 import { HostListener } from '@angular/core';
-import { Document, Values, Value } from '../documents/documents.service';
+import { Values, Value } from '../documents/documents.service';
+import { Document } from '../documents/documents.model';
 
 export class AbstractContentComponent {
     public content: ContentData;

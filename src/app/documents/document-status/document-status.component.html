@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h3 class="modal-title">Change Record &lt;{{document.documentName}}&gt; </h3>
+</div>
+<div class="modal-body">
+    <table class="table table-sm">
+        <tr [ngClass]="{'table-warning': issue.severity=='Warning','table-danger':issue.severity=='Error','table-info':issue.severity=='Information'}" 
+            *ngFor="let issue of status.issues">
+            <td>
+                {{issue.alertGroup}}
+            </td>
+            <td>
+                {{issue.messageText}}
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss()">
+      <i class="fa fa-times" ></i> Close
+    </button>
+</div>
