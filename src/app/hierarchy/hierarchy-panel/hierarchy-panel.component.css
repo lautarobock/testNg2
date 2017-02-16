@@ -1,0 +1,14 @@
+:host /deep/ .hierarchy .toggle-children {
+  background-image: url('assets/images/tree/ic_chevron_right_black_24px.svg');
+  width: 24px;
+  height: 24px;
+}
+
+:host /deep/ .hierarchy .toggle-children-wrapper {
+  padding-right: 0px;
+  margin-right: -7px;
+}
+
+:host /deep/ .hierarchy .node-wrapper>treenodeexpander {
+  width: 18px !important;
+}
