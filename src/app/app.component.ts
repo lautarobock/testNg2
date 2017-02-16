@@ -1,7 +1,9 @@
-import {Component, Optional, OnInit } from '@angular/core';
+import { Component, Optional, OnInit } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { ToastyConfig } from 'ng2-toasty';
+import { LoginDialog } from './login/login-dialog/login-dialog.component';
+import { SessionEmitter } from './http/session-http.service';
 
 
 @Component({
@@ -14,8 +16,9 @@ export class AppComponent implements OnInit {
   documents: Array<any> = [];
   activeIdx: string;
 
-  constructor(public http: Http, private toastyConfig: ToastyConfig) {
+  constructor(private toastyConfig: ToastyConfig, private loginDialog: LoginDialog, sessionEmitter:SessionEmitter) {
     this.toastyConfig.theme = 'bootstrap';
+    sessionEmitter.onExpire().subscribe(() => this.loginDialog.open().then(() => location.reload()).catch((err)=>console.log(err)));
   }
 
   ngOnInit() {
@@ -46,19 +49,7 @@ export class AppComponent implements OnInit {
   }
 
   login() {
-    this.http.post('/api/authentication/logon?sso=false',{
-        "UserName": "Administrator",
-        "Password": "Administrator",
-        "UseWindowsAuthentication": false
-    })
-    .map(res => res.json())
-    .subscribe(
-      data => console.log(data),
-      err => console.log(err),
-      () => {
-        console.log('Authentication Complete');
-      }
-    );
+    this.loginDialog.open().then(() => location.reload()).catch((err)=>console.log(err));
   }
 
 }

@@ -3,30 +3,6 @@ import { Http } from '@angular/http';
 import { Config } from '../config/config';
 import { Document } from './documents.model';
 
-// export class Document {
-  
-//   public readonly:boolean = false;
-
-//   constructor(
-//     public documentId: number,
-//     public documentName: string,
-//     public templateVariables: any[],
-//     public variableDefinitions: any,
-//     public versionId: number,
-//     public hasExclusiveLock: boolean,
-//     public documentLock: any,
-//     public conceptDefinition: any,
-//     public revisions: any[],
-//     public template: any
-//   ) {}
-
-// }
-
-// export enum DataType {
-//   ScalarString,
-//   ScalarDateTime
-// }
-
 export class Value {
   public state = {
     dirty: false,

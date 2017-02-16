@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h3 class="modal-title">Login</h3>
+</div>
+<div class="modal-body">
+  <form (ngSubmit)="ok()" role="form">
+    <div class="form-group">
+      <label>Username</label>
+      <input #usernameInput type="tel" class="form-control" [(ngModel)]="username" name="Username">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+       <input type="password" class="form-control" [(ngModel)]="password" name="Password">
+    </div>
+    <button type="submit" style="display: none" >Submit</button>
+  </form>
+  <div *ngIf="error">
+    <ngb-alert [dismissible]="false" [type]="'danger'">
+      <strong>Error!</strong> {{error}}
+    </ngb-alert>
+  </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary" (click)="ok()">
+      <i class="fa fa-check" ></i> Ok
+    </button>
+    <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
+      <i class="fa fa-times" ></i> Cancel
+    </button>
+</div>
