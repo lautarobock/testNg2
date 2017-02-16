@@ -5,7 +5,7 @@
     'has-comment': comment()
   }">
   <label class="col-sm-3 col-form-label col-form-label-sm">{{document.variableDefinitions[variableId()].prompt}}</label>
-  <div class="col-sm-9">
+  <div class="col-sm-9" *ngIf="!lookUpList">
     <input type="text" 
         #input
         class="form-control form-control-sm" 
@@ -17,6 +17,17 @@
     <i class="fa fa-comment comment"  [readonly]="document.readonly" title="{{comment()}}" [open-comment]="value()" [ngClass]="{'fill': comment()}"></i>
     <span class="expression" title="{{expression()}}" [ngClass]="{'fill': expression()}"
       [readonly]="document.readonly" [open-expression]="value()" [document]="document" [scenario]="scenario">&fnof;</span>
+  </div>
+  <div class="col-sm-9" *ngIf="lookUpList">
+    <select #select
+        [ngModel]="value().safe()"
+        class="form-control form-control-sm" 
+        [disabled]="document.readonly || expression() ? 'true' : null"
+        (change)="value().update(select.value)">
+      <option *ngFor="let value of lookUpList.lookupList" [ngValue]="value">
+        {{value}}
+      </option>
+    </select>
   </div>
   
 </div>

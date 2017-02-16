@@ -10,12 +10,13 @@ import { RegisterEditor } from '../../template-loader.directive';
 @RegisterEditor(EditorType.TextBox)
 export class TextBoxEditorComponent extends AbstractEditorComponent implements OnInit {
 
+  lookUpList: any = null;
   constructor() { 
     super();
   }
 
   ngOnInit() {
-    
+    this.lookUpList = this.document.template.lookUpLists.find(value => value.associatedVariableId === this.variableId());
   }
 
 }

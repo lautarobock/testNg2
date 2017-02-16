@@ -15,7 +15,8 @@ export class Document {
     public hasExclusiveLock: boolean,
     public documentLock: any,
     public conceptDefinition: any,
-    public revisions: any[]
+    public revisions: any[],
+    public template: any
   ) {}
 
 }
