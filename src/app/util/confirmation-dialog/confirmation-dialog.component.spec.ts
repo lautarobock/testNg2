@@ -1,9 +1,8 @@
-/* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
 import { ConfirmationDialogComponent } from './confirmation-dialog.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+/* tslint:disable:no-unused-variable */
 
 describe('ConfirmationDialogComponent', () => {
   let component: ConfirmationDialogComponent;
@@ -11,7 +10,9 @@ describe('ConfirmationDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfirmationDialogComponent ]
+      imports: [FormsModule, NgbModule],
+      declarations: [ ConfirmationDialogComponent ],
+      providers: [NgbActiveModal]
     })
     .compileComponents();
   }));

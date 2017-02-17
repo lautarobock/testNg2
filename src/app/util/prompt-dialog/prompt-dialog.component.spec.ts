@@ -1,9 +1,8 @@
-/* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
 import { PromptDialogComponent } from './prompt-dialog.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+/* tslint:disable:no-unused-variable */
 
 describe('PromptDialogComponent', () => {
   let component: PromptDialogComponent;
@@ -11,7 +10,9 @@ describe('PromptDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PromptDialogComponent ]
+      imports: [FormsModule, NgbModule],
+      declarations: [ PromptDialogComponent ],
+      providers: [NgbActiveModal]
     })
     .compileComponents();
   }));

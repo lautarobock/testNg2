@@ -1,23 +1,19 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { Http, XHRBackend, RequestOptions } from '@angular/http';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { RouterModule } from '@angular/router';
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { HierarchyModule } from './hierarchy/hierarchy.module';
-import { DocumentsModule } from './documents/documents.module';
-import { ConfigModule } from './config/config';
-import { CustomHttpModule } from './http/http.module';
-import { LoginModule } from './login/login.module';
-import { LoginDialog } from './login/login-dialog/login-dialog.component';
-import { SessionHttpService, SessionEmitter } from './http/session-http.service';
-import { ToastyModule } from 'ng2-toasty';
-import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
-
 import 'rxjs/Rx';
+import { AppComponent } from './app.component';
+import { ConfigModule } from './config/config';
+import { DocumentsModule } from './documents/documents.module';
+import { HierarchyModule } from './hierarchy/hierarchy.module';
+import { CustomHttpModule } from './http/http.module';
+import { SessionEmitter, SessionHttpService } from './http/session-http.service';
+import { LoginModule } from './login/login.module';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Http, RequestOptions, XHRBackend } from '@angular/http';
+import { HttpModule } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { ToastyModule } from 'ng2-toasty';
 
 @NgModule({
   declarations: [
