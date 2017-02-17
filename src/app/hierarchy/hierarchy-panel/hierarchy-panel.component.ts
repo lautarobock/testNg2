@@ -44,14 +44,14 @@ export class HierarchyPanelComponent implements OnInit {
         this.loadDocuments();
       },
       err => this.loadingService.reset()
-    )
+    );
   }
 
   loadDocuments() {
     this._hierarchyService.documents(this.selectedVersion.versionId).subscribe(data => {
       this.hierarchy = this.markAsExpanded(data);
       this.loadingService.complete();
-    })
+    });
   }
 
   changeVersion() {

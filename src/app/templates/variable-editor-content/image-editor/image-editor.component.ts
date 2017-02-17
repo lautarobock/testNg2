@@ -31,7 +31,7 @@ export class ImageEditorComponent extends AbstractEditorComponent implements OnI
       this.uploadedFiles = [];
     };
     this.uploader.onCompleteItem = (item:FileItem, response:string, status:number, headers:ParsedResponseHeaders) => {
-      var data = eval('('+response+')');
+      let data = eval('('+response+')');
       this.uploadedFiles.push({
         fullName: item.file.name,
         fileName: item.file.name,
@@ -39,7 +39,7 @@ export class ImageEditorComponent extends AbstractEditorComponent implements OnI
         saveInDB: true,
         hideFullPath: false,
         isWebLink: false
-      })
+      });
     };
     this.uploader.onCompleteAll = () => {
       this.value().update(new AttachmentSerializer(this.uploadedFiles[0]).toXML());
@@ -54,7 +54,7 @@ export class ImageEditorComponent extends AbstractEditorComponent implements OnI
           title: 'Upload finish',
           msg: 'Just the first document was loaded',
           timeout: 5000
-        })
+        });
       }
     };
   }
@@ -72,7 +72,7 @@ export class ImageEditorComponent extends AbstractEditorComponent implements OnI
       .then( () => {
         this.value().update(null);
       })
-      .catch( () => console.log('no'))
+      .catch( () => console.log('no'));
   }
 
   public fileOverBase(e:any):void {

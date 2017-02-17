@@ -28,7 +28,7 @@ export class VisualizationEditorComponent extends AbstractEditorComponent implem
       return {
         label: this.document.variableDefinitions[variableId].prompt,
         data: this.value(variableId).values().map(v=>v.value)
-      }
+      };
     });
     this.chartType = (this.parent.jsonProperties().Type || 'line').toLowerCase();
   }

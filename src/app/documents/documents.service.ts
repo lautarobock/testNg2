@@ -26,7 +26,7 @@ export class DocumentsService {
             period: value.periodString,
             value: value.value,
             lookup: value.lookup
-          }
+          };
         })
       ).map(res => res.json());
     } else {
@@ -53,7 +53,7 @@ export class DocumentsService {
   
   variables(documentId, version, scenario, revision, variableNames) {
     let search = '';
-    variableNames.forEach(variableId=>search += `variableId=${variableId}&`)
+    variableNames.forEach(variableId=>search += `variableId=${variableId}&`);
     return this._http.get(
       this._config.get('apiPath') + `/documents/variables/${documentId}/${version}/${revision}/${scenario}`,
       {

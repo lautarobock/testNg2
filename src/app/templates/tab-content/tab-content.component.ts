@@ -12,7 +12,7 @@ import { RegisterTemplate } from '../template-loader.directive';
 export class TabContentComponent extends AbstractContentComponent implements OnInit {
 
   constructor() {
-    super()
+    super();
    }
 
   ngOnInit() {

@@ -41,7 +41,7 @@ export class SaveDocumentDialog {
   constructor(private modalService: NgbModal) {}
 
   open(document: Document) {
-    let ref = this.modalService.open(SaveDocumentDialogComponent)
+    let ref = this.modalService.open(SaveDocumentDialogComponent);
     ref.componentInstance.document  = document;
     return ref.result;
   }

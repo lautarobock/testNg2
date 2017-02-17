@@ -32,7 +32,7 @@ export class ConfirmationDialog {
   constructor(private modalService: NgbModal) {}
 
   open(text: string, title: string = null) {
-    let ref = this.modalService.open(ConfirmationDialogComponent)
+    let ref = this.modalService.open(ConfirmationDialogComponent);
     ref.componentInstance.text  = text;
     ref.componentInstance.title  = title;
     return ref.result;

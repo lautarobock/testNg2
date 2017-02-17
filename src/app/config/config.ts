@@ -6,7 +6,7 @@ export class Config {
 
     private _config = {
         apiPath: '../../api/v1'
-    }
+    };
 
     constructor() {}
 

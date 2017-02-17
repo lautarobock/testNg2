@@ -25,7 +25,7 @@ export class DocumentStatusDialog {
   constructor(private modalService: NgbModal) {}
 
   open(document: Document, status: DocumentStatus) {
-    let ref = this.modalService.open(DocumentStatusComponent, {size: 'lg'})
+    let ref = this.modalService.open(DocumentStatusComponent, {size: 'lg'});
     ref.componentInstance.document = document;
     ref.componentInstance.status = status;
     return ref.result;

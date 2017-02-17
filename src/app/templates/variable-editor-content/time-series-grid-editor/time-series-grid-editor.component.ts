@@ -28,13 +28,13 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
   ngOnInit() {
     this.unitsByRow = this.editor.variableIds.map(variableId=>{
       if ( this.document.variableDefinitions[variableId].unit.isCurrency) {
-        return new CurrencyReader(this.document.variableDefinitions[variableId].unit, this.value(variableId)).unique()
+        return new CurrencyReader(this.document.variableDefinitions[variableId].unit, this.value(variableId)).unique();
       } else {
-        return new UnitReader(this.document.variableDefinitions[variableId].unit).unique()
+        return new UnitReader(this.document.variableDefinitions[variableId].unit).unique();
       }
     });
     this.selectedUnitsByRow = this.editor.variableIds.map( (variableId, idx) =>{
-      return this.unitsByRow[idx].find(u=> u.display === this.value(variableId).unit())
+      return this.unitsByRow[idx].find(u=> u.display === this.value(variableId).unit());
     });
     this.decimalPlaces = this.parent.jsonProperties().DecimalPlaces || 2;
     this.numberFormat = `1.${this.decimalPlaces}-${this.decimalPlaces}`;

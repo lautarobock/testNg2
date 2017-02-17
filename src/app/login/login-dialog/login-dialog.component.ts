@@ -25,9 +25,9 @@ export class LoginDialogComponent implements OnInit {
   ok() {
     this.error = null;
     this.http.post('/api/authentication/logon?sso=false',{
-        "UserName": this.username,
-        "Password": this.password,
-        "UseWindowsAuthentication": false
+        'UserName': this.username,
+        'Password': this.password,
+        'UseWindowsAuthentication': false
     })
     .map(res => res.json())
     .subscribe(

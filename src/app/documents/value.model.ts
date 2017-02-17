@@ -47,7 +47,7 @@ export class Value {
 
   safe() {
     if ( !this.data.values || this.data.values.length === 0 ) {
-      return null
+      return null;
     } else {
       return this.data.values[0].value;
     }
@@ -74,7 +74,7 @@ export class Value {
 
   comment(period) {
     if ( !this.data.values || this.data.values.length === 0 ) {
-      return null
+      return null;
     } else {
       let idx = 0;
       if ( period ) {

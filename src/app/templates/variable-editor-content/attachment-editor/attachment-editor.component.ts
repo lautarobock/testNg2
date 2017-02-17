@@ -34,7 +34,7 @@ export class AttachmentEditorComponent extends AbstractEditorComponent implement
       this.uploadedFiles = [];
     };
     this.uploader.onCompleteItem = (item:FileItem, response:string, status:number, headers:ParsedResponseHeaders) => {
-      var data = eval('('+response+')');
+      let data = eval('('+response+')');
       this.uploadedFiles.push({
         fullName: item.file.name,
         fileName: item.file.name,
@@ -42,11 +42,11 @@ export class AttachmentEditorComponent extends AbstractEditorComponent implement
         saveInDB: true,
         hideFullPath: false,
         isWebLink: false
-      })
+      });
     };
     this.uploader.onCompleteAll = () => {
       let prev = this.value(this._variableId).safe() || [];
-      let all = prev.concat(this.uploadedFiles)
+      let all = prev.concat(this.uploadedFiles);
       this.value(this._variableId).update(new AttachmentsSerializer(all).toXML());
       this.toastyService.success({
         title: 'Upload Successful',
@@ -78,7 +78,7 @@ export class AttachmentEditorComponent extends AbstractEditorComponent implement
         });
         this.value(this._variableId).update(new AttachmentsSerializer(files).toXML());
       })
-      .catch( () => console.log('cancel'))
+      .catch( () => console.log('cancel'));
   }
 
   downloadURL (file) {
@@ -96,7 +96,7 @@ export class AttachmentEditorComponent extends AbstractEditorComponent implement
         }
         this.value(this._variableId).update(new AttachmentsSerializer(files).toXML());
       })
-      .catch( () => console.log('no'))
+      .catch( () => console.log('no'));
   }
 
 }
@@ -118,7 +118,7 @@ class AttachmentsSerializer {
       if (file.attachmentId !== null) fileXML += `<AttachmentId>${file.attachmentId}</AttachmentId> `;
       if (file.isWebLink !== null) fileXML += `<IsWebLink>${file.isWebLink}</IsWebLink> `;
       fileXML += '</Attachment>';
-      return fileXML
+      return fileXML;
     }).join('');
     xml += ' </Attachments>';
     return xml;

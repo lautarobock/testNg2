@@ -18,7 +18,7 @@ export class Values {
       if ( this._paramsMap.has(val.variableId) ) {
         this._paramsMap.get(val.variableId).set(val);
       } else {
-        this._paramsMap.set(val.variableId,new Value(val,this))
+        this._paramsMap.set(val.variableId,new Value(val,this));
       }
     });
   }

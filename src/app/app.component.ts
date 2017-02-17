@@ -21,9 +21,7 @@ export class AppComponent implements OnInit {
     sessionEmitter.onExpire().subscribe(() => this.loginDialog.open().then(() => location.reload()).catch((err)=>console.log(err)));
   }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 
   open(params) {
     let idx = this.documents.findIndex(p => p.documentId === params.documentId && p.versionId === params.versionId);

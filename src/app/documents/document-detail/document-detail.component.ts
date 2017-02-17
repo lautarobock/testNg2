@@ -7,7 +7,7 @@ import { SaveDocumentDialog } from '../save-document-dialog/save-document-dialog
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { DocumentStatusDialog } from '../document-status/document-status.component';
-import * as _ from "lodash";
+import * as _ from 'lodash';
 
 
 @Component({
@@ -65,7 +65,7 @@ export class DocumentDetailComponent implements OnInit {
         this.data = new Values(data.data);
         this._documentService.status(this.document,this.selectedScenario.name,this.selectedRevision.revision).toPromise()
           .then(data => this.status = new DocumentStatus(data.activeWorkflows,data.issues))
-          .then(() => this.loadingService.complete())
+          .then(() => this.loadingService.complete());
         //Only subscribe to events if it is not readonly
         if ( this.selectedRevision.revision === -1 ) {
           this.data.changeVariable.subscribe(v=> {
@@ -87,7 +87,7 @@ export class DocumentDetailComponent implements OnInit {
               .then(() => this.loadingService.complete());
           });
         } 
-      })
+      });
     });
   }
 

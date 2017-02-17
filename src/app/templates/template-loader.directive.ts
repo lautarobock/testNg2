@@ -37,13 +37,13 @@ let EDITOR_REGISTER = new EditorLoaderRegister();
 export function RegisterTemplate(type: ContentType) {
   return function(target) {
     TEMPLATE_REGISTER.register(type, target);
-  }
+  };
 }
 
 export function RegisterEditor(type: EditorType) {
   return function(target) {
     EDITOR_REGISTER.register(type, target);
-  }
+  };
 }
 
 @Directive({

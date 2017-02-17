@@ -31,7 +31,7 @@ export class Date2Model implements PipeTransform {
         year: date.getYear() + 1900,
         month: date.getMonth() + 1,
         day: date.getDate()
-      }
+      };
     } else {
       return null;
     }

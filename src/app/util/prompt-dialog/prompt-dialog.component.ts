@@ -38,7 +38,7 @@ export class PromptDialog {
   constructor(private modalService: NgbModal) {}
 
   open(title: string, defaultText: string = '') {
-    let ref = this.modalService.open(PromptDialogComponent)
+    let ref = this.modalService.open(PromptDialogComponent);
     ref.componentInstance.text  = defaultText;
     ref.componentInstance.title  = title;
     return ref.result;

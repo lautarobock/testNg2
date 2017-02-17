@@ -38,7 +38,7 @@ export class CommentDialog {
   constructor(private modalService: NgbModal) {}
 
   open(value: Value, readonly: boolean) {
-    let ref = this.modalService.open(CommentDialogComponent)
+    let ref = this.modalService.open(CommentDialogComponent);
     ref.componentInstance.value  = value;
     ref.componentInstance.readonly = readonly;
     return ref.result;

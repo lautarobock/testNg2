@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import * as _ from 'lodash';
 
 class BaseReader {
     constructor(
@@ -9,13 +9,13 @@ class BaseReader {
         private displayLabel) {}
 
      all() {
-        var units = [];
-        for (var i = 0; i < this.types.length; i++) {
-            var type = this.unit[this.types[i]];
-            for (var j = 0; j < this.sizes.length; j++) {
-                var actualLabelProvider = this.labelProvider || new UnitLabelProvider(type);
-                var display = actualLabelProvider.label(this.sizes[j]);
-                var factor = type[this.sizes[j] + 'Factor'];
+        let units = [];
+        for (let i = 0; i < this.types.length; i++) {
+            let type = this.unit[this.types[i]];
+            for (let j = 0; j < this.sizes.length; j++) {
+                let actualLabelProvider = this.labelProvider || new UnitLabelProvider(type);
+                let display = actualLabelProvider.label(this.sizes[j]);
+                let factor = type[this.sizes[j] + 'Factor'];
                 units.push({
                     display: display,
                     factor: factor,

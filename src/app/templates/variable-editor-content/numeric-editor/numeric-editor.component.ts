@@ -21,9 +21,9 @@ export class NumericEditorComponent extends AbstractEditorComponent implements O
   ngOnInit() {
     let unit = this.document.variableDefinitions[this.variableId()].unit;
     if ( unit.isCurrency) {
-      this.units = new CurrencyReader(unit, this.value()).unique()
+      this.units = new CurrencyReader(unit, this.value()).unique();
     } else {
-      this.units = new UnitReader(unit).unique()
+      this.units = new UnitReader(unit).unique();
     }
     this.selectedUnit = this.units[0];
   }
