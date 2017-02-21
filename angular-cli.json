@@ -25,7 +25,11 @@
         "../node_modules/ng2-slim-loading-bar/bundles/style.css",
         "../node_modules/openlayers/dist/ol.css"
       ],
-      "scripts": ["../node_modules/chart.js/dist/Chart.bundle.min.js"],
+      "scripts": [
+        "../node_modules/chart.js/dist/Chart.bundle.min.js",
+        "../node_modules/terraformer/terraformer.js",
+        "../node_modules/terraformer-wkt-parser/dist/terraformer-wkt-parser.min.js"
+      ],
       "environments": {
         "source": "environments/environment.ts",
         "dev": "environments/environment.ts",
