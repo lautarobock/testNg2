@@ -31,12 +31,12 @@
       </td>
       <td *ngFor="let value of value(variableId).data.values; let periodIdx = index" style="text-align: right;" 
           (mouseover)="mouseover[idx+value.periodString]=true" (mouseout)="mouseover[idx+value.periodString]=false"
-          [style.cursor]="cellCursor(idx)" (click)="edit(idx)">
+          [style.cursor]="cellCursor(idx)" (click)="edit(idx, periodIdx)">
         <span  [ngClass]="{'over': mouseover[idx+value.periodString]}">
           <span *ngIf="editionIdx!==idx">{{ computedValue(value.value, selectedUnitsByRow[idx]) | number:numberFormat }}</span>
           <input *ngIf="editionIdx===idx" (focus)="focus()" (focusout)="blur()" id="input-grid-{{periodIdx}}" onfocus="this.select()"
             type="number" style="min-width:130px;text-align: right;background: white !important;"
-            class="form-control form-control-sm" 
+            class="form-control form-control-sm"  (keyup.enter)="$event.srcElement.blur()" (keyup.esc)="cancelEdit()"
             [(ngModel)]="tmpValues[periodIdx].value">
           <i class="fa fa-comment comment" [hidden]="editionIdx===idx" title="{{comment(variableId, value.periodString)}}" 
               [readonly]="document.readonly" [open-comment]="commentValue(variableId)" [period]="value.periodString"

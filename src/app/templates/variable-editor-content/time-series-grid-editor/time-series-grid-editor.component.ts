@@ -49,13 +49,22 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
     }
   }
 
-  edit(idx) {
+  edit(idx, periodIdx) {
     if ( this.document.readonly || this.value(this.editor.variableIds[idx]).periodicExpression() ) return;
     if ( this.editionIdx !== null ) return;
     this.editionIdx = idx;
     this.tmpValues =  JSON.parse(JSON.stringify(this.value(this.editor.variableIds[idx]).values()));
     this.tmpValues.forEach(value=>value.value = value.value * this.selectedUnitsByRow[idx].factor);
-    setTimeout(()=> document.getElementById('input-grid-0').focus() ,50);
+    setTimeout(()=> document.getElementById(`input-grid-${periodIdx}`).focus() ,50);
+  }
+
+  cancelEdit() {
+    this.editionIdx=null;
+    setTimeout(()=>this.tmpValues=[],50);
+    if ( this.editTimeout ) {
+      clearTimeout(this.editTimeout);
+      this.editTimeout = null;
+    }
   }
 
   focus() {
@@ -66,13 +75,14 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
   }
 
   blur() {
-    this.editTimeout = setTimeout(()=>{
-      this.tmpValues.forEach(value=>value.value = value.value / this.selectedUnitsByRow[this.editionIdx].factor);
-      this.value(this.editor.variableIds[this.editionIdx]).updateAll(this.tmpValues);
-      this.tmpValues=[];
-      this.editionIdx=null;
-
-    },1000);
+    if ( this.editionIdx !== null ) {
+      this.editTimeout = setTimeout(()=>{
+        this.tmpValues.forEach(value=>value.value = value.value / this.selectedUnitsByRow[this.editionIdx].factor);
+        this.value(this.editor.variableIds[this.editionIdx]).updateAll(this.tmpValues);
+        this.tmpValues=[];
+        this.editionIdx=null;
+      },500);
+    }
   }
 
   //@Deprecated
