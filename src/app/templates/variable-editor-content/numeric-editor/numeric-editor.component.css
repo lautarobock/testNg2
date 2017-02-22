@@ -32,7 +32,7 @@
     z-index: 999;
 }
 
-.expression.fill {
+.has-expression .expression {
     color: blue;
     display: block !important;
 }

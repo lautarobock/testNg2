@@ -1,9 +1,9 @@
 
-:host /deep/ .dirty input, :host /deep/ .dirty select, :host /deep/ tr.dirty {
+:host /deep/ .dirty input, :host /deep/ .dirty textarea, :host /deep/ .dirty select, :host /deep/ tr.dirty {
     background-color: lightblue !important;
 }
 
-:host /deep/ .has-expression input, :host /deep/ tr.has-expression {
+:host /deep/ .has-expression input, :host /deep/ .has-expression textarea, :host /deep/ tr.has-expression {
     background-color: #DFFFFF  !important;
 }
 

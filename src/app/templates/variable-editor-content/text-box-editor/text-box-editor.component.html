@@ -14,7 +14,7 @@
         (blur)="value().update(input.value)"
         >
     <i class="fa fa-comment comment"  [readonly]="document.readonly" title="{{comment()}}" [open-comment]="value()" [ngClass]="{'fill': comment()}"></i>
-    <span class="expression" title="{{expression()}}" [ngClass]="{'fill': expression()}"
+    <span class="expression" title="{{expression()}}"
       [readonly]="document.readonly" [open-expression]="value()" [document]="document" [scenario]="scenario">&fnof;</span>
   </div>
   <div class="col-sm-9" *ngIf="lookUpList">
