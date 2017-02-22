@@ -7,7 +7,7 @@
   <label class="col-sm-3 col-form-label col-form-label-sm">{{document.variableDefinitions[variableId()].prompt}}</label>
   <div class="col-sm-9">
     <div class="input-group">
-      <span class="input-group-btn">
+      <span class="input-group-btn" *ngIf="!(units.length===1 && units[0].display==='')">
         <select [(ngModel)]="selectedUnit" class="btn btn-sm btn-secondary" style="background-color: white !important">
           <option *ngFor="let unit of units" [ngValue]="unit">
             {{ unit.display }}
@@ -16,7 +16,7 @@
       </span>
       <input type="number" 
         #input
-        style="text-align: right"
+        style="text-align: right; padding-right: 1em"
         class="form-control form-control-sm" 
         [readonly]="expression() ? 'true' : null"
         [disabled]="document.readonly"
@@ -26,6 +26,7 @@
        
     </div>
     <i class="fa fa-comment comment"  [readonly]="document.readonly" title="{{comment()}}" [open-comment]="value()" [ngClass]="{'fill': comment()}"></i>
-    <span class="expression" title="{{expression()}}" [ngClass]="{'fill': expression()}">&fnof;</span>
+    <span class="expression" title="{{expression()}}" [ngClass]="{'fill': expression()}" 
+        [readonly]="document.readonly" [open-expression]="value()" [document]="document" [scenario]="scenario">&fnof;</span>
   </div>  
 </div>
