@@ -3,7 +3,8 @@
 }
 
 .over .comment {
-    display: inline-block !important;
+    /*display: inline-block !important;*/
+    visibility: visible !important;
 }
 
 .expression {
@@ -18,12 +19,14 @@
 
 .comment {
     position: relative !important;
-    display: none;
+    /*display: none;*/
+    visibility: hidden;
     cursor: pointer;
     font-size: 10px;
     /*top: -26px;*/
     font-weight: bold;
     /*margin-top: -26px;*/
+    top: -10px;
 }
 
 .expression.fill {
@@ -33,7 +36,8 @@
 
 .comment.fill {
     color: blue;
-    display: inline-block !important;
+    /*display: inline-block !important;*/
+    visibility: visible !important;
 }
 
 input::-webkit-outer-spin-button,

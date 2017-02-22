@@ -84,12 +84,9 @@ export class Value {
     }
   }
 
-  updateComment(comment) {
+  updateComment(comment, period?) {
     if ( !this.data.values || this.data.values.length === 0 || this.data.values[0].comment !== comment) {
-      this._values.changeComment.emit({
-        variableId: this.data.variableId,
-        comment: comment
-      });
+      this._values.changeComment.emit({variableId: this.data.variableId, comment, period});
     }
   }
   

@@ -5,7 +5,7 @@
   <div class="form-group row no-gutters">
     <textarea #inputComment
         (focus)="inputComment.select()"
-        [ngModel]="value.comment()"
+        [ngModel]="value.comment(period)"
         [readonly]="readonly"
         class="form-control">
     </textarea>

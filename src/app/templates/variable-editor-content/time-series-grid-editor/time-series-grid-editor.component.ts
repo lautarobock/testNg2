@@ -89,4 +89,7 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
       return this.displayZeroValuesAs;
     }
   }
+  commentValue(variableId: number) {
+    return this.value(variableId);
+  }
 }

@@ -76,7 +76,7 @@ export class DocumentDetailComponent implements OnInit {
           });
           this.data.changeComment.subscribe(v=> {
             this.loadingService.start();
-            this._documentService.updateComment(this.document,this.selectedScenario.name,v.variableId,v.comment).toPromise()
+            this._documentService.updateComment(this.document,this.selectedScenario.name,v.variableId,v.comment, v.period).toPromise()
               .then(data=> this.data.update([data]))
               .then(() => this.loadingService.complete());
           });
