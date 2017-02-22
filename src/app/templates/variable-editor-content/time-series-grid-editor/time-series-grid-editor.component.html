@@ -2,6 +2,7 @@
   <table class="table table-sm table-bordered">
     <thead>
     <tr>
+      <th></th>
       <th style="min-width: 100px">Category</th>
       <th style="min-width: 250px">Variable</th>
       <th style="min-width: 140px">Unit</th>
@@ -13,6 +14,9 @@
         'dirty': value(variableId).state.dirty,
         'has-expression': value(variableId).periodicExpression()
       }">
+      <td>
+        <copy-paste-box></copy-paste-box>
+      </td>
       <td>{{document.variableDefinitions[variableId].category.name}}</td>
       <td (mouseover)="mouseover[idx+'expression']=true" (mouseout)="mouseover[idx+'expression']=false"
           [ngClass]="{'over': mouseover[idx+'expression']}">
