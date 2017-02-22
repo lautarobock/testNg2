@@ -1,0 +1,16 @@
+@media (min-width: 1200px) {
+  .expression-text-lg {
+    height: 100px !important;
+  }
+  .expression-table-lg {
+    height: 320px !important;
+  }
+}
+@media (max-width: 1200px) {
+  .expression-table-md {
+    height: 105px !important;
+  }
+  .expression-text-md {
+    height: 35px !important;
+  }
+}
