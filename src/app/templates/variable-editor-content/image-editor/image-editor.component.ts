@@ -21,6 +21,7 @@ export class ImageEditorComponent extends AbstractEditorComponent implements OnI
   });
   public hasBaseDropZoneOver:boolean = false;
   private uploadedFiles = [];
+  zoom:boolean = false;
 
   constructor(private config: Config, private confirmationDialog: ConfirmationDialog, private toastyService: ToastyService) { 
     super();
@@ -59,13 +60,21 @@ export class ImageEditorComponent extends AbstractEditorComponent implements OnI
     };
   }
 
-  url() {
+  url(full:boolean) {
     //TODO, read size of json properties, and zoom feature
-    let image = this.value().safe();
-    let width = (<any>this.parent).width() || 600;
-    let height = (<any>this.parent).height() || 600;
-    return image ? this.config.get('apiPath') + `/file/image/${image.attachmentId}?imageWidth=${height}&imageHeight=${width}` : null;
+    if ( full ) {
+      let image = this.value().safe();
+      let width = (<any>this.parent).width() || 600;
+      let height = (<any>this.parent).height() || 600;
+      return image ? this.config.get('apiPath') + `/file/image/${image.attachmentId}?imageWidth=${height}&imageHeight=${width}` : null;
+    } else {
+      let image = this.value().safe();
+      let width = (<any>this.parent).width() || 600;
+      let height = (<any>this.parent).height() || 600;
+      return image ? this.config.get('apiPath') + `/file/download/${image.attachmentId}?fileName==${image.fileName}` : null;
+    }
   }
+  
 
   remove() {
     this.confirmationDialog.open('Are you sure?', 'Remove Image')

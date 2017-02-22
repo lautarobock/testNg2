@@ -57,5 +57,7 @@
       </div>
 
   </div>  
-  <img *ngIf="value().safe()?.attachmentId" src="{{url()}}" style="cursor: -webkit-zoom-in;" class="img-thumbnail" />
+  <img *ngIf="value().safe()?.attachmentId" src="{{url(false)}}" style="cursor: -webkit-zoom-in;" class="img-thumbnail" (click)="zoom=true" />
+  <div *ngIf="value().safe()?.attachmentId && zoom" (click)="zoom=false" style="position: fixed; top: 0px; left: 0px;bottom: 0;right: 0;background: black;z-index: 2000;opacity: 0.5;cursor: -webkit-zoom-in"></div>
+  <img *ngIf="value().safe()?.attachmentId && zoom" src="{{url(true)}}" (click)="zoom=false" style="position: fixed; top: 50px; left: 200px;z-index: 2010;cursor: -webkit-zoom-out;" class="img-thumbnail" />
 </div>
