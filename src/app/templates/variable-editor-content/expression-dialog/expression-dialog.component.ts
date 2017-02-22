@@ -20,6 +20,8 @@ export class ExpressionDialogComponent implements OnInit {
   error: any = {};
   functions: any[] = [];
   expression: string = '';
+  variableQuery: string = '';
+  functionQuery: string = '';
   @ViewChild('inputExpression') inputExpression: ElementRef;
 
   constructor(
@@ -36,6 +38,18 @@ export class ExpressionDialogComponent implements OnInit {
 
   ngAfterViewInit() {
     setTimeout(()=>this.inputExpression.nativeElement.focus(),50);
+  }
+
+  filteredVariables() {
+    return this.document.templateVariables
+      .filter(variable => variable.prompt.toLowerCase().includes(this.variableQuery))
+      .sort(variable => variable.prompt);
+  }
+
+  filteredFunctions() {
+    return this.functions
+      .filter(fn => fn.functionName.toLowerCase().includes(this.functionQuery) || fn.helpText.toLowerCase().includes(this.functionQuery) )
+      .sort(fn => fn.functionName);
   }
 
   validate(expression: string) {

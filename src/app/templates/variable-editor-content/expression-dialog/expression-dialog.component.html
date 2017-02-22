@@ -3,56 +3,88 @@
 </div>
 <div class="modal-body" style="padding-top: 5px;font-size: 12px;">
   <div class="row" *ngIf="!document.readonly">
-    <div class="col-12 col-xl-6" style="height: 320px; overflow: auto">
-      <table class="table table-sm">
-          <thead>
-          <tr>
-              <th>Variable</th>
-              <th>Type</th>
-              <th>Unit</th>
-              <th>Category</th>
-              <th>Add</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let arg of document.templateVariables">
-              <td>{{arg.prompt}}</td>
-              <td>{{arg.variableDataType}}</td>
-              <td>{{arg.unit.name}}</td>
-              <td>{{arg.category.name}}</td>
-              <td>
-                  <button type="button" class="btn btn-sm btn-success" (click)="add(arg)">
-                      <i class="fa fa-plus-circle"></i>
-                  </button>
-              </td>
-          </tr>
-          </tbody>
-      </table>
+    <div class="col-12 col-xl-6">
+        <nav class="navbar navbar-toggleable-md navbar-light bg-faded" style="margin-bottom: 4px;">
+            <div class="collapse navbar-collapse">
+                <form class="form-inline my-2 my-lg-0">
+                    <div class="input-group">
+                        <input type="text" class="form-control form-control-sm" placeholder="Search variables..." [(ngModel)]="variableQuery" [ngModelOptions]="{standalone: true}">
+                        <span class="input-group-btn">
+                            <button class="btn btn-sm btn-secondary" type="button" (click)="variableQuery=''" [disabled]="variableQuery===''">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </nav>
+        <div style="overflow: auto;height: 320px">
+            <table class="table table-sm" >
+                <thead>
+                <tr>
+                    <th>Variable</th>
+                    <th>Type</th>
+                    <th>Unit</th>
+                    <th>Category</th>
+                    <th>Add</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let arg of filteredVariables()">
+                    <td>{{arg.prompt}}</td>
+                    <td>{{arg.variableDataType}}</td>
+                    <td>{{arg.unit.name}}</td>
+                    <td>{{arg.category.name}}</td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-success" (click)="add(arg)">
+                            <i class="fa fa-plus-circle"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="col-12 col-xl-6" style="height: 320px; overflow: auto">
-      <table class="table table-sm">
-          <thead>
-          <tr>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Add</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let fn of functions">
-              <td>
-                  <i style="cursor: help" class="fa fa-question-circle" title="{{fn.helpText}}"></i>
-                  {{fn.functionName}}
-              </td>
-              <td>{{fn.category}}</td>
-              <td>
-                  <button type="button" class="btn btn-sm btn-success" (click)="addFn(fn)">
-                      <i class="fa fa-plus-circle"></i>
-                  </button>
-              </td>
-          </tr>
-          </tbody>
-      </table>
+    <div class="col-12 col-xl-6" >
+        <nav class="navbar navbar-toggleable-md navbar-light bg-faded" style="margin-bottom: 4px;">
+            <div class="collapse navbar-collapse">
+                <form class="form-inline my-2 my-lg-0">
+                    <div class="input-group">
+                        <input type="text" class="form-control form-control-sm" placeholder="Search functions..." [(ngModel)]="functionQuery" [ngModelOptions]="{standalone: true}">
+                        <span class="input-group-btn">
+                            <button class="btn btn-sm btn-secondary" type="button" (click)="functionQuery=''" [disabled]="functionQuery===''">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </nav>
+        <div style="overflow: auto;height: 320px">
+            <table class="table table-sm">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Add</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let fn of filteredFunctions()">
+                <td>
+                    <i style="cursor: help" class="fa fa-question-circle" title="{{fn.helpText}}"></i>
+                    {{fn.functionName}}
+                </td>
+                <td>{{fn.category}}</td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-success" (click)="addFn(fn)">
+                        <i class="fa fa-plus-circle"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
     </div>
   </div>
   <nav class="navbar navbar-toggleable-md navbar-light bg-faded" style="margin-bottom: 4px;">
