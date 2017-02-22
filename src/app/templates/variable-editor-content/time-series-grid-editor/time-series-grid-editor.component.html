@@ -14,7 +14,14 @@
         'has-expression': value(variableId).periodicExpression()
       }">
       <td>{{document.variableDefinitions[variableId].category.name}}</td>
-      <td>{{document.variableDefinitions[variableId].prompt}}</td>
+      <td (mouseover)="mouseover[idx+'expression']=true" (mouseout)="mouseover[idx+'expression']=false"
+          [ngClass]="{'over': mouseover[idx+'expression']}">
+        {{document.variableDefinitions[variableId].prompt}}
+        <span class="expression" title="{{value(variableId).periodicExpression()}}" 
+            [readonly]="document.readonly" [open-expression]="value(variableId)" [isPeriodic]="true" [document]="document" [scenario]="scenario">
+          &fnof;
+        </span>
+      </td>
       <td>
         <select [(ngModel)]="selectedUnitsByRow[idx]" class="form-control form-control-sm" style="border-radius: 0;">
           <option *ngFor="let unit of unitsByRow[idx]" [ngValue]="unit">
@@ -23,11 +30,9 @@
         </select>
       </td>
       <td *ngFor="let value of value(variableId).data.values; let periodIdx = index" style="text-align: right;" 
+          (mouseover)="mouseover[idx+value.periodString]=true" (mouseout)="mouseover[idx+value.periodString]=false"
           [style.cursor]="cellCursor(idx)" (click)="edit(idx)">
-        <span (mouseover)="mouseover[idx+value.periodString]=true" (mouseout)="mouseover[idx+value.periodString]=false" [ngClass]="{
-            'over': mouseover[idx+value.periodString],
-            'has-comment': comment(variableId, value.periodString)
-          }">
+        <span  [ngClass]="{'over': mouseover[idx+value.periodString]}">
           <span *ngIf="editionIdx!==idx">{{ computedValue(value.value, selectedUnitsByRow[idx]) | number:numberFormat }}</span>
           <input *ngIf="editionIdx===idx" (focus)="focus()" (focusout)="blur()" id="input-grid-{{periodIdx}}" onfocus="this.select()"
             type="number" style="min-width:130px;text-align: right;background: white !important;"

@@ -1,8 +1,7 @@
 <div class="form-group row no-gutters" [ngClass]="{
     'over': isOver,
     'dirty': value()?.state.dirty,
-    'has-expression': expression(),
-    'has-comment': comment()
+    'has-expression': expression()
   }">
   <label class="col-sm-3 col-form-label col-form-label-sm">{{document.variableDefinitions[variableId()].prompt}}</label>
   <div class="col-sm-9" *ngIf="!lookUpList">

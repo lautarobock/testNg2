@@ -1,5 +1,5 @@
 .over .expression {
-    display: block !important;
+    display: inline !important;
 }
 
 .over .comment {
@@ -10,11 +10,9 @@
 .expression {
     display: none;
     cursor: pointer;
-    position: absolute;
-    font-size: 11px;
-    bottom: 0px;
-    right: 3px;
+    font-size: 13px;
     font-weight: bold;
+    margin-left: 1em;
 }
 
 .comment {
@@ -29,9 +27,9 @@
     top: -10px;
 }
 
-.expression.fill {
+.has-expression .expression {
     color: blue;
-    display: block !important;
+    display: inline !important;
 }
 
 .comment.fill {

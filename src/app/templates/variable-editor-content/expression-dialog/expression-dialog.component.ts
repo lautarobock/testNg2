@@ -17,6 +17,7 @@ export class ExpressionDialogComponent implements OnInit {
   readonly: boolean;
   document: Document;
   scenario: any;
+  isPeriodic: boolean;
   error: any = {};
   functions: any[] = [];
   expression: string = '';
@@ -33,7 +34,11 @@ export class ExpressionDialogComponent implements OnInit {
 
   ngOnInit() {
     this.mathService.functions().subscribe(data => this.functions = data);
-    this.expression = this.value.expression();
+    if ( this.isPeriodic ) {
+      this.expression = this.value.periodicExpression();
+    } else {
+      this.expression = this.value.expression();
+    }
   }
 
   ngAfterViewInit() {
@@ -115,12 +120,13 @@ export class ExpressionDialog {
 
   constructor(private modalService: NgbModal) {}
 
-  open(value: Value, readonly: boolean, document: Document, scenario: any) {
+  open(value: Value, readonly: boolean, document: Document, scenario: any, isPeriodic: boolean = false) {
     let ref = this.modalService.open(ExpressionDialogComponent, {size: 'lg',windowClass: 'modal-xl'});
     ref.componentInstance.value  = value;
     ref.componentInstance.readonly = readonly;
     ref.componentInstance.document = document;
     ref.componentInstance.scenario = scenario;
+    ref.componentInstance.isPeriodic = isPeriodic;
     return ref.result;
   }
 }
@@ -132,12 +138,13 @@ export class ExpressionComment {
   @Input('readonly') readonly: boolean;
   @Input('document') document: Document;
   @Input('scenario') scenario: any;
+  @Input('isPeriodic') isPeriodic: boolean;
 
   constructor(el: ElementRef, private expressionDialog: ExpressionDialog) {
 
   }
 
   @HostListener('click') onClick() {
-    this.expressionDialog.open(this.value, this.readonly, this.document, this.scenario).then(result => console.log('ok',result)).catch(reason => console.log('cancel',reason));
+    this.expressionDialog.open(this.value, this.readonly, this.document, this.scenario, this.isPeriodic).then(result => console.log('ok',result)).catch(reason => console.log('cancel',reason));
   }
 }
