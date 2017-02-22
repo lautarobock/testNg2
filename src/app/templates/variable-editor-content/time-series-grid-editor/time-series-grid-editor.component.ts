@@ -16,6 +16,7 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
   decimalPlaces = 2;
   numberFormat = '1.2-2';
   displayZeroValuesAs = 0;
+  groupName: string;
   mouseover = {};
   editionIdx = null;
   tmpValues = [];
@@ -39,6 +40,7 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
     this.decimalPlaces = this.parent.jsonProperties().DecimalPlaces || 2;
     this.numberFormat = `1.${this.decimalPlaces}-${this.decimalPlaces}`;
     this.displayZeroValuesAs = this.parent.jsonProperties().DisplayZeroValuesAs || 0;
+    this.groupName = this.parent.jsonProperties().GroupName;
   }
 
   cellCursor(idx) {

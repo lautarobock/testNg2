@@ -5,6 +5,7 @@ import { FormsModule }    from '@angular/forms';
 import { ConfirmationDialogComponent, ConfirmationDialog } from './confirmation-dialog/confirmation-dialog.component';
 import { PromptDialogComponent, PromptDialog } from './prompt-dialog/prompt-dialog.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SyncScrollDirective } from './sync-scroll.directive';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     NgbModule
   ],
-  declarations: [ConfirmationDialogComponent, PromptDialogComponent],
+  declarations: [ConfirmationDialogComponent, PromptDialogComponent, SyncScrollDirective],
+  exports: [SyncScrollDirective],
   entryComponents: [ConfirmationDialogComponent, PromptDialogComponent],
   providers: [ConfirmationDialog, PromptDialog]
 })
