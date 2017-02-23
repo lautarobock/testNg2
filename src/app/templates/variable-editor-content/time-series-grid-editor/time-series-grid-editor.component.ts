@@ -1,4 +1,7 @@
+import { Value } from '../../../documents/value.model';
+import { Values } from '../../../documents/values.model';
 import { Component, OnInit } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { AbstractEditorComponent, EditorType } from '../../abstract-content';
 import { RegisterEditor } from '../../template-loader.directive';
 import { UnitReader, CurrencyReader } from '../../../documents/unit-reader';
@@ -22,7 +25,7 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
   tmpValues = [];
   editTimeout;
 
-  constructor() { 
+  constructor(private decimalPipe: DecimalPipe) { 
     super();
   }
 
@@ -94,14 +97,89 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
   }
 
   computedValue(value, unit) {
-    // value = value || 0;
+    // if ( value ) {
+    //   return value * unit.factor;
+    // } else {
+    //   return this.displayZeroValuesAs;
+    // }
+    return new ValueFormatter(
+      unit,
+      this.displayZeroValuesAs,
+      this.numberFormat,
+      this.decimalPipe
+    ).format(value);
+  }
+  
+  commentValue(variableId: number) {
+    return this.value(variableId);
+  }
+
+  onPasteRow(text, variableId) {
+    console.log('PASTE', variableId, text);
+  }
+
+  text2Copy(variableId:number, idx: number) {
+    return new RowSerializer(
+      variableId,
+      this.value(variableId),
+      this.selectedUnitsByRow[idx],
+      this.document.variableDefinitions,
+      this.displayZeroValuesAs,
+      this.numberFormat,
+      this.decimalPipe
+    ).toString()
+  }
+}
+
+class ValueFormatter {
+  constructor(
+    private unit: any, 
+    private displayZeroValuesAs: number, 
+    private numberFormat: string,
+    private decimalPipe: DecimalPipe
+  ) {}
+
+  format(value: number) {
+    return this.decimalPipe.transform(this.computedValue(value),this.numberFormat);
+  }
+
+  computedValue(value) {
     if ( value ) {
-      return value * unit.factor;
+      return value * this.unit.factor;
     } else {
       return this.displayZeroValuesAs;
     }
   }
-  commentValue(variableId: number) {
-    return this.value(variableId);
+}
+
+class RowSerializer {
+
+  private formatter: ValueFormatter;
+
+  constructor(
+    private variableId: number, 
+    private value: Value, 
+    private unit: any, 
+    private variableDefinitions: any, 
+    private displayZeroValuesAs: number, 
+    private numberFormat: string,
+    private decimalPipe: DecimalPipe
+  ) {
+    this.formatter = new ValueFormatter(
+      this.unit,
+      this.displayZeroValuesAs,
+      this.numberFormat,
+      this.decimalPipe
+    );
   }
+
+  toString() {
+    return this.variableDefinitions[this.variableId].prompt + '\t' + 
+      this.variableDefinitions[this.variableId].category.name + '\t' + 
+      this.unit.display + '\t' + 
+      this.value.values().map(periodValue => {
+        return this.formatter.format(periodValue.value);
+      }).join('\t');
+  }
+
 }

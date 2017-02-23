@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'copy-paste-box',
@@ -7,17 +7,21 @@ import { Component, HostListener, OnInit } from '@angular/core';
 })
 export class CopyPasteBoxComponent implements OnInit {
 
+  @Input() value: string;
+  @Output() onPaste = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
   }
 
-  // @HostListener('onpaste',['$event']) onPaste(event) {
-  //     console.log('PASTE',event)
-  // }
+  ngOnChanges() {
+    
+  }
 
-  onPaste(event) {
-    console.log('kk',event.clipboardData.getData('text/plain'))
+  paste(event) {
+    this.value = event.clipboardData.getData('text/plain');
+    this.onPaste.emit(this.value);
   }
 
 }

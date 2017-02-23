@@ -1,5 +1,6 @@
 <textarea style="overflow: hidden; resize: none; height: 6px; width: 6px; padding: 0; cursor: pointer;"
   readonly
-  (paste)="onPaste($event)"
+  (paste)="paste($event)"
   onfocus="this.select()">
+  {{value}}
 </textarea>

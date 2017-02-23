@@ -15,7 +15,7 @@
         'has-expression': value(variableId).periodicExpression()
       }">
       <td>
-        <copy-paste-box></copy-paste-box>
+        <copy-paste-box [value]="text2Copy(variableId, idx)" (onPaste)="onPasteRow($event, variableId)"></copy-paste-box>
       </td>
       <td>{{document.variableDefinitions[variableId].category.name}}</td>
       <td (mouseover)="mouseover[idx+'expression']=true" (mouseout)="mouseover[idx+'expression']=false"
@@ -37,7 +37,7 @@
           (mouseover)="mouseover[idx+value.periodString]=true" (mouseout)="mouseover[idx+value.periodString]=false"
           [style.cursor]="cellCursor(idx)" (click)="edit(idx, periodIdx)">
         <span  [ngClass]="{'over': mouseover[idx+value.periodString]}">
-          <span *ngIf="editionIdx!==idx">{{ computedValue(value.value, selectedUnitsByRow[idx]) | number:numberFormat }}</span>
+          <span *ngIf="editionIdx!==idx">{{ computedValue(value.value, selectedUnitsByRow[idx]) }}</span>
           <input *ngIf="editionIdx===idx" (focus)="focus()" (focusout)="blur()" id="input-grid-{{periodIdx}}" onfocus="this.select()"
             type="number" style="min-width:130px;text-align: right;background: white !important;"
             class="form-control form-control-sm"  (keyup.enter)="$event.srcElement.blur()" (keyup.esc)="cancelEdit()"

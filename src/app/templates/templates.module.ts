@@ -1,3 +1,4 @@
+import { DecimalPipe } from '@angular/common';
 import { UtilModule } from '../util/util.module';
 import { ExpanderContentComponent } from './expander-content/expander-content.component';
 import { GroupContentComponent } from './group-content/group-content.component';
@@ -122,6 +123,6 @@ import { FileUploadModule } from 'ng2-file-upload';
     CommentDialogComponent,
     ExpressionDialogComponent
   ],
-  providers: [CommentDialog, ExpressionDialog]
+  providers: [CommentDialog, ExpressionDialog, DecimalPipe]
 })
 export class TemplatesModule { }
