@@ -43,6 +43,10 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
-.selected-row {
-    background: lightgray !important;
+tr.selected-row {
+    background-color: lightgray !important;
+}
+
+.selected-row tr {
+    background-color: lightgray !important;
 }

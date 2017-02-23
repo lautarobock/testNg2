@@ -4,6 +4,7 @@ import { Value } from './value.model';
 export class Values {
   
   public changeVariable = new EventEmitter();
+  public changeVariables = new EventEmitter();
   public changeComment = new EventEmitter();
   public changeExpression = new EventEmitter();
 

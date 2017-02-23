@@ -16,6 +16,22 @@ export class DocumentsService {
     return this._http.get(this._config.get('apiPath') + `/documents/status/${document.documentId}/${document.versionId}/${revision}/${scenario}`).map(res => res.json());
   }
 
+  updateVariables(document: Document, datas: Array<any>, scenario, revision = -1) {
+    var requestValues = [];
+    datas.forEach(data => {
+      data.values.forEach(value => {
+        requestValues.push({
+          variableId: data.variableId,
+          period: value.periodString,
+          value: value.value,
+          lookup: value.lookup
+        })
+      });
+    });
+    return this._http.post(this._config.get('apiPath') + `/documents/multipledata/${document.documentId}/${document.versionId}/${revision}/${scenario}`, requestValues)
+      .map(res => res.json());
+  }
+
   updateFields(document: Document, data, scenario, revision = -1, period?, lookup?, variableCurrency?) {
     if ( data.values.length > 1) {
       return this._http.post(

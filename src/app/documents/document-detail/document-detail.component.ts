@@ -68,6 +68,12 @@ export class DocumentDetailComponent implements OnInit {
           .then(() => this.loadingService.complete());
         //Only subscribe to events if it is not readonly
         if ( this.selectedRevision.revision === -1 ) {
+          this.data.changeVariables.subscribe(v => {
+            this.loadingService.start();
+            this._documentService.updateVariables(this.document,v,this.selectedScenario.name).toPromise()
+              .then(data => this.data.update(data))
+              .then(() => this.loadingService.complete());
+          });
           this.data.changeVariable.subscribe(v=> {
             this.loadingService.start();
             this._documentService.updateFields(this.document,v,this.selectedScenario.name).toPromise()

@@ -131,6 +131,14 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
     }
   }
 
+  onPasteAll(text: string) {
+    text.split('\n').map((row, idx) => new RowParser(row,this.unitsByRow[idx]).values())
+  }
+
+  text2CopyAll() {
+    return this.editor.variableIds.map( (variableId,idx) => this.text2Copy(variableId, idx)).join('\n');
+  }
+
   text2Copy(variableId:number, idx: number) {
     return new RowSerializer(
       this.document.variableDefinitions[variableId].prompt,

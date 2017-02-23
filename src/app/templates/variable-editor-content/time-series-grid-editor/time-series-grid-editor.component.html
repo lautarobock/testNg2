@@ -1,8 +1,13 @@
 <div style="overflow-x: scroll;" [sync-scroll]="groupName">
-  <table class="table table-sm table-bordered">
+  <table class="table table-sm table-bordered" [ngClass]="{'selected-row': selectedCP['h']}">
     <thead>
     <tr>
-      <th></th>
+      <th>
+        <copy-paste-box 
+          (focusChange)="selectedCP['h']=$event"
+          [value]="text2CopyAll()" 
+          (onPaste)="onPasteAll($event)"></copy-paste-box>
+      </th>
       <th style="min-width: 100px">Category</th>
       <th style="min-width: 250px">Variable</th>
       <th style="min-width: 140px">Unit</th>
