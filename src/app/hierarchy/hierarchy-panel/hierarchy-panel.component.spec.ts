@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { HierarchyPanelComponent } from './hierarchy-panel.component';
 
-describe('HierarchyPanelComponent', () => {
+xdescribe('HierarchyPanelComponent', () => {
   let component: HierarchyPanelComponent;
   let fixture: ComponentFixture<HierarchyPanelComponent>;
 

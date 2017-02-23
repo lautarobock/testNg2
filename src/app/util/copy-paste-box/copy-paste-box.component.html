@@ -1,6 +1,7 @@
 <textarea style="overflow: hidden; resize: none; height: 6px; width: 6px; padding: 0; cursor: pointer;"
   readonly
   (paste)="paste($event)"
+  (focus)="focusChange.emit(true)" (focusout)="focusChange.emit(false)"
   onfocus="this.select()">
   {{value}}
 </textarea>

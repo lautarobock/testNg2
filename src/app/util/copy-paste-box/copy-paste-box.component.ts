@@ -9,6 +9,7 @@ export class CopyPasteBoxComponent implements OnInit {
 
   @Input() value: string;
   @Output() onPaste = new EventEmitter();
+  @Output() focusChange = new EventEmitter();
 
   constructor() { }
 

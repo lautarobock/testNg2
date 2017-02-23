@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { PanelContentComponent } from './panel-content.component';
 
-describe('PanelContentComponent', () => {
+xdescribe('PanelContentComponent', () => {
   let component: PanelContentComponent;
   let fixture: ComponentFixture<PanelContentComponent>;
 

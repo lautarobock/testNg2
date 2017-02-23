@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { VariableEditorContentComponent } from './variable-editor-content.component';
 
-describe('VariableEditorContentComponent', () => {
+xdescribe('VariableEditorContentComponent', () => {
   let component: VariableEditorContentComponent;
   let fixture: ComponentFixture<VariableEditorContentComponent>;
 

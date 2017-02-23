@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { DocumentStatusComponent } from './document-status.component';
 
-describe('DocumentStatusComponent', () => {
+xdescribe('DocumentStatusComponent', () => {
   let component: DocumentStatusComponent;
   let fixture: ComponentFixture<DocumentStatusComponent>;
 

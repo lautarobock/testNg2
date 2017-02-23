@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { TextBoxEditorComponent } from './text-box-editor.component';
 
-describe('TextBoxEditorComponent', () => {
+xdescribe('TextBoxEditorComponent', () => {
   let component: TextBoxEditorComponent;
   let fixture: ComponentFixture<TextBoxEditorComponent>;
 

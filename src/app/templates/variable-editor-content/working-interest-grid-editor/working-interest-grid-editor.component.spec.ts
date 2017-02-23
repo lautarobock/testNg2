@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { WorkingInterestGridEditorComponent } from './working-interest-grid-editor.component';
 
-describe('WorkingInterestGridEditorComponent', () => {
+xdescribe('WorkingInterestGridEditorComponent', () => {
   let component: WorkingInterestGridEditorComponent;
   let fixture: ComponentFixture<WorkingInterestGridEditorComponent>;
 

@@ -12,10 +12,14 @@
     <tbody>
     <tr *ngFor="let variableId of editor.variableIds; let idx=index" [ngClass]="{
         'dirty': value(variableId).state.dirty,
-        'has-expression': value(variableId).periodicExpression()
+        'has-expression': value(variableId).periodicExpression(),
+        'selected-row': selectedCP[idx]
       }">
       <td>
-        <copy-paste-box [value]="text2Copy(variableId, idx)" (onPaste)="onPasteRow($event, variableId)"></copy-paste-box>
+        <copy-paste-box 
+          (focusChange)="selectedCP[idx]=$event"
+          [value]="text2Copy(variableId, idx)" 
+          (onPaste)="onPasteRow($event, variableId, idx)"></copy-paste-box>
       </td>
       <td>{{document.variableDefinitions[variableId].category.name}}</td>
       <td (mouseover)="mouseover[idx+'expression']=true" (mouseout)="mouseover[idx+'expression']=false"
@@ -27,7 +31,7 @@
         </span>
       </td>
       <td>
-        <select [(ngModel)]="selectedUnitsByRow[idx]" class="form-control form-control-sm" style="border-radius: 0;">
+        <select [(ngModel)]="selectedUnitsByRow[idx]" class="form-control form-control-sm" style="border-radius: 0; background-color: white">
           <option *ngFor="let unit of unitsByRow[idx]" [ngValue]="unit">
             {{ unit.display }}
           </option>

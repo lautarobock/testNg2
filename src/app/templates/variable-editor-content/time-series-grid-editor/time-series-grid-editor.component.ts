@@ -1,5 +1,5 @@
+import { ToastyService } from 'ng2-toasty';
 import { Value } from '../../../documents/value.model';
-import { Values } from '../../../documents/values.model';
 import { Component, OnInit } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { AbstractEditorComponent, EditorType } from '../../abstract-content';
@@ -24,8 +24,9 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
   editionIdx = null;
   tmpValues = [];
   editTimeout;
+  selectedCP = {};
 
-  constructor(private decimalPipe: DecimalPipe) { 
+  constructor(private decimalPipe: DecimalPipe, private toastyService: ToastyService,) { 
     super();
   }
 
@@ -91,17 +92,12 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
   }
 
   //@Deprecated
-  unit(variableId) {
-    let units = new UnitReader(this.document.variableDefinitions[variableId].unit).unique();
-    return units.find(u=> u.display === this.value(variableId).unit()).factor;
-  }
+  // unit(variableId) {
+  //   let units = new UnitReader(this.document.variableDefinitions[variableId].unit).unique();
+  //   return units.find(u=> u.display === this.value(variableId).unit()).factor;
+  // }
 
   computedValue(value, unit) {
-    // if ( value ) {
-    //   return value * unit.factor;
-    // } else {
-    //   return this.displayZeroValuesAs;
-    // }
     return new ValueFormatter(
       unit,
       this.displayZeroValuesAs,
@@ -114,24 +110,44 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
     return this.value(variableId);
   }
 
-  onPasteRow(text, variableId) {
-    console.log('PASTE', variableId, text);
+  onPasteRow(text:string, variableId: number, idx: number) {
+    try {
+      let pastedValues = new RowParser(text,this.unitsByRow[idx]).values();
+      if ( pastedValues.variablePrompt !== this.document.variableDefinitions[variableId].prompt ) {
+        this.toastyService.error('Variable name do not match');
+        return;
+      }
+      if ( pastedValues.categoryName !== this.document.variableDefinitions[variableId].category.name ) {
+        this.toastyService.error('Category name do not match');
+        return;
+      }
+      this.selectedUnitsByRow[idx] = pastedValues.unit;
+      this.value(variableId).updateAll(this.value(variableId).values().map((v,idx) => {
+        v.value = pastedValues.values[idx];
+        return v;
+      }));
+    } catch(err) {
+      this.toastyService.error(err.message);
+    }
   }
 
   text2Copy(variableId:number, idx: number) {
     return new RowSerializer(
-      variableId,
-      this.value(variableId),
+      this.document.variableDefinitions[variableId].prompt,
+      this.document.variableDefinitions[variableId].category.name,
+      this.value(variableId).values(),
       this.selectedUnitsByRow[idx],
-      this.document.variableDefinitions,
-      this.displayZeroValuesAs,
-      this.numberFormat,
-      this.decimalPipe
+      new ValueFormatter(
+        this.selectedUnitsByRow[idx],
+        this.displayZeroValuesAs,
+        this.numberFormat,
+        this.decimalPipe
+      )
     ).toString()
   }
 }
 
-class ValueFormatter {
+export class ValueFormatter {
   constructor(
     private unit: any, 
     private displayZeroValuesAs: number, 
@@ -152,34 +168,40 @@ class ValueFormatter {
   }
 }
 
-class RowSerializer {
-
-  private formatter: ValueFormatter;
+export class RowSerializer {
 
   constructor(
-    private variableId: number, 
-    private value: Value, 
+    private prompt: string,
+    private category: string,
+    private values: Array<any>,
     private unit: any, 
-    private variableDefinitions: any, 
-    private displayZeroValuesAs: number, 
-    private numberFormat: string,
-    private decimalPipe: DecimalPipe
-  ) {
-    this.formatter = new ValueFormatter(
-      this.unit,
-      this.displayZeroValuesAs,
-      this.numberFormat,
-      this.decimalPipe
-    );
-  }
+    private formatter: ValueFormatter
+  ) { }
 
   toString() {
-    return this.variableDefinitions[this.variableId].prompt + '\t' + 
-      this.variableDefinitions[this.variableId].category.name + '\t' + 
-      this.unit.display + '\t' + 
-      this.value.values().map(periodValue => {
+    return `${this.prompt}\t${this.category}\t${this.unit.display}\t` 
+      + this.values.map(periodValue => {
         return this.formatter.format(periodValue.value);
       }).join('\t');
   }
 
+}
+
+export class RowParser {
+
+  constructor(private rowText: string, private units: Array<any>) {}
+
+  values() {
+    let fields = this.rowText.split('\t');
+    let unit = this.units.find(u=>u.display === fields[2]);
+    if ( !unit ) {
+      throw new Error('Unit do not match with any of the list');
+    }
+    return {
+      variablePrompt: fields[0],
+      categoryName: fields[1],
+      unit,
+      values: fields.slice(3).map(v => parseFloat(v) / unit.factor)
+    };
+  }
 }

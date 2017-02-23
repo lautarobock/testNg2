@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { CheckBoxEditorComponent } from './check-box-editor.component';
 
-describe('CheckBoxEditorComponent', () => {
+xdescribe('CheckBoxEditorComponent', () => {
   let component: CheckBoxEditorComponent;
   let fixture: ComponentFixture<CheckBoxEditorComponent>;
 

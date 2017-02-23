@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { WellViewEditorComponent } from './well-view-editor.component';
 
-describe('WellViewEditorComponent', () => {
+xdescribe('WellViewEditorComponent', () => {
   let component: WellViewEditorComponent;
   let fixture: ComponentFixture<WellViewEditorComponent>;
 

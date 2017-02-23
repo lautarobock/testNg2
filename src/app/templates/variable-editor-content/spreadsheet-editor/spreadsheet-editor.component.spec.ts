@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { SpreadsheetEditorComponent } from './spreadsheet-editor.component';
 
-describe('SpreadsheetEditorComponent', () => {
+xdescribe('SpreadsheetEditorComponent', () => {
   let component: SpreadsheetEditorComponent;
   let fixture: ComponentFixture<SpreadsheetEditorComponent>;
 

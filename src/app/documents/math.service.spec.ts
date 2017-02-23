@@ -3,7 +3,7 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 import { MathService } from './math.service';
 
-describe('MathService', () => {
+xdescribe('MathService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [MathService]

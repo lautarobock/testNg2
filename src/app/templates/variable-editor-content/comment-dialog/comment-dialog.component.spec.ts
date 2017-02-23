@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { CommentDialogComponent } from './comment-dialog.component';
 
-describe('CommentDialogComponent', () => {
+xdescribe('CommentDialogComponent', () => {
   let component: CommentDialogComponent;
   let fixture: ComponentFixture<CommentDialogComponent>;
 

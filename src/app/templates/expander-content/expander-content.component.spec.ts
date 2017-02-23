@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { ExpanderContentComponent } from './expander-content.component';
 
-describe('ExpanderContentComponent', () => {
+xdescribe('ExpanderContentComponent', () => {
   let component: ExpanderContentComponent;
   let fixture: ComponentFixture<ExpanderContentComponent>;
 
