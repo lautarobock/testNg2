@@ -25,12 +25,20 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
   tmpValues = [];
   editTimeout;
   selectedCP = {};
+  text2CopyByRow: Array<string>;
+  text2CopyAll: string;
 
   constructor(private decimalPipe: DecimalPipe, private toastyService: ToastyService,) { 
     super();
   }
 
   ngOnInit() {
+    //General Config
+    this.decimalPlaces = this.parent.jsonProperties().DecimalPlaces || 2;
+    this.numberFormat = `1.${this.decimalPlaces}-${this.decimalPlaces}`;
+    this.displayZeroValuesAs = this.parent.jsonProperties().DisplayZeroValuesAs || 0;
+    this.groupName = this.parent.jsonProperties().GroupName;
+    //Units by row
     this.unitsByRow = this.editor.variableIds.map(variableId=>{
       if ( this.document.variableDefinitions[variableId].unit.isCurrency) {
         return new CurrencyReader(this.document.variableDefinitions[variableId].unit, this.value(variableId)).unique();
@@ -41,10 +49,16 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
     this.selectedUnitsByRow = this.editor.variableIds.map( (variableId, idx) =>{
       return this.unitsByRow[idx].find(u=> u.display === this.value(variableId).unit());
     });
-    this.decimalPlaces = this.parent.jsonProperties().DecimalPlaces || 2;
-    this.numberFormat = `1.${this.decimalPlaces}-${this.decimalPlaces}`;
-    this.displayZeroValuesAs = this.parent.jsonProperties().DisplayZeroValuesAs || 0;
-    this.groupName = this.parent.jsonProperties().GroupName;
+    //Text for copy to clipboard
+    this.text2CopyByRow = this.editor.variableIds.map((variableId,idx) => this.text2Copy(variableId,idx));
+    this.text2CopyAll = this.text2CopyByRow.join('\n');
+    //Listen for changes
+    this.editor.variableIds.forEach((variableId, idx) => this.value(variableId).onChange.subscribe(data => this.updateText2Copy(variableId,idx)));
+  }
+
+  updateText2Copy(variableId, idx) {
+    this.text2CopyByRow[idx] = this.text2Copy(variableId,idx);
+    this.text2CopyAll = this.text2CopyByRow.join('\n');
   }
 
   cellCursor(idx) {
@@ -90,12 +104,6 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
       },500);
     }
   }
-
-  //@Deprecated
-  // unit(variableId) {
-  //   let units = new UnitReader(this.document.variableDefinitions[variableId].unit).unique();
-  //   return units.find(u=> u.display === this.value(variableId).unit()).factor;
-  // }
 
   computedValue(value, unit) {
     return new ValueFormatter(
@@ -150,10 +158,6 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
     );
   }
 
-  text2CopyAll() {
-    return this.editor.variableIds.map( (variableId,idx) => this.text2Copy(variableId, idx)).join('\n')
-  }
-
   text2Copy(variableId:number, idx: number) {
     return new RowSerializer(
       this.document.variableDefinitions[variableId].prompt,
@@ -202,7 +206,6 @@ export class RowSerializer {
   ) { }
 
   toString() {
-    console.log('aca')
     return `${this.prompt}\t${this.category}\t${this.unit.display}\t` 
       + this.values.map(periodValue => {
         return this.formatter.format(periodValue.value);

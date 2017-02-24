@@ -1,6 +1,9 @@
+import { EventEmitter } from '@angular/core';
 import { Values } from './values.model';
 
 export class Value {
+
+  public onChange = new EventEmitter();
   public state = {
     dirty: false,
     updated: false
@@ -9,8 +12,8 @@ export class Value {
   constructor(private data: any, private _values: Values) {}
 
   set(data) {
-    // this.data.values = data.values;
     this.data = data;
+    this.onChange.emit(data);
   }
 
   update(val) {

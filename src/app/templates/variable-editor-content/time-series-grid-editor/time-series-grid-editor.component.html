@@ -3,10 +3,10 @@
     <thead>
     <tr>
       <th>
-        <!--<copy-paste-box 
+        <copy-paste-box 
           (focusChange)="selectedCP['h']=$event"
-          [value]="text2CopyAll()" 
-          (onPaste)="onPasteAll($event)"></copy-paste-box>-->
+          [value]="text2CopyAll" 
+          (onPaste)="onPasteAll($event)"></copy-paste-box>
       </th>
       <th style="min-width: 100px">Category</th>
       <th style="min-width: 250px">Variable</th>
@@ -21,10 +21,10 @@
         'selected-row': selectedCP[idx]
       }">
       <td>
-        <!--<copy-paste-box 
+        <copy-paste-box 
           (focusChange)="selectedCP[idx]=$event"
-          [value]="text2Copy(variableId, idx)" 
-          (onPaste)="onPasteRow($event, variableId, idx)"></copy-paste-box>-->
+          [value]="text2CopyByRow[idx]" 
+          (onPaste)="onPasteRow($event, variableId, idx)"></copy-paste-box>
       </td>
       <td>{{document.variableDefinitions[variableId].category.name}}</td>
       <td (mouseover)="mouseover[idx+'expression']=true" (mouseout)="mouseover[idx+'expression']=false"
