@@ -24,6 +24,11 @@ export class Values {
     });
   }
 
+  updateMultiple(datas) {
+    datas.forEach(data => this._paramsMap.get(data.variableId).state.dirty = true);
+    this.changeVariables.emit(datas);
+  }
+
   get(variableId) : Value {
     return this._paramsMap.get(variableId);
   }

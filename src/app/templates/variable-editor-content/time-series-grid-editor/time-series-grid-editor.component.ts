@@ -132,11 +132,26 @@ export class TimeSeriesGridEditorComponent extends AbstractEditorComponent imple
   }
 
   onPasteAll(text: string) {
-    text.split('\n').map((row, idx) => new RowParser(row,this.unitsByRow[idx]).values())
+    this.data.updateMultiple(
+      text.split('\n')
+        .filter(row => row.trim().length !== 0)
+        .map((row, idx) => new RowParser(row,this.unitsByRow[idx]).values())
+        .map((row, idx) => {
+          this.selectedUnitsByRow[idx] = row.unit;
+          let variableId = this.editor.variableIds[idx];
+          return {
+            variableId,
+            values: this.value(variableId).values().map((v,idx) => {
+              v.value = row.values[idx];
+              return v;
+            })
+          }
+        })
+    );
   }
 
   text2CopyAll() {
-    return this.editor.variableIds.map( (variableId,idx) => this.text2Copy(variableId, idx)).join('\n');
+    return this.editor.variableIds.map( (variableId,idx) => this.text2Copy(variableId, idx)).join('\n')
   }
 
   text2Copy(variableId:number, idx: number) {
@@ -187,6 +202,7 @@ export class RowSerializer {
   ) { }
 
   toString() {
+    console.log('aca')
     return `${this.prompt}\t${this.category}\t${this.unit.display}\t` 
       + this.values.map(periodValue => {
         return this.formatter.format(periodValue.value);

@@ -23,8 +23,7 @@ export class DocumentsService {
         requestValues.push({
           variableId: data.variableId,
           period: value.periodString,
-          value: value.value,
-          lookup: value.lookup
+          value: value.value
         })
       });
     });
