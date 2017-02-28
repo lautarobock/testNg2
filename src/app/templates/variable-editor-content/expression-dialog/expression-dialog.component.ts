@@ -35,7 +35,7 @@ export class ExpressionDialogComponent implements OnInit {
   ngOnInit() {
     this.mathService.functions().subscribe(data => this.functions = data);
     if ( this.isPeriodic ) {
-      this.expression = this.value.periodicExpression();
+      this.expression = this.value.scalarExpression() || this.value.periodicExpression();
     } else {
       this.expression = this.value.expression();
     }

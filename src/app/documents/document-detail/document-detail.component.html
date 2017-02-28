@@ -35,7 +35,7 @@
             <span [ngPlural]="status.warnings().length">
               <template ngPluralCase="=0">0 Warnings</template>
               <template ngPluralCase="=1">1 Warning</template>
-              <template ngPluralCase="few">{{status.warnings().length}} Warnings</template>
+              <template ngPluralCase="other">{{status.warnings().length}} Warnings</template>
             </span>
         </button>
         <button type="button" class="btn btn-info btn-sm" style="margin-left: 1em" *ngIf="status.informations().length!==0" (click)="showStatus()">

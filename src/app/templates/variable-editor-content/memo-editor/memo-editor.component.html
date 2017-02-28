@@ -1,6 +1,7 @@
 <div class="form-group row no-gutters" [ngClass]="{
     'over': isOver,
     'dirty': value().state.dirty,
+    'updated': value().state.updated,
     'has-expression': expression()
   }">
   <label class="col-sm-3 col-form-label col-form-label-sm">{{document.variableDefinitions[variableId()].prompt}}</label>

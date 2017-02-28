@@ -14,10 +14,10 @@ export class Values {
     values.forEach(val=>this._paramsMap.set(val.variableId,new Value(val,this)));
   }
 
-  update(values) {
+  update(values, flash: boolean = false) {
     values.forEach(val=>{
       if ( this._paramsMap.has(val.variableId) ) {
-        this._paramsMap.get(val.variableId).set(val);
+        this._paramsMap.get(val.variableId).set(val, flash);
       } else {
         this._paramsMap.set(val.variableId,new Value(val,this));
       }

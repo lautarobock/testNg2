@@ -3,6 +3,10 @@
     background-color: lightblue ;
 }
 
+:host /deep/ .updated input, :host /deep/ .updated textarea, :host /deep/ .updated select, :host /deep/ tr.updated {
+    background-color: #FEFFBE !important;
+}
+
 :host /deep/ .has-expression input, :host /deep/ .has-expression textarea, :host /deep/ tr.has-expression {
     background-color: #DFFFFF  ;
 }

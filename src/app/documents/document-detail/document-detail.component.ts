@@ -71,25 +71,25 @@ export class DocumentDetailComponent implements OnInit {
           this.data.changeVariables.subscribe(v => {
             this.loadingService.start();
             this._documentService.updateVariables(this.document,v,this.selectedScenario.name).toPromise()
-              .then(data => this.data.update(data))
+              .then(data => this.data.update(data, true))
               .then(() => this.loadingService.complete());
           });
           this.data.changeVariable.subscribe(v=> {
             this.loadingService.start();
             this._documentService.updateFields(this.document,v,this.selectedScenario.name).toPromise()
-              .then(data => this.data.update(data))
+              .then(data => this.data.update(data, true))
               .then(() => this.loadingService.complete());
           });
           this.data.changeComment.subscribe(v=> {
             this.loadingService.start();
-            this._documentService.updateComment(this.document,this.selectedScenario.name,v.variableId,v.comment, v.period).toPromise()
+            this._documentService.updateComment(this.document,this.selectedScenario.name,v.variableId,v.comment, v.period, v.lookup).toPromise()
               .then(data=> this.data.update([data]))
               .then(() => this.loadingService.complete());
           });
           this.data.changeExpression.subscribe(v=>{
             this.loadingService.start();
             this._documentService.updateExpression(this.document,this.selectedScenario.name, v.variableId,v.expression).toPromise()
-              .then(data=> this.data.update(data))
+              .then(data=> this.data.update(data, true))
               .then(() => this.loadingService.complete());
           });
         } 
@@ -130,6 +130,7 @@ export class DocumentDetailComponent implements OnInit {
     this._documentService.variables(this.document.documentId,this.document.versionId,this.selectedScenario.name,-1,allVariables)
       .subscribe((data: any) =>{
         this.data.update(data.data);
+        this.data.clearDirties();
         this.loadingService.complete();
       });
   }

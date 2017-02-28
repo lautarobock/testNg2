@@ -1,3 +1,4 @@
+import { lookup } from 'dns';
 import { EventEmitter } from '@angular/core';
 import { Values } from './values.model';
 
@@ -6,14 +7,19 @@ export class Value {
   public onChange = new EventEmitter();
   public state = {
     dirty: false,
-    updated: false
+    updated: false,
+
   };
 
   constructor(private data: any, private _values: Values) {}
 
-  set(data) {
+  set(data, flash: boolean = false) {
     this.data = data;
-    this.onChange.emit(data);
+    this.onChange.emit(data); 
+    if ( flash ) {
+      this.state.updated =true;
+      setTimeout(() => this.state.updated =false, 1000);
+    }
   }
 
   update(val) {
@@ -75,22 +81,28 @@ export class Value {
     }
   }
 
-  comment(period) {
+  scalarExpression() {
+    return this.data.expression;
+  }
+
+  comment(period, lookup) {
     if ( !this.data.values || this.data.values.length === 0 ) {
       return null;
     } else {
       let idx = 0;
       if ( period ) {
         idx = this.data.values.findIndex(value=>value.periodString === period);
+      } else if (lookup) {
+        idx = this.data.values.findIndex(value=>value.lookup === lookup);
       }
       return this.data.values[idx].comment;
     }
   }
 
-  updateComment(comment, period?) {
-    if ( !this.data.values || this.data.values.length === 0 || this.data.values[0].comment !== comment) {
-      this._values.changeComment.emit({variableId: this.data.variableId, comment, period});
-    }
+  updateComment(comment, period?, lookup?) {
+    // if ( !this.data.values || this.data.values.length === 0 || this.data.values[0].comment !== comment) {
+      this._values.changeComment.emit({variableId: this.data.variableId, comment, period, lookup});
+    // }
   }
   
   dataType() {

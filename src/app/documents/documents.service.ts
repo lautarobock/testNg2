@@ -52,10 +52,10 @@ export class DocumentsService {
     }
   }
 
-  updateComment(document: Document, scenario, variableId, comment, period?, revision = -1) {
+  updateComment(document: Document, scenario, variableId, comment, period?, lookup?, revision = -1) {
     return this._http.post(
       this._config.get('apiPath') + `/documents/comment/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
-      { variableId, comment, period }
+      { variableId, comment, period, lookup }
     ).map(res => res.json());
   }
 
