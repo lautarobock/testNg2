@@ -63,3 +63,8 @@ md-sidenav-layout.m2app-dark {
     width: 90% !important;
     max-width: 1100px;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}

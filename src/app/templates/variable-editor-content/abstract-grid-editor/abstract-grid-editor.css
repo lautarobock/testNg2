@@ -3,7 +3,6 @@
 }
 
 .over .comment {
-    /*display: inline-block !important;*/
     visibility: visible !important;
 }
 
@@ -17,13 +16,10 @@
 
 .comment {
     position: relative !important;
-    /*display: none;*/
     visibility: hidden;
     cursor: pointer;
     font-size: 10px;
-    /*top: -26px;*/
     font-weight: bold;
-    /*margin-top: -26px;*/
     top: -10px;
 }
 
@@ -34,7 +30,6 @@
 
 .comment.fill {
     color: blue;
-    /*display: inline-block !important;*/
     visibility: visible !important;
 }
 
@@ -42,6 +37,6 @@ tr.selected-row {
     background-color: lightgray !important;
 }
 
-.selected-row tr {
+.selected-table tr {
     background-color: lightgray !important;
 }

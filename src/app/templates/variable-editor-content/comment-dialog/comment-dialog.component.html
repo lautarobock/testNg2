@@ -3,7 +3,6 @@
 </div>
 <div class="modal-body">
   <div class="form-group row no-gutters">
-    [{{period}}, {{lookup}}]
     <textarea #inputComment
         (focus)="inputComment.select()"
         [ngModel]="value.comment(period, lookup)"

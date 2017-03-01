@@ -1,3 +1,63 @@
-<p>
-  line-item-grid-editor works!
-</p>
+<div style="overflow-x: scroll;" [sync-scroll]="groupName">
+  <table class="table table-sm table-bordered" [ngClass]="{'selected-table': selectedCP['h']}">
+    <thead>
+    <tr>
+      <th>
+        <copy-paste-box 
+          (focusChange)="selectedCP['h']=$event"
+          [value]="text2CopyAll" 
+          (onPaste)="onPasteAll($event)"></copy-paste-box>
+      </th>
+      <th style="min-width: 100px">Category</th>
+      <th style="min-width: 250px">Variable</th>
+      <th style="min-width: 140px">Unit</th>
+      <th *ngFor="let column of value().values()" style="text-align: right;min-width: 150px;padding-right: 17px;">{{column.periodString}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let variableId of editor.variableIds; let idx=index" [ngClass]="{
+        'dirty': value(variableId).state.dirty,
+        'updated': value(variableId).state.updated,
+        'has-expression': value(variableId).periodicExpression(),
+        'selected-row': selectedCP[idx]
+      }">
+      <td>
+        <copy-paste-box 
+          (focusChange)="selectedCP[idx]=$event"
+          [value]="rowContexts[idx].text2Copy" 
+          (onPaste)="onPasteRow($event, variableId, idx)"></copy-paste-box>
+      </td>
+      <td>{{document.variableDefinitions[variableId].category.name}}</td>
+      <td (mouseover)="mouseover[idx+'expression']=true" (mouseout)="mouseover[idx+'expression']=false"
+          [ngClass]="{'over': mouseover[idx+'expression']}">
+        {{document.variableDefinitions[variableId].prompt}}
+        <span class="expression" title="{{value(variableId).periodicExpression()}}" 
+            [readonly]="document.readonly" [open-expression]="value(variableId)" [isPeriodic]="true" [document]="document" [scenario]="scenario">
+          &fnof;
+        </span>
+      </td>
+      <td>
+        <select [(ngModel)]="rowContexts[idx].selectedUnit" class="form-control form-control-sm" style="border-radius: 0; background-color: white">
+          <option *ngFor="let unit of rowContexts[idx].units" [ngValue]="unit">
+            {{ unit.display }}
+          </option>
+        </select>
+      </td>
+      <td *ngFor="let colValue of value(variableId).values(); let periodIdx = index" style="text-align: right;" 
+          (mouseover)="mouseover[idx+colValue.periodString]=true" (mouseout)="mouseover[idx+colValue.periodString]=false"
+          [style.cursor]="isReadOnly(idx) ? 'not-allowed' : 'pointer'" (click)="edit(idx, periodIdx)">
+        <span  [ngClass]="{'over': mouseover[idx+colValue.periodString]}">
+          <span *ngIf="editionIdx!==idx">{{ computedValue(colValue.value, rowContexts[idx].selectedUnit) }}</span>
+          <input *ngIf="editionIdx===idx" (focus)="focus()" (focusout)="blur()" id="input-grid-{{periodIdx}}" onfocus="this.select()"
+            type="number" style="min-width:130px;text-align: right;background: white !important;"
+            class="form-control form-control-sm"  (keyup.enter)="$event.srcElement.blur()" (keyup.esc)="cancelEdit()"
+            [(ngModel)]="tmpValues[periodIdx].value">
+          <i class="fa fa-comment comment" [hidden]="editionIdx===idx" title="{{comment(variableId, colValue.periodString)}}" 
+              [readonly]="document.readonly" [open-comment]="value(variableId)" [period]="colValue.periodString"
+              [ngClass]="{'fill': comment(variableId, colValue.periodString)}"></i>
+        </span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -8,7 +8,7 @@ class BaseReader {
         private sizes,
         private displayLabel) {}
 
-     all() {
+     all() : Unit[] {
         let units = [];
         for (let i = 0; i < this.types.length; i++) {
             let type = this.unit[this.types[i]];
@@ -27,9 +27,18 @@ class BaseReader {
         return units;
     }
 
-    unique() {
+    unique() : Unit[] {
         return _.uniqBy(this.all(), 'display');
     }   
+}
+
+export class Unit {
+    constructor(
+        public display: string,
+        public factor: number,
+        public type: string,
+        public size: string
+    ) {}
 }
 
 export class UnitReader extends BaseReader {

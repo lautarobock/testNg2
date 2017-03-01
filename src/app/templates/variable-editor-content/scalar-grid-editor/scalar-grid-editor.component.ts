@@ -1,4 +1,5 @@
-import { ValueFormatter } from '../time-series-grid-editor/time-series-grid-editor.component';
+import { clearTimeout, setTimeout } from 'timers';
+import { ValueFormatter } from '../abstract-grid-editor/abstract-grid-editor';
 import { CurrencyReader, UnitReader } from '../../../documents/unit-reader';
 import { ToastyService } from 'ng2-toasty';
 import { DecimalPipe } from '@angular/common/src/pipes/number_pipe';
@@ -57,7 +58,7 @@ export class ScalarGridEditorComponent extends AbstractEditorComponent implement
   }
 
   cellCursor(idx) {
-    if ( this.document.readonly || this.value(this.editor.variableIds[idx]).periodicExpression() ) {
+    if ( this.document.readonly || this.value(this.editor.variableIds[idx]).scalarExpression() ) {
       return 'not-allowed';
     } else {
       return 'pointer';
@@ -65,7 +66,7 @@ export class ScalarGridEditorComponent extends AbstractEditorComponent implement
   }
 
   edit(idx, periodIdx) {
-    if ( this.document.readonly || this.value(this.editor.variableIds[idx]).periodicExpression() ) return;
+    if ( this.document.readonly || this.value(this.editor.variableIds[idx]).scalarExpression() ) return;
     if ( this.editionIdx !== null ) return;
     this.editionIdx = idx;
     this.tmpValues =  JSON.parse(JSON.stringify(this.value(this.editor.variableIds[idx]).values()));
@@ -102,11 +103,10 @@ export class ScalarGridEditorComponent extends AbstractEditorComponent implement
 
   computedValue(value, unit) {
     return new ValueFormatter(
-      unit,
       this.displayZeroValuesAs,
       this.numberFormat,
       this.decimalPipe
-    ).format(value);
+    ).format(value, unit);
   }
   
   commentValue(variableId: number) {
