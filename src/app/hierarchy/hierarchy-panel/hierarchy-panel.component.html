@@ -6,7 +6,7 @@
   </select>
   <Tree [nodes]="hierarchy" [options]="options">
     <template #treeNodeTemplate let-node="node" let-index="index">
-      <img src="assets/images/tree/{{node.data.nodeType.imageKey}}.png"
+      <img [src]="'assets/images/tree/'+fixImgName(node.data.nodeType.imageKey)+'.png'"
                  style="position: relative;;width: 17px;height: 17px;top:-2px" />
       <span>{{ node.data.name }}</span>
     </template>

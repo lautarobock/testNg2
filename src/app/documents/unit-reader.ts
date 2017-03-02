@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-class BaseReader {
+export class BaseReader {
     constructor(
         private unit:any,
         private labelProvider,

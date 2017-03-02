@@ -24,4 +24,8 @@ export class LineItemGridEditorComponent extends AbstractGridEditorComponent {
     return this.document.readonly || this.value(this.editor.variableIds[idx]).periodicExpression();
   }
 
+  columns(): string[] {
+    return this.value(this.variableId()).values().map(value => value.periodString);
+  }
+
 }

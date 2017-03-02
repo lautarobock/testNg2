@@ -1,5 +1,5 @@
 :host /deep/ .hierarchy .toggle-children {
-  background-image: url('assets/images/tree/ic_chevron_right_black_24px.svg');
+  background-image: url('/assets/images/tree/ic_chevron_right.svg');
   width: 24px;
   height: 24px;
 }

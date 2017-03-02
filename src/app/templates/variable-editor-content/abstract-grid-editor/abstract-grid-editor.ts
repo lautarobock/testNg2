@@ -21,6 +21,7 @@ export abstract class AbstractGridEditorComponent extends AbstractEditorComponen
   editTimeout;
   selectedCP = {};
   formatter: ValueFormatter;
+  cachedColumns: string[];
 
   constructor(protected decimalPipe: DecimalPipe, protected toastyService: ToastyService) {
     super();
@@ -31,15 +32,16 @@ export abstract class AbstractGridEditorComponent extends AbstractEditorComponen
     this.numberFormat = `1.${this.decimalPlaces}-${this.decimalPlaces}`;
     this.displayZeroValuesAs = this.parent.jsonProperties().DisplayZeroValuesAs || 0;
     this.groupName = this.parent.jsonProperties().GroupName;
-    this.rowContexts = this.editor.variableIds.map((variableId,idx) => new RowContext(
+    this.rowContexts = this.editor.variableIds.map((variableId, idx) => new RowContext(
       this.value(variableId),
       this.document.variableDefinitions,
       this.displayZeroValuesAs,
       this.numberFormat,
       this.decimalPipe
     ));
-    this.text2CopyAll = this.rowContexts.map(rc => rc.text2Copy).join('\n');
-    this.editor.variableIds.forEach((variableId, idx) => this.value(variableId).onChange.subscribe(data => this.updateText2Copy(variableId,idx)));
+    this.cachedColumns = this.columns();
+    this.updateText2CopyAll();
+    this.editor.variableIds.forEach((variableId, idx) => this.value(variableId).onChange.subscribe(data => this.updateText2Copy(variableId, idx)));
     this.formatter = new ValueFormatter(
       this.displayZeroValuesAs,
       this.numberFormat,
@@ -47,11 +49,19 @@ export abstract class AbstractGridEditorComponent extends AbstractEditorComponen
     );
   }
 
-  abstract isReadOnly(idx) : boolean;
+  abstract isReadOnly(idx): boolean;
+  abstract columns(): string[];
 
   updateText2Copy(variableId, idx) {
     this.rowContexts[idx].updateText2Copy();
-    this.text2CopyAll = this.rowContexts.map(rc => rc.text2Copy).join('\n');
+    this.updateText2CopyAll();
+  }
+
+  updateText2CopyAll() {
+    this.text2CopyAll = 'Category\tVariable\tUnit\t';
+    this.text2CopyAll += this.cachedColumns.join('\t');
+    this.text2CopyAll += '\n';
+    this.text2CopyAll += this.rowContexts.map(rc => rc.text2Copy).join('\n');
   }
 
   computedValue(value, unit) {
@@ -59,57 +69,57 @@ export abstract class AbstractGridEditorComponent extends AbstractEditorComponen
   }
 
   edit(idx, periodIdx) {
-    if ( this.isReadOnly(idx) || this.editionIdx !== null ) return;
+    if (this.isReadOnly(idx) || this.editionIdx !== null) return;
     this.editionIdx = idx;
-    this.tmpValues =  JSON.parse(JSON.stringify(this.value(this.editor.variableIds[idx]).values()));
-    this.tmpValues.forEach(value=>value.value = value.value * this.rowContexts[idx].selectedUnit.factor);
-    setTimeout(()=> document.getElementById(`input-grid-${periodIdx}`).focus() ,50);
+    this.tmpValues = JSON.parse(JSON.stringify(this.value(this.editor.variableIds[idx]).values()));
+    this.tmpValues.forEach(value => value.value = value.value * this.rowContexts[idx].selectedUnit.factor);
+    setTimeout(() => document.getElementById(`input-grid-${periodIdx}`).focus(), 50);
   }
 
   cancelEdit() {
-    this.editionIdx=null;
-    setTimeout(()=>this.tmpValues=[],50);
-    if ( this.editTimeout ) {
+    this.editionIdx = null;
+    setTimeout(() => this.tmpValues = [], 50);
+    if (this.editTimeout) {
       clearTimeout(this.editTimeout);
       this.editTimeout = null;
     }
   }
 
   focus() {
-    if ( this.editTimeout ) {
+    if (this.editTimeout) {
       clearTimeout(this.editTimeout);
       this.editTimeout = null;
     }
   }
 
   blur() {
-    if ( this.editionIdx !== null ) {
-      this.editTimeout = setTimeout(()=>{
-        this.tmpValues.forEach(value=>value.value = value.value / this.rowContexts[this.editionIdx].selectedUnit.factor);
+    if (this.editionIdx !== null) {
+      this.editTimeout = setTimeout(() => {
+        this.tmpValues.forEach(value => value.value = value.value / this.rowContexts[this.editionIdx].selectedUnit.factor);
         this.value(this.editor.variableIds[this.editionIdx]).updateAll(this.tmpValues);
-        this.tmpValues=[];
-        this.editionIdx=null;
-      },500);
+        this.tmpValues = [];
+        this.editionIdx = null;
+      }, 500);
     }
   }
 
-  onPasteRow(text:string, variableId: number, idx: number) {
+  onPasteRow(text: string, variableId: number, idx: number) {
     try {
-      let pastedValues = new RowParser(text,this.rowContexts[idx].units).values();
-      if ( pastedValues.variablePrompt !== this.document.variableDefinitions[variableId].prompt ) {
+      let pastedValues = new RowParser(text, this.rowContexts[idx].units).values();
+      if (pastedValues.variablePrompt !== this.document.variableDefinitions[variableId].prompt) {
         this.toastyService.error('Variable name do not match');
         return;
       }
-      if ( pastedValues.categoryName !== this.document.variableDefinitions[variableId].category.name ) {
+      if (pastedValues.categoryName !== this.document.variableDefinitions[variableId].category.name) {
         this.toastyService.error('Category name do not match');
         return;
       }
       this.rowContexts[idx].selectedUnit = pastedValues.unit;
-      this.value(variableId).updateAll(this.value(variableId).values().map((v,idx) => {
+      this.value(variableId).updateAll(this.value(variableId).values().map((v, idx) => {
         v.value = pastedValues.values[idx];
         return v;
       }));
-    } catch(err) {
+    } catch (err) {
       this.toastyService.error(err.message);
     }
   }
@@ -118,13 +128,13 @@ export abstract class AbstractGridEditorComponent extends AbstractEditorComponen
     this.data.updateMultiple(
       text.split('\n')
         .filter(row => row.trim().length !== 0)
-        .map((row, idx) => new RowParser(row,this.rowContexts[idx].units).values())
+        .map((row, idx) => new RowParser(row, this.rowContexts[idx].units).values())
         .map((row, idx) => {
           this.rowContexts[idx].selectedUnit = row.unit;
           let variableId = this.editor.variableIds[idx];
           return {
             variableId,
-            values: this.value(variableId).values().map((v,idx) => {
+            values: this.value(variableId).values().map((v, idx) => {
               v.value = row.values[idx];
               return v;
             })
@@ -137,22 +147,22 @@ export abstract class AbstractGridEditorComponent extends AbstractEditorComponen
 
 
 export class RowContext {
-  units : Unit[];
+  units: Unit[];
   selectedUnit: Unit;
   text2Copy: string;
 
-  constructor(private value: Value, private variableDefinitions:any, private displayZeroValuesAs, private numberFormat, private decimalPipe: DecimalPipe) {
-    if ( variableDefinitions[value.variableId()].unit.isCurrency) {
+  constructor(private value: Value, private variableDefinitions: any, private displayZeroValuesAs, private numberFormat, private decimalPipe: DecimalPipe) {
+    if (variableDefinitions[value.variableId()].unit.isCurrency) {
       this.units = new CurrencyReader(variableDefinitions[value.variableId()].unit, value).unique();
     } else {
       this.units = new UnitReader(variableDefinitions[value.variableId()].unit).unique();
     }
-    this.selectedUnit = this.units.find(u=> u.display === value.unit());
+    this.selectedUnit = this.units.find(u => u.display === value.unit());
     this.updateText2Copy();
   }
 
   updateText2Copy() {
-    this.text2Copy =  new RowSerializer(
+    this.text2Copy = new RowSerializer(
       this.variableDefinitions[this.value.variableId()].prompt,
       this.variableDefinitions[this.value.variableId()].category.name,
       this.value.values(),
@@ -164,22 +174,22 @@ export class RowContext {
       )
     ).toString()
   }
-  
+
 }
 
 export class ValueFormatter {
   constructor(
-    private displayZeroValuesAs: number, 
+    private displayZeroValuesAs: number,
     private numberFormat: string,
     private decimalPipe: DecimalPipe
-  ) {}
+  ) { }
 
   format(value: number, unit: Unit) {
-    return this.decimalPipe.transform(this.computedValue(value, unit),this.numberFormat);
+    return this.decimalPipe.transform(this.computedValue(value, unit), this.numberFormat);
   }
 
   computedValue(value, unit: Unit) {
-    if ( value ) {
+    if (value) {
       return value * unit.factor;
     } else {
       return this.displayZeroValuesAs;
@@ -193,12 +203,12 @@ export class RowSerializer {
     private prompt: string,
     private category: string,
     private values: Array<any>,
-    private unit: any, 
+    private unit: any,
     private formatter: ValueFormatter
   ) { }
 
   toString() {
-    return `${this.prompt}\t${this.category}\t${this.unit.display}\t` 
+    return `${this.prompt}\t${this.category}\t${this.unit.display}\t`
       + this.values.map(periodValue => {
         return this.formatter.format(periodValue.value, this.unit);
       }).join('\t');
@@ -208,12 +218,12 @@ export class RowSerializer {
 
 export class RowParser {
 
-  constructor(private rowText: string, private units: Array<Unit>) {}
+  constructor(private rowText: string, private units: Array<Unit>) { }
 
   values() {
     let fields = this.rowText.split('\t');
-    let unit = this.units.find(u=>u.display === fields[2]);
-    if ( !unit ) {
+    let unit = this.units.find(u => u.display === fields[2]);
+    if (!unit) {
       throw new Error('Unit do not match with any of the list');
     }
     return {

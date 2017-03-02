@@ -47,6 +47,10 @@ export class HierarchyPanelComponent implements OnInit {
     );
   }
 
+  fixImgName(name) {
+    return name.replace(' ','');
+  }
+
   loadDocuments() {
     this._hierarchyService.documents(this.selectedVersion.versionId).subscribe(data => {
       this.hierarchy = this.markAsExpanded(data);

@@ -100,9 +100,7 @@ export class Value {
   }
 
   updateComment(comment, period?, lookup?) {
-    // if ( !this.data.values || this.data.values.length === 0 || this.data.values[0].comment !== comment) {
-      this._values.changeComment.emit({variableId: this.data.variableId, comment, period, lookup});
-    // }
+    this._values.changeComment.emit({variableId: this.data.variableId, comment, period, lookup});
   }
   
   dataType() {

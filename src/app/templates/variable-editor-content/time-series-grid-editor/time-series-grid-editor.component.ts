@@ -23,4 +23,8 @@ export class TimeSeriesGridEditorComponent extends AbstractGridEditorComponent  
   isReadOnly(idx) : boolean {
     return this.document.readonly || this.value(this.editor.variableIds[idx]).periodicExpression();
   }
+
+  columns(): string[] {
+    return this.value(this.variableId()).values().map(value => value.periodString);
+  }
 }
