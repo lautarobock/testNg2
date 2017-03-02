@@ -17,7 +17,6 @@ export abstract class AbstractGridEditorComponent extends AbstractEditorComponen
   text2CopyAll: string;
   editionIdx = null;
   tmpValues = [];
-  editTimeout;
   selectedCP = {};
   formatter: ValueFormatter;
   cachedColumns: string[];
@@ -78,27 +77,15 @@ export abstract class AbstractGridEditorComponent extends AbstractEditorComponen
   cancelEdit() {
     this.editionIdx = null;
     setTimeout(() => this.tmpValues = [], 50);
-    if (this.editTimeout) {
-      clearTimeout(this.editTimeout);
-      this.editTimeout = null;
-    }
   }
 
-  focus() {
-    if (this.editTimeout) {
-      clearTimeout(this.editTimeout);
-      this.editTimeout = null;
-    }
-  }
-
-  blur() {
-    if (this.editionIdx !== null) {
-      this.editTimeout = setTimeout(() => {
-        this.tmpValues.forEach(value => value.value = value.value / this.rowContexts[this.editionIdx].selectedUnit.factor);
-        this.value(this.editor.variableIds[this.editionIdx]).updateAll(this.tmpValues);
-        this.tmpValues = [];
-        this.editionIdx = null;
-      }, 500);
+  blur($event) {
+    //if two ids start with prefix 'input-grid-' is like do not lost focus of row in edition
+    if ( this.editionIdx !== null && !($event.srcElement.id && $event.relatedTarget   && $event.relatedTarget.id && $event.srcElement.id.startsWith('input-grid-') && $event.relatedTarget.id.startsWith('input-grid-')) ) {
+      this.tmpValues.forEach(value => value.value = value.value / this.rowContexts[this.editionIdx].selectedUnit.factor);
+      this.value(this.editor.variableIds[this.editionIdx]).updateAll(this.tmpValues);
+      this.tmpValues = [];
+      this.editionIdx = null;
     }
   }
 

@@ -45,9 +45,9 @@
       <td *ngFor="let colValue of value(variableId).values(); let periodIdx = index" class="period"
           [style.cursor]="isReadOnly(idx) ? 'not-allowed' : 'pointer'" (click)="edit(idx, periodIdx)">
         <span *ngIf="editionIdx!==idx">{{ computedValue(colValue.value, rowContexts[idx].selectedUnit) }}</span>
-        <input *ngIf="editionIdx===idx" (focus)="focus()" (focusout)="blur()" id="input-grid-{{periodIdx}}" onfocus="this.select()"
+        <input *ngIf="editionIdx===idx" (focusout)="blur($event)" id="input-grid-{{periodIdx}}" onfocus="this.select()"
           type="number" style="min-width:130px;text-align: right;background: white !important;"
-          class="form-control form-control-sm"  (keyup.enter)="$event.srcElement.blur()" (keyup.esc)="cancelEdit()"
+          class="form-control form-control-sm" (keyup.enter)="$event.srcElement.blur()" (keyup.esc)="cancelEdit()"
           [(ngModel)]="tmpValues[periodIdx].value">
         <i class="fa fa-comment comment" [hidden]="editionIdx===idx" title="{{comment(variableId, periodIdx)}}" 
             [readonly]="document.readonly" [open-comment]="value(variableId)" [index]="periodIdx"
