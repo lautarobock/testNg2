@@ -11,7 +11,7 @@
       <th style="min-width: 100px">Category</th>
       <th style="min-width: 250px">Variable</th>
       <th style="min-width: 140px">Unit</th>
-      <th *ngFor="let column of document.variableDefinitions[variableId()].subcategories" style="text-align: right;min-width: 150px;padding-right: 17px;">
+      <th *ngFor="let column of cachedColumns" class="period">
         {{column}}
       </th>
     </tr>
@@ -54,9 +54,9 @@
             type="number" style="min-width:130px;text-align: right;background: white !important;"
             class="form-control form-control-sm"  (keyup.enter)="$event.srcElement.blur()" (keyup.esc)="cancelEdit()"
             [(ngModel)]="tmpValues[periodIdx].value">
-          <i class="fa fa-comment comment" [hidden]="editionIdx===idx" title="{{comment(variableId, null, colValue.lookup)}}" 
-              [readonly]="document.readonly" [open-comment]="value(variableId)" [period]="colValue.periodString" [lookup]="colValue.lookup"
-              [ngClass]="{'fill': comment(variableId, null, colValue.lookup)}"></i>
+          <i class="fa fa-comment comment" [hidden]="editionIdx===idx" title="{{comment(variableId, periodIdx)}}" 
+              [readonly]="document.readonly" [open-comment]="value(variableId)" [index]="periodIdx"
+              [ngClass]="{'fill': comment(variableId, periodIdx)}"></i>
         </span>
       </td>
     </tr>

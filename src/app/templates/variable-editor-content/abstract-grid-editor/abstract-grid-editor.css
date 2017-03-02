@@ -40,3 +40,9 @@ tr.selected-row {
 .selected-table tr {
     background-color: lightgray !important;
 }
+
+th.period {
+    text-align: right;
+    min-width: 150px;
+    padding-right: 17px;
+}

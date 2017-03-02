@@ -25,6 +25,6 @@ export class ScalarGridEditorComponent extends AbstractGridEditorComponent {
   }
 
   columns(): string[] {
-    return this.value(this.variableId()).values().map(value => value.lookup);
+    return this.document.variableDefinitions[this.variableId()].subcategories;
   }
 }

@@ -11,9 +11,9 @@ export class AbstractContentComponent {
 
     private _jsonProperties = undefined;
     jsonProperties() {
-        if ( !this._jsonProperties ) {
-            if ( this.content.jsonDisplayedProperties ) {
-                this._jsonProperties = eval('(' +this.content.jsonDisplayedProperties + ')')    ;
+        if (!this._jsonProperties) {
+            if (this.content.jsonDisplayedProperties) {
+                this._jsonProperties = eval('(' + this.content.jsonDisplayedProperties + ')');
             } else {
                 this._jsonProperties = {};
             }
@@ -30,11 +30,11 @@ export class AbstractEditorComponent {
     public scenario: any;
     public isOver: boolean = false;
 
-    variableId() : number {
+    variableId(): number {
         return this.editor.variableIds[0];
     }
 
-    value(variableId?) : Value {
+    value(variableId?): Value {
         return this.data.get(variableId || this.variableId());
     }
 
@@ -42,8 +42,8 @@ export class AbstractEditorComponent {
         return this.data.get(this.variableId()).expression();
     }
 
-    comment(variableId, period, lookup) {
-        return this.data.get(variableId || this.variableId()).comment(period, lookup);
+    comment(variableId, index = 0) {
+        return this.data.get(variableId || this.variableId()).comment(index);
     }
 
     @HostListener('mouseenter') onMouseEnter() {
@@ -87,15 +87,15 @@ export enum EditorType {
 }
 
 export class EditorData {
-    
+
     constructor(
         public editorType: EditorType,
         public variableIds: number[]
-    ) {}
+    ) { }
 }
 
 export class ContentData {
-    
+
     constructor(
         public contentType: ContentType,
         public name: string,
@@ -103,5 +103,5 @@ export class ContentData {
         public informationText: string,
         public editors: EditorData[],
         public jsonDisplayedProperties: any
-    ) {}
+    ) { }
 }

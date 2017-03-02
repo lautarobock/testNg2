@@ -11,8 +11,7 @@ export class CommentDialogComponent implements OnInit {
 
   value:Value;
   readonly: boolean;
-  period: string;
-  lookup: string;
+  index: number;
   @ViewChild('inputComment') inputComment: ElementRef;
 
   constructor(public activeModal: NgbActiveModal) { }
@@ -25,7 +24,7 @@ export class CommentDialogComponent implements OnInit {
   }
 
   ok(comment) {
-    this.value.updateComment(comment,this.period, this.lookup);
+    this.value.updateComment(comment,this.index);
     this.activeModal.close();
   }
 
@@ -39,12 +38,11 @@ export class CommentDialog {
 
   constructor(private modalService: NgbModal) {}
 
-  open(value: Value, readonly: boolean, period: string, lookup: string) {
+  open(value: Value, readonly: boolean, index: number) {
     let ref = this.modalService.open(CommentDialogComponent);
     ref.componentInstance.value  = value;
     ref.componentInstance.readonly = readonly;
-    ref.componentInstance.period = period;
-    ref.componentInstance.lookup = lookup;
+    ref.componentInstance.index = index;
     return ref.result;
   }
 }
@@ -54,8 +52,7 @@ export class OpenComment {
  
   @Input('open-comment') value: Value;
   @Input('readonly') readonly: boolean;
-  @Input('period') period: string;
-  @Input('lookup') lookup: string;
+  @Input('index') index: number;
 
   constructor(el: ElementRef, private commentDialog: CommentDialog) {
 
@@ -63,6 +60,6 @@ export class OpenComment {
 
   @HostListener('click',['$event']) onClick(event) {
     event.stopPropagation();
-    this.commentDialog.open(this.value, this.readonly, this.period, this.lookup).then(result => console.log('ok',result)).catch(reason => console.log('cancel',reason));
+    this.commentDialog.open(this.value, this.readonly, this.index).then(result => console.log('ok',result)).catch(reason => console.log('cancel',reason));
   }
 }

@@ -16,6 +16,8 @@ import { ToastyService } from 'ng2-toasty';
 @RegisterEditor(EditorType.TimeSeriesGrid)
 export class TimeSeriesGridEditorComponent extends AbstractGridEditorComponent  {
 
+  cachedColumns: string[];
+
   constructor(decimalPipe: DecimalPipe, toastyService: ToastyService) { 
     super(decimalPipe, toastyService);
   }
