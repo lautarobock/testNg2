@@ -28,8 +28,7 @@
           (onPaste)="onPasteRow($event, variableId, idx)"></copy-paste-box>
       </td>
       <td>{{document.variableDefinitions[variableId].category.name}}</td>
-      <td (mouseover)="mouseover[idx+'expression']=true" (mouseout)="mouseover[idx+'expression']=false"
-          [ngClass]="{'over': mouseover[idx+'expression']}">
+      <td class="expression-cell">
         {{document.variableDefinitions[variableId].prompt}}
         <span class="expression" title="{{value(variableId).periodicExpression()}}" 
             [readonly]="document.readonly" [open-expression]="value(variableId)" [isPeriodic]="true" [document]="document" [scenario]="scenario">
@@ -43,19 +42,16 @@
           </option>
         </select>
       </td>
-      <td *ngFor="let colValue of value(variableId).values(); let periodIdx = index" style="text-align: right;" 
-          (mouseover)="mouseover[idx+colValue.periodString]=true" (mouseout)="mouseover[idx+colValue.periodString]=false"
+      <td *ngFor="let colValue of value(variableId).values(); let periodIdx = index" class="period"
           [style.cursor]="isReadOnly(idx) ? 'not-allowed' : 'pointer'" (click)="edit(idx, periodIdx)">
-        <span  [ngClass]="{'over': mouseover[idx+colValue.periodString]}">
-          <span *ngIf="editionIdx!==idx">{{ computedValue(colValue.value, rowContexts[idx].selectedUnit) }}</span>
-          <input *ngIf="editionIdx===idx" (focus)="focus()" (focusout)="blur()" id="input-grid-{{periodIdx}}" onfocus="this.select()"
-            type="number" style="min-width:130px;text-align: right;background: white !important;"
-            class="form-control form-control-sm"  (keyup.enter)="$event.srcElement.blur()" (keyup.esc)="cancelEdit()"
-            [(ngModel)]="tmpValues[periodIdx].value">
-          <i class="fa fa-comment comment" [hidden]="editionIdx===idx" title="{{comment(variableId, periodIdx)}}" 
-              [readonly]="document.readonly" [open-comment]="value(variableId)" [index]="periodIdx"
-              [ngClass]="{'fill': comment(variableId, periodIdx)}"></i>
-        </span>
+        <span *ngIf="editionIdx!==idx">{{ computedValue(colValue.value, rowContexts[idx].selectedUnit) }}</span>
+        <input *ngIf="editionIdx===idx" (focus)="focus()" (focusout)="blur()" id="input-grid-{{periodIdx}}" onfocus="this.select()"
+          type="number" style="min-width:130px;text-align: right;background: white !important;"
+          class="form-control form-control-sm"  (keyup.enter)="$event.srcElement.blur()" (keyup.esc)="cancelEdit()"
+          [(ngModel)]="tmpValues[periodIdx].value">
+        <i class="fa fa-comment comment" [hidden]="editionIdx===idx" title="{{comment(variableId, periodIdx)}}" 
+            [readonly]="document.readonly" [open-comment]="value(variableId)" [index]="periodIdx"
+            [ngClass]="{'fill': comment(variableId, periodIdx)}"></i>
       </td>
     </tr>
     </tbody>

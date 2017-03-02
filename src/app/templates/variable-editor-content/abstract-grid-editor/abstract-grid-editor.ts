@@ -15,7 +15,6 @@ export abstract class AbstractGridEditorComponent extends AbstractEditorComponen
   groupName: string;
   rowContexts: RowContext[];
   text2CopyAll: string;
-  mouseover = {};
   editionIdx = null;
   tmpValues = [];
   editTimeout;

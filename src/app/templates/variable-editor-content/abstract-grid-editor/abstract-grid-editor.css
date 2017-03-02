@@ -1,8 +1,8 @@
-.over .expression {
+td.expression-cell:hover .expression {
     display: inline !important;
 }
 
-.over .comment {
+td.period:hover .comment {
     visibility: visible !important;
 }
 
@@ -45,4 +45,8 @@ th.period {
     text-align: right;
     min-width: 150px;
     padding-right: 17px;
+}
+
+td.period {
+    text-align: right;
 }
