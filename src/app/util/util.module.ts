@@ -5,7 +5,7 @@ import { FormsModule }    from '@angular/forms';
 import { ConfirmationDialogComponent, ConfirmationDialog } from './confirmation-dialog/confirmation-dialog.component';
 import { PromptDialogComponent, PromptDialog } from './prompt-dialog/prompt-dialog.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SyncScrollDirective } from './sync-scroll.directive';
+import { SyncScrollDirective, OnScrollDirective } from './sync-scroll.directive';
 import { CopyPasteBoxComponent } from './copy-paste-box/copy-paste-box.component';
 
 @NgModule({
@@ -15,8 +15,8 @@ import { CopyPasteBoxComponent } from './copy-paste-box/copy-paste-box.component
     BrowserModule,
     NgbModule
   ],
-  declarations: [ConfirmationDialogComponent, PromptDialogComponent, SyncScrollDirective, CopyPasteBoxComponent],
-  exports: [SyncScrollDirective, CopyPasteBoxComponent],
+  declarations: [ConfirmationDialogComponent, PromptDialogComponent, SyncScrollDirective, CopyPasteBoxComponent, OnScrollDirective],
+  exports: [SyncScrollDirective, CopyPasteBoxComponent, OnScrollDirective],
   entryComponents: [ConfirmationDialogComponent, PromptDialogComponent],
   providers: [ConfirmationDialog, PromptDialog]
 })

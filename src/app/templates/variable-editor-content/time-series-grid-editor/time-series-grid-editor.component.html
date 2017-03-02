@@ -1,4 +1,4 @@
-<div style="overflow-x: scroll;" [sync-scroll]="groupName">
+<div style="overflow-x: scroll;" [sync-scroll]="groupName" (on-scroll)="onScroll()">
   <table class="table table-sm table-bordered" [ngClass]="{'selected-table': selectedCP['h']}">
     <thead>
     <tr>
@@ -42,7 +42,7 @@
           </option>
         </select>
       </td>
-      <td *ngFor="let colValue of value(variableId).values(); let periodIdx = index" class="period"
+      <td *ngFor="let colValue of value(variableId).values() | slice:0:maxCols; let periodIdx = index" class="period"
           [style.cursor]="isReadOnly(idx) ? 'not-allowed' : 'pointer'" (click)="edit(idx, periodIdx)">
         <span *ngIf="editionIdx!==idx">{{ computedValue(colValue.value, rowContexts[idx].selectedUnit) }}</span>
         <input *ngIf="editionIdx===idx" (focusout)="blur($event)" id="input-grid-{{periodIdx}}" onfocus="this.select()"

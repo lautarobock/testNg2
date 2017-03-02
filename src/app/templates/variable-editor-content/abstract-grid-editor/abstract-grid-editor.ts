@@ -20,6 +20,7 @@ export abstract class AbstractGridEditorComponent extends AbstractEditorComponen
   selectedCP = {};
   formatter: ValueFormatter;
   cachedColumns: string[];
+  maxCols = 10;
 
   constructor(protected decimalPipe: DecimalPipe, protected toastyService: ToastyService) {
     super();
@@ -66,11 +67,16 @@ export abstract class AbstractGridEditorComponent extends AbstractEditorComponen
     return this.formatter.format(value, unit);
   }
 
+  onScroll() {
+    this.maxCols = this.cachedColumns.length;
+  }
+
   edit(idx, periodIdx) {
     if (this.isReadOnly(idx) || this.editionIdx !== null) return;
     this.editionIdx = idx;
     this.tmpValues = JSON.parse(JSON.stringify(this.value(this.editor.variableIds[idx]).values()));
     this.tmpValues.forEach(value => value.value = value.value * this.rowContexts[idx].selectedUnit.factor);
+    this.onScroll();
     setTimeout(() => document.getElementById(`input-grid-${periodIdx}`).focus(), 50);
   }
 
