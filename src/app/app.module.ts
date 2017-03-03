@@ -14,6 +14,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { ToastyModule } from 'ng2-toasty';
+import { HotkeyModule } from 'angular2-hotkeys';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ToastyModule } from 'ng2-toasty';
     ConfigModule,
     DocumentsModule,
     ToastyModule.forRoot(),
-    SlimLoadingBarModule.forRoot()
+    SlimLoadingBarModule.forRoot(),
+    HotkeyModule.forRoot()
   ],
   providers: [
     {

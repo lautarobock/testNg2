@@ -1,25 +1,13 @@
-import {
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    Directive,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    ReflectiveInjector,
-    ViewContainerRef
-} from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { DocumentsService } from '../documents.service';
-import { Values } from '../values.model';
-import { Document, DocumentStatus } from '../documents.model';
-import { SaveDocumentDialog } from '../save-document-dialog/save-document-dialog.component';
-import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
-import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { DocumentStatusDialog } from '../document-status/document-status.component';
+import { Document, DocumentStatus } from '../documents.model';
+import { DocumentsService } from '../documents.service';
+import { SaveDocumentDialog } from '../save-document-dialog/save-document-dialog.component';
+import { Values } from '../values.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as _ from 'lodash';
-
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import { ToastyService } from 'ng2-toasty';
+import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 
 @Component({
   selector: 'app-document-detail',
@@ -47,8 +35,14 @@ export class DocumentDetailComponent implements OnInit {
     private saveDocumentDialog: SaveDocumentDialog,
     private toastyService: ToastyService,
     private loadingService: SlimLoadingBarService,
-    private documentStatusDialog: DocumentStatusDialog
-  ) { }
+    private documentStatusDialog: DocumentStatusDialog,
+    private hotkeysService: HotkeysService
+  ) {
+    this.hotkeysService.add(new Hotkey('ctrl+s', (event: KeyboardEvent): boolean => {
+        this.save();
+        return false; // Prevent bubbling
+    }));
+  }
 
   ngOnInit() {
     this.selectedRevision = RevisionList.LASTEST;
@@ -62,7 +56,7 @@ export class DocumentDetailComponent implements OnInit {
     }
   }
 
-  shareLink() : string {
+  shareLink(): string {
     return `${window.location.protocol}//${window.location.host}${window.location.pathname}?documentId=${this.document.documentId}&versionId=${this.document.versionId}`;
   }
 
