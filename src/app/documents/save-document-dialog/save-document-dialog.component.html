@@ -4,7 +4,7 @@
 <div class="modal-body">
     <textarea #inputText
         (focus)="inputText.select()"
-        class="form-control" 
+        class="form-control mousetrap" 
         [(ngModel)]="text" 
         style="height:130px; margin-bottom: 1em;">
     </textarea>
@@ -28,7 +28,7 @@
     </div>-->
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-outline-primary" (click)="ok()">
+    <button type="button" class="btn btn-outline-primary" (click)="ok()" title="Confirm text and save document (ctrl+enter)">
       <i class="fa fa-check" ></i> Ok
     </button>
     <button type="button" class="btn btn-secondary" (click)="cancel()">

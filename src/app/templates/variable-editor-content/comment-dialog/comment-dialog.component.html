@@ -7,12 +7,12 @@
         (focus)="inputComment.select()"
         [ngModel]="value.comment(index)"
         [readonly]="readonly"
-        class="form-control">
+        class="form-control mousetrap">
     </textarea>
   </div>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-outline-primary" (click)="ok(inputComment.value)" [hidden]="readonly">
+  <button type="button" class="btn btn-outline-primary" (click)="ok(inputComment.value)" [hidden]="readonly" title="Confirm comment (ctrl+enter)">
     <i class="fa fa-check" ></i> Ok
   </button>
   <button type="button" class="btn btn-secondary" (click)="cancel()">

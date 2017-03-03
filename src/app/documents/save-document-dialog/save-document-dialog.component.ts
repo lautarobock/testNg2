@@ -1,6 +1,7 @@
 import { Component, OnInit, Injectable, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document } from '../documents.model';
+import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 
 @Component({
   selector: 'app-save-document-dialog',
@@ -13,7 +14,15 @@ export class SaveDocumentDialogComponent implements OnInit {
   text: string = '';
   document: Document;
 
-  constructor(public activeModal: NgbActiveModal) { }
+  constructor(
+    public activeModal: NgbActiveModal,
+    private hotkeysService: HotkeysService
+  ) {
+    this.hotkeysService.add(new Hotkey('ctrl+enter', (event: KeyboardEvent): boolean => {
+        this.ok();
+        return false; // Prevent bubbling
+    }));
+  }
 
   ngOnInit() {
   }
