@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastyConfig } from 'ng2-toasty';
 import { URLSearchParams } from "@angular/http";
 import { Document } from './documents/documents.model';
+import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 
 @Component({
   selector: 'app-root',
@@ -19,10 +20,15 @@ export class AppComponent implements OnInit {
   constructor(
     private toastyConfig: ToastyConfig, 
     private loginDialog: LoginDialog, 
-    sessionEmitter :SessionEmitter
+    sessionEmitter :SessionEmitter,
+    private hotkeysService: HotkeysService
   ) {
     this.toastyConfig.theme = 'bootstrap';
     sessionEmitter.onExpire().subscribe(() => this.loginDialog.open().then(() => location.reload()).catch((err)=>console.log(err)));
+    this.hotkeysService.add(new Hotkey('alt+w', () => {
+        this.closeCurrent();
+        return false; // Prevent bubbling
+    }));
   }
 
   ngOnInit() {
@@ -50,6 +56,11 @@ export class AppComponent implements OnInit {
     if ( !this.documents[documentIndex].name ) {
       this.documents[documentIndex].name = document.documentName;
     }
+  }
+
+  closeCurrent() {
+    let index = this.documents.findIndex(p => p.idx === this.activeIdx);
+    this.closeTab(this.activeIdx,index);
   }
 
   closeTab(idx, documentIndex) {

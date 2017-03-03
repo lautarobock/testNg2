@@ -51,7 +51,7 @@
       <ul class="navbar-nav mr-auto">
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <button type="button" class="btn btn-primary" (click)="save()" [disabled]="document.readonly">
+        <button type="button" class="btn btn-primary" (click)="save()" [disabled]="document.readonly" title="Save document (ctrl+s)">
           <i [hidden]="!saving" class='fa fa-circle-o-notch fa-spin'></i> 
           <i [hidden]="saving" class="fa fa-floppy-o" ></i>
         </button>
