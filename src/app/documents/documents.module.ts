@@ -9,6 +9,7 @@ import { SaveDocumentDialogComponent, SaveDocumentDialog } from './save-document
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MathService } from './math.service';
 import { DocumentStatusComponent, DocumentStatusDialog } from './document-status/document-status.component';
+import { ClipboardModule } from 'ngx-clipboard';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { DocumentStatusComponent, DocumentStatusDialog } from './document-status
     FormsModule,
     // DocumentsRoutingModule,
     TemplatesModule,
-    NgbModule
+    NgbModule,
+    ClipboardModule
   ],
   declarations: [DocumentDetailComponent, SaveDocumentDialogComponent, DocumentStatusComponent],
   entryComponents: [SaveDocumentDialogComponent, DocumentStatusComponent],

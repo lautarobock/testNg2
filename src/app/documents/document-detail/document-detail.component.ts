@@ -1,4 +1,15 @@
-import { Component, Input, OnInit, Directive, ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentRef } from '@angular/core';
+import {
+    Component,
+    ComponentFactoryResolver,
+    ComponentRef,
+    Directive,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ReflectiveInjector,
+    ViewContainerRef
+} from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DocumentsService } from '../documents.service';
 import { Values } from '../values.model';
@@ -19,6 +30,7 @@ export class DocumentDetailComponent implements OnInit {
 
   @Input() documentId: number;
   @Input() versionId: number;
+  @Output() onLoad = new EventEmitter();
   document: Document = <Document>{};
   data: Values;
   selectedScenario: any;
@@ -27,6 +39,7 @@ export class DocumentDetailComponent implements OnInit {
   saving: boolean = false;
   hideAlert: boolean = false;
   status: DocumentStatus = new DocumentStatus();
+  isCopied = false;
 
 
   constructor(
@@ -49,11 +62,21 @@ export class DocumentDetailComponent implements OnInit {
     }
   }
 
+  shareLink() : string {
+    return `${window.location.protocol}//${window.location.host}${window.location.pathname}?documentId=${this.document.documentId}&versionId=${this.document.versionId}`;
+  }
+
+  afterCopyUrl() {
+    this.isCopied = true;
+    this.toastyService.info('Url copied to clipboard!');
+  }
+
   loadDocument() {
     this.loadingService.start();
     this._documentService.get(this.documentId, this.versionId, this.selectedRevision.revision)
       .subscribe((documentData: Document) => {
         this.document = this.postProcess(documentData);
+        this.onLoad.emit(this.document);
         this.selectedScenario = _.find(this.document.conceptDefinition.concepts, (concept: any) => concept.name === this.document.conceptDefinition.currentConceptName);
         this.revisions = new RevisionList(this.document.revisions);
         this.selectedRevision = this.revisions.find(rev => rev.revision === this.selectedRevision.revision);

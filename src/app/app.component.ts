@@ -1,10 +1,10 @@
-import { Component, Optional, OnInit } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
-import { ToastyConfig } from 'ng2-toasty';
-import { LoginDialog } from './login/login-dialog/login-dialog.component';
+import { WithStringInitializer } from 'codelyzer/util/astQuery';
 import { SessionEmitter } from './http/session-http.service';
-
+import { LoginDialog } from './login/login-dialog/login-dialog.component';
+import { Component, OnInit } from '@angular/core';
+import { ToastyConfig } from 'ng2-toasty';
+import { URLSearchParams } from "@angular/http";
+import { Document } from './documents/documents.model';
 
 @Component({
   selector: 'app-root',
@@ -16,12 +16,25 @@ export class AppComponent implements OnInit {
   documents: Array<any> = [];
   activeIdx: string;
 
-  constructor(private toastyConfig: ToastyConfig, private loginDialog: LoginDialog, sessionEmitter:SessionEmitter) {
+  constructor(
+    private toastyConfig: ToastyConfig, 
+    private loginDialog: LoginDialog, 
+    sessionEmitter :SessionEmitter
+  ) {
     this.toastyConfig.theme = 'bootstrap';
     sessionEmitter.onExpire().subscribe(() => this.loginDialog.open().then(() => location.reload()).catch((err)=>console.log(err)));
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    let params = new URLSearchParams(window.location.search);
+    if ( params.get('?documentId') && params.get('versionId') ) {
+      this.open({
+        documentId: params.get('?documentId'),
+        versionId: params.get('versionId')
+      })
+    }
+    console.log('params', params);
+  }
 
   open(params) {
     let idx = this.documents.findIndex(p => p.documentId === params.documentId && p.versionId === params.versionId);
@@ -31,6 +44,12 @@ export class AppComponent implements OnInit {
       idx = this.documents.length-1;
     }
     this.activeIdx = this.documents[idx].idx;
+  }
+
+  loadDocument(document: Document, documentIndex: number) {
+    if ( !this.documents[documentIndex].name ) {
+      this.documents[documentIndex].name = document.documentName;
+    }
   }
 
   closeTab(idx, documentIndex) {
