@@ -16,6 +16,8 @@ import { RegisterEditor } from '../../template-loader.directive';
 @RegisterEditor(EditorType.LineItemGrid)
 export class LineItemGridEditorComponent extends AbstractGridEditorComponent {
 
+  expanded = {};
+
   constructor(decimalPipe: DecimalPipe, toastyService: ToastyService) { 
     super(decimalPipe, toastyService);
   }
