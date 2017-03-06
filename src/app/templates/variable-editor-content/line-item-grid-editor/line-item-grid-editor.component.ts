@@ -18,7 +18,6 @@ import { RegisterEditor } from '../../template-loader.directive';
 export class LineItemGridEditorComponent extends AbstractGridEditorComponent {
 
   expanded = {};
-  // isEditLineItem = {};
   lineItemTypeTexts : string[] = [];
 
 
@@ -55,7 +54,24 @@ export class LineItemGridEditorComponent extends AbstractGridEditorComponent {
     this.value(variableId).updateLineItem(lineItems);
   }
 
-  editLineItem(idx, lineItemIdx) {
+  changeLineItemType(idx, variableId, lineItem, lineItemIdx) {
+    //Fill empty data
+    if ( lineItem.lineItemType === 'Dated Value' ) {
+      lineItem.date = lineItem.date || this.document.startDate;
+      lineItem.value = lineItem.value || 0;
+    } else if ( lineItem.lineItemType === 'Escalating Value' ) {
+      lineItem.startDate = lineItem.startDate || this.document.startDate;
+      lineItem.endDate = lineItem.endDate || this.document.endDate;
+      lineItem.value = lineItem.value || 0;
+      lineItem.escalationRate = lineItem.escalationRate || 0;
+    }
+    this.expanded[idx][lineItemIdx] = false;
+    let lineItems = this.value(variableId).lineItems();
+    lineItems[lineItemIdx] = lineItem;
+    this.value(variableId).updateLineItem(lineItems);
+  }
+
+  editLineItem(idx,lineItemIdx) {
     this.expanded[idx][lineItemIdx] = true;
   }
 

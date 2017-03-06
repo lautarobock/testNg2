@@ -87,6 +87,7 @@
                   <select #select
                       [(ngModel)]="item.lineItemType"
                       class="form-control form-control-sm" 
+                      (change)="changeLineItemType(idx, variableId, item, lineItemIdx)"
                       [disabled]="document.readonly ? 'true' : null">
                     <option *ngFor="let value of lineItemTypeTexts" [ngValue]="value">
                       {{value}}

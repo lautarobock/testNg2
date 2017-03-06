@@ -19,7 +19,7 @@
                 </button>
             </td>
             <td>
-              <input type="number" [(ngModel)]="value" class="form-control form-control-sm" />
+              <input type="number" [(ngModel)]="value" class="form-control form-control-sm" (keyup.enter)="ok()" (keyup.esc)="close()" />
             </td>
             <td>
               <select #select

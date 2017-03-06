@@ -21,7 +21,7 @@
                 </button>
             </td>
             <td>
-              <input type="number" [(ngModel)]="value" class="form-control form-control-sm" />
+              <input type="number" [(ngModel)]="value" class="form-control form-control-sm" (keyup.enter)="ok()" (keyup.esc)="close()"/>
             </td>
             <td style="width: 120px">
               <select #select
@@ -60,7 +60,7 @@
               </select>
             </td>
             <td>
-              <input type="number" [(ngModel)]="escalationRate" class="form-control form-control-sm" />
+              <input type="number" [(ngModel)]="escalationRate" class="form-control form-control-sm" (keyup.enter)="ok()" (keyup.esc)="close()"/>
             </td>
         </tr>
     </tbody>
