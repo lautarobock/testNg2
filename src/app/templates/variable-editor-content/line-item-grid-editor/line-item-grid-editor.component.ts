@@ -18,7 +18,7 @@ import { RegisterEditor } from '../../template-loader.directive';
 export class LineItemGridEditorComponent extends AbstractGridEditorComponent {
 
   expanded = {};
-  isEditLineItem = {};
+  // isEditLineItem = {};
   lineItemTypeTexts : string[] = [];
 
 
@@ -36,8 +36,11 @@ export class LineItemGridEditorComponent extends AbstractGridEditorComponent {
   }
 
   expandLineItems(idx: number, expand: boolean) {
-    this.expanded[idx]=expand;
-    this.isEditLineItem = {};
+    if ( expand ) {
+      this.expanded[idx]={};
+    } else {
+      this.expanded[idx]=null;
+    }
   }
 
   updateLineItemType(variableId, idx, selectedTypeIdx: number) {
@@ -52,16 +55,16 @@ export class LineItemGridEditorComponent extends AbstractGridEditorComponent {
     this.value(variableId).updateLineItem(lineItems);
   }
 
-  editLineItem(lineItemIdx) {
-    this.isEditLineItem[lineItemIdx] = true;
+  editLineItem(idx, lineItemIdx) {
+    this.expanded[idx][lineItemIdx] = true;
   }
 
-  closeLineItem(lineItemIdx) {
-    this.isEditLineItem[lineItemIdx] = false;
+  closeLineItem(idx, lineItemIdx) {
+    this.expanded[idx][lineItemIdx] = false;
   }
 
-  changeLineItem(variableId, lineItem, lineItemIdx) {
-    this.isEditLineItem[lineItemIdx] = false;
+  changeLineItem(idx, variableId, lineItem, lineItemIdx) {
+    this.expanded[idx][lineItemIdx] = false;
     let lineItems = this.value(variableId).lineItems();
     lineItems[lineItemIdx] = lineItem;
     this.value(variableId).updateLineItem(lineItems);

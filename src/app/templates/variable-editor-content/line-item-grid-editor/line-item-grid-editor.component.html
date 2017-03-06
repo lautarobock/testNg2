@@ -95,11 +95,11 @@
                 </td>
                 <td>{{item.comment}}</td>
                 <td>
-                  <span *ngIf="!isEditLineItem[lineItemIdx]" class="pointer" (click)="editLineItem(lineItemIdx)">{{item.friendlyDescription}}</span>
-                  <line-item-dated-value [document]="document" [item]="item" (onChange)="changeLineItem(variableId, $event,lineItemIdx)" (cancel)="closeLineItem(lineItemIdx)" *ngIf="isEditLineItem[lineItemIdx] && item.lineItemType === 'Dated Value'"></line-item-dated-value>
-                  <span *ngIf="isEditLineItem[lineItemIdx] && item.lineItemType === 'Escalating Value'">Escalating</span>
-                  <span *ngIf="isEditLineItem[lineItemIdx] && item.lineItemType === 'Expression'">Expression</span>
-                  <span *ngIf="isEditLineItem[lineItemIdx] && item.lineItemType === 'Periodic Values'">Periodic</span>
+                  <span *ngIf="!expanded[idx][lineItemIdx]" class="pointer" (click)="editLineItem(idx,lineItemIdx)">{{item.friendlyDescription}}</span>
+                  <line-item-dated-value [document]="document" [item]="item" (onChange)="changeLineItem(idx,variableId, $event,lineItemIdx)" (cancel)="closeLineItem(idx,lineItemIdx)" *ngIf="expanded[idx][lineItemIdx] && item.lineItemType === 'Dated Value'"></line-item-dated-value>
+                  <line-item-escalating-value [document]="document" [item]="item" (onChange)="changeLineItem(idx,variableId, $event,lineItemIdx)" (cancel)="closeLineItem(idx,lineItemIdx)"  *ngIf="expanded[idx][lineItemIdx] && item.lineItemType === 'Escalating Value'"></line-item-escalating-value>
+                  <span *ngIf="expanded[idx][lineItemIdx] && item.lineItemType === 'Expression'">Expression</span>
+                  <span *ngIf="expanded[idx][lineItemIdx] && item.lineItemType === 'Periodic Values'">Periodic</span>
                 </td>
               </tr>
             </tbody>
