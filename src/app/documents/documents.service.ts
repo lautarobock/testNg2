@@ -1,19 +1,23 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
 import { Config } from '../config/config';
-import { Document } from './documents.model';
+import { Document, LineItemType } from './documents.model';
 
 @Injectable()
 export class DocumentsService {
 
-  constructor(private _http: Http, private _config: Config) { }
+  apiPath: string;
+
+  constructor(private _http: Http, private _config: Config) {
+    this.apiPath = this._config.get('apiPath');
+  }
 
   get(documentId,versionId,revision = -1) {
-    return this._http.get(this._config.get('apiPath') + `/documents/Data/${documentId}/${versionId}/${revision}`).map(res => res.json());
+    return this._http.get(`${this.apiPath}/documents/Data/${documentId}/${versionId}/${revision}`).map(res => res.json());
   }
 
   status(document: Document, scenario, revision = -1) {
-    return this._http.get(this._config.get('apiPath') + `/documents/status/${document.documentId}/${document.versionId}/${revision}/${scenario}`).map(res => res.json());
+    return this._http.get(`${this.apiPath}/documents/status/${document.documentId}/${document.versionId}/${revision}/${scenario}`).map(res => res.json());
   }
 
   updateVariables(document: Document, datas: Array<any>, scenario, revision = -1) {
@@ -27,14 +31,14 @@ export class DocumentsService {
         })
       });
     });
-    return this._http.post(this._config.get('apiPath') + `/documents/multipledata/${document.documentId}/${document.versionId}/${revision}/${scenario}`, requestValues)
+    return this._http.post(`${this.apiPath}/documents/multipledata/${document.documentId}/${document.versionId}/${revision}/${scenario}`, requestValues)
       .map(res => res.json());
   }
 
   updateFields(document: Document, data, scenario, revision = -1, period?, lookup?, variableCurrency?) {
     if ( data.values.length > 1) {
       return this._http.post(
-        this._config.get('apiPath') + `/documents/multipledata/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
+        `${this.apiPath}/documents/multipledata/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
         data.values.map(value=> {
           return {
             variableId: data.variableId,
@@ -46,22 +50,34 @@ export class DocumentsService {
       ).map(res => res.json());
     } else {
       return this._http.post(
-        this._config.get('apiPath') + `/documents/data/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
+        `${this.apiPath}/documents/data/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
         { variableId: data.variableId, value: data.values[0].value, period, lookup, variableCurrency}
       ).map(res => res.json());
     }
   }
 
+  updateLineItem(document: Document, scenario, variableId, lineItems, revision = -1) {
+    return this._http.post(
+      `${this.apiPath}/documents/data/${document.documentId}/${document.versionId}/${revision}/${scenario}`, { 
+        variableId,
+        lineItems: lineItems.map(item => {
+            item.values = item.containedValues;
+            return item;
+        })
+      }
+    ).map(res => res.json());
+  }
+
   updateComment(document: Document, scenario, variableId, comment, period?, lookup?, revision = -1) {
     return this._http.post(
-      this._config.get('apiPath') + `/documents/comment/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
+      `${this.apiPath}/documents/comment/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
       { variableId, comment, period, lookup }
     ).map(res => res.json());
   }
 
   updateExpression(document: Document, scenario, variableId, expression, revision = -1) {
     return this._http.post(
-      this._config.get('apiPath') + `/documents/expression/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
+      `${this.apiPath}/documents/expression/${document.documentId}/${document.versionId}/${revision}/${scenario}`,
       { variableId, expression }
     ).map(res => res.json());
   }
@@ -70,7 +86,7 @@ export class DocumentsService {
     let search = '';
     variableNames.forEach(variableId=>search += `variableId=${variableId}&`);
     return this._http.get(
-      this._config.get('apiPath') + `/documents/variables/${documentId}/${version}/${revision}/${scenario}`,
+      `${this.apiPath}/documents/variables/${documentId}/${version}/${revision}/${scenario}`,
       {
         search: search
       }
@@ -79,14 +95,14 @@ export class DocumentsService {
 
   save(document: Document, comment, revisionTagIds) {
       return this._http.post(
-        this._config.get('apiPath') + `/documents/save/${document.documentId}/${document.versionId}/-1`,
+        `${this.apiPath}/documents/save/${document.documentId}/${document.versionId}/-1`,
         { comment, revisionTagIds }
       );
   };
 
   release(document: Document) {
     return this._http.post(
-      this._config.get('apiPath') + `/documents/UnlockDocument/${document.documentId}/${document.versionId}`,
+      `${this.apiPath}/documents/UnlockDocument/${document.documentId}/${document.versionId}`,
       { 
         lockKey: document.documentLock.lockKey,
         isForceUnlock: true,
@@ -97,8 +113,24 @@ export class DocumentsService {
 
   validateExpression(document: Document, scenarioName: string, variableId: number, expression: string) {
     return this._http.post(
-      this._config.get('apiPath') + `/documents/validateexpression/${document.documentId}/${document.versionId}`,
+      `${this.apiPath}/documents/validateexpression/${document.documentId}/${document.versionId}`,
       { variableId, expression, scenarioName }
     ).map(res => res.json());
   }
+}
+
+@Injectable()
+export class LineItemTypeText {
+
+  public names: Array<string> = [
+    'Dated Value',
+    'Escalating Value',
+    'Expression',
+    'Periodic Values'
+  ];
+
+  // public get(key: LineItemType) {
+  //   return this.names[LineItemType[key]];
+  // }
+
 }

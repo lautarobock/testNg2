@@ -34,6 +34,14 @@ export class Value {
     }
   }
 
+  updateLineItem(lineItems) {
+    this.state.dirty = true;
+    this._values.changeLineItem.emit({
+      variableId: this.data.variableId,
+      lineItems
+    });
+  }
+
   clear() {
     this.state.dirty = true;
     this._values.changeVariable.emit({
@@ -79,6 +87,10 @@ export class Value {
     } else {
       return null;
     }
+  }
+
+  lineItems() {
+    return this.data.lineItems;
   }
 
   scalarExpression() {

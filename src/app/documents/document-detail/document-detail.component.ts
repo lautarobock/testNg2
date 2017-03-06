@@ -39,8 +39,8 @@ export class DocumentDetailComponent implements OnInit {
     private hotkeysService: HotkeysService
   ) {
     this.hotkeysService.add(new Hotkey('ctrl+s', (event: KeyboardEvent): boolean => {
-        this.save();
-        return false; // Prevent bubbling
+      this.save();
+      return false; // Prevent bubbling
     }));
   }
 
@@ -109,6 +109,12 @@ export class DocumentDetailComponent implements OnInit {
                   .then(data => this.data.update(data, true))
                   .then(() => this.loadingService.complete());
               });
+              this.data.changeLineItem.subscribe(v => {
+                this.loadingService.start();
+                this._documentService.updateLineItem(this.document, this.selectedScenario.name, v.variableId, v.lineItems).toPromise()
+                  .then(data => this.data.update(data, true))
+                  .then(() => this.loadingService.complete());
+              })
             }
           });
       });

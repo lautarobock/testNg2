@@ -29,14 +29,13 @@
             (onPaste)="onPasteRow($event, variableId, idx)"></copy-paste-box>
         </td>
         <td>
-          <i class="fa fa-caret-right" [hidden]="expanded[idx]" (click)="expanded[idx]=true"></i>
-          <i class="fa fa-caret-down" [hidden]="!expanded[idx]" (click)="expanded[idx]=false"></i>
+          <i class="fa fa-caret-right pointer" [hidden]="expanded[idx]" (click)="expandLineItems(idx,true)"></i>
+          <i class="fa fa-caret-down pointer" [hidden]="!expanded[idx]" (click)="expandLineItems(idx,false)"></i>
         </td>
         <td>{{document.variableDefinitions[variableId].category.name}}</td>
         <td class="expression-cell">
           {{document.variableDefinitions[variableId].prompt}}
-          <span class="expression" title="{{value(variableId).periodicExpression()}}" 
-              [readonly]="document.readonly" [open-expression]="value(variableId)" [isPeriodic]="true" [document]="document" [scenario]="scenario">
+          <span class="expression" title="{{value(variableId).periodicExpression()}}" >
             &fnof;
           </span>
         </td>
@@ -47,24 +46,64 @@
             </option>
           </select>
         </td>
-        <td *ngFor="let colValue of value(variableId).values() | slice:0:maxCols; let periodIdx = index" class="period"
-            [style.cursor]="isReadOnly(idx) ? 'not-allowed' : 'pointer'" (click)="edit(idx, periodIdx)">
-          <span *ngIf="editionIdx!==idx">{{ computedValue(colValue.value, rowContexts[idx].selectedUnit) }}</span>
-          <input *ngIf="editionIdx===idx" (focusout)="blur($event)" id="input-grid-{{periodIdx}}" onfocus="this.select()"
-            type="number" style="min-width:130px;text-align: right;background: white !important;"
-            class="form-control form-control-sm" (keyup.enter)="$event.srcElement.blur()" (keyup.esc)="cancelEdit()"
-            [(ngModel)]="tmpValues[periodIdx].value">
+        <td *ngFor="let colValue of value(variableId).values() | slice:0:maxCols; let periodIdx = index" class="period">
+          {{ computedValue(colValue.value, rowContexts[idx].selectedUnit) }}
           <i class="fa fa-comment comment" [hidden]="editionIdx===idx" title="{{comment(variableId, periodIdx)}}" 
               [readonly]="document.readonly" [open-comment]="value(variableId)" [index]="periodIdx"
               [ngClass]="{'fill': comment(variableId, periodIdx)}"></i>
         </td>
       </tr>
       <tr *ngIf="expanded[idx]">
-        <td [attr.colspan]="cachedColumns.length+5">
-          <span *ngFor="let item of value(variableId).data.lineItems">
-            {{item.friendlyDescription}}
-            <br/>
-          </span>
+        <td [attr.colspan]="cachedColumns.length+5" style="background: #f7f7f9">
+          <table class="table table-sm table-bordered">
+            <thead>
+              <tr>
+                <th style="width: 50px">Action</th>
+                <th style="width: 50px">ID</th>
+                <th style="width: 50px"></th>
+                <th style="width: 100px">Line Type</th>
+                <th style="width: 170px">Data Type</th>
+                <th style="width: 150px">Comment</th>
+                <th>Values</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of value(variableId).data.lineItems; let lineItemIdx = index;">
+                <td></td>
+                <td>{{lineItemIdx+1}}</td>
+                <td style="text-align: center;">
+                  <label class="custom-control custom-checkbox" style="margin-left: auto;margin-right: auto;clear: both;">
+                    <input type="checkbox" 
+                      #input
+                      [checked]="item.operation==='Add'"
+                      (change)="updateLineItemOperation(variableId, lineItemIdx, input.checked)"
+                      class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description"></span>
+                  </label>
+                </td>
+                <td>{{item.lineType}}</td>
+                <td>
+                  <select #select
+                      [(ngModel)]="item.lineItemType"
+                      class="form-control form-control-sm" 
+                      [disabled]="document.readonly ? 'true' : null">
+                    <option *ngFor="let value of lineItemTypeTexts" [ngValue]="value">
+                      {{value}}
+                    </option>
+                  </select>
+                </td>
+                <td>{{item.comment}}</td>
+                <td>
+                  <span class="pointer" (click)="editLineItem(variableId, lineItemIdx)">{{item.friendlyDescription}}</span>
+                  <span *ngIf="isEditLineItem[lineItemIdx] && item.lineItemType === 'Dated Value'">Dated Value</span>
+                  <span *ngIf="isEditLineItem[lineItemIdx] && item.lineItemType === 'Escalating Value'">Escalating</span>
+                  <span *ngIf="isEditLineItem[lineItemIdx] && item.lineItemType === 'Expression'">Expression</span>
+                  <span *ngIf="isEditLineItem[lineItemIdx] && item.lineItemType === 'Periodic Values'">Periodic</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </td>
       </tr>
     </tbody>

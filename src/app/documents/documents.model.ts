@@ -17,6 +17,14 @@ export class Document {
 
 }
 
+export enum LineItemType {
+  DatedValue,
+  EscalatingValue,
+  Expression,
+  PeriodicValues,
+  // ScalarValue
+}
+
 export enum DataType {
   ScalarString,
   ScalarDateTime

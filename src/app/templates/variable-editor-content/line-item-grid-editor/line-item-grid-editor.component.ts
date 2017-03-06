@@ -1,3 +1,4 @@
+import { LineItemTypeText } from '../../../documents/documents.service';
 import { DecimalPipe } from '@angular/common/src/pipes/number_pipe';
 import { ToastyService } from 'ng2-toasty';
 import { AbstractGridEditorComponent } from '../abstract-grid-editor/abstract-grid-editor';
@@ -17,9 +18,13 @@ import { RegisterEditor } from '../../template-loader.directive';
 export class LineItemGridEditorComponent extends AbstractGridEditorComponent {
 
   expanded = {};
+  isEditLineItem = {};
+  lineItemTypeTexts : string[] = [];
 
-  constructor(decimalPipe: DecimalPipe, toastyService: ToastyService) { 
+
+  constructor(decimalPipe: DecimalPipe, toastyService: ToastyService, private lineItemTypeText: LineItemTypeText) { 
     super(decimalPipe, toastyService);
+    this.lineItemTypeTexts = lineItemTypeText.names;
   }
 
   isReadOnly(idx) : boolean {
@@ -28,6 +33,27 @@ export class LineItemGridEditorComponent extends AbstractGridEditorComponent {
 
   columns(): string[] {
     return this.value(this.variableId()).values().map(value => value.periodString);
+  }
+
+  expandLineItems(idx: number, expand: boolean) {
+    this.expanded[idx]=expand;
+    this.isEditLineItem = {};
+  }
+
+  updateLineItemType(variableId, idx, selectedTypeIdx: number) {
+    let lineItems = JSON.parse(JSON.stringify(this.value(variableId).lineItems()));
+    lineItems[idx].lineItemType = this.lineItemTypeTexts[selectedTypeIdx];
+    this.value(variableId).updateLineItem(lineItems);
+  }
+
+  updateLineItemOperation(variableId, idx, checked) {
+    let lineItems = this.value(variableId).lineItems();
+    lineItems[idx].operation = checked ? 'Add' : 'None';
+    this.value(variableId).updateLineItem(lineItems);
+  }
+
+  editLineItem(variableId, lineItemIdx) {
+    this.isEditLineItem[lineItemIdx] = true;
   }
 
 }
