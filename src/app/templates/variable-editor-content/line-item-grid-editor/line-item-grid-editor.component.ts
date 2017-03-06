@@ -1,3 +1,4 @@
+import { Value } from '../../../documents/value.model';
 import { LineItemTypeText } from '../../../documents/documents.service';
 import { DecimalPipe } from '@angular/common/src/pipes/number_pipe';
 import { ToastyService } from 'ng2-toasty';
@@ -64,6 +65,14 @@ export class LineItemGridEditorComponent extends AbstractGridEditorComponent {
       lineItem.endDate = lineItem.endDate || this.document.endDate;
       lineItem.value = lineItem.value || 0;
       lineItem.escalationRate = lineItem.escalationRate || 0;
+    } else if ( lineItem.lineItemType === 'Periodic Values' ) {
+      lineItem.containedValues = lineItem.containedValues || this.value(variableId).values().map(value => {
+        return {
+          value: value.value,
+          periodString: value.periodString
+        }
+      });
+      
     }
     this.expanded[idx][lineItemIdx] = false;
     let lineItems = this.value(variableId).lineItems();

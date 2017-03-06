@@ -53,6 +53,7 @@ import { ChartsModule } from 'ng2-charts';
 import { FileUploadModule } from 'ng2-file-upload';
 import { LineItemDatedValueComponent } from './variable-editor-content/line-item-grid-editor/line-item-dated-value/line-item-dated-value.component';
 import { LineItemEscalatingValueComponent } from './variable-editor-content/line-item-grid-editor/line-item-escalating-value/line-item-escalating-value.component';
+import { LineItemPeriodicValuesComponent } from './variable-editor-content/line-item-grid-editor/line-item-periodic-values/line-item-periodic-values.component';
 
 @NgModule({
   imports: [
@@ -99,7 +100,8 @@ import { LineItemEscalatingValueComponent } from './variable-editor-content/line
     ExpressionDialogComponent,
     ExpressionComment,
     LineItemDatedValueComponent,
-    LineItemEscalatingValueComponent
+    LineItemEscalatingValueComponent,
+    LineItemPeriodicValuesComponent
   ],
   entryComponents: [
     TabContentComponent, 
