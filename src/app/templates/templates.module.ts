@@ -51,6 +51,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularOpenlayersModule } from 'angular2-openlayers';
 import { ChartsModule } from 'ng2-charts';
 import { FileUploadModule } from 'ng2-file-upload';
+import { LineItemDatedValueComponent } from './variable-editor-content/line-item-grid-editor/line-item-dated-value/line-item-dated-value.component';
 
 @NgModule({
   imports: [
@@ -95,7 +96,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     Date2Model,
     OpenComment,
     ExpressionDialogComponent,
-    ExpressionComment
+    ExpressionComment,
+    LineItemDatedValueComponent
   ],
   entryComponents: [
     TabContentComponent, 

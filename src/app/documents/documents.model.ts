@@ -12,7 +12,9 @@ export class Document {
     public documentLock: any,
     public conceptDefinition: any,
     public revisions: any[],
-    public template: any
+    public template: any,
+    public startDate: Date,
+    public endDate: Date
   ) {}
 
 }

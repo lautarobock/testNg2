@@ -95,8 +95,8 @@
                 </td>
                 <td>{{item.comment}}</td>
                 <td>
-                  <span class="pointer" (click)="editLineItem(variableId, lineItemIdx)">{{item.friendlyDescription}}</span>
-                  <span *ngIf="isEditLineItem[lineItemIdx] && item.lineItemType === 'Dated Value'">Dated Value</span>
+                  <span *ngIf="!isEditLineItem[lineItemIdx]" class="pointer" (click)="editLineItem(lineItemIdx)">{{item.friendlyDescription}}</span>
+                  <line-item-dated-value [document]="document" [item]="item" (onChange)="changeLineItem(variableId, $event,lineItemIdx)" (cancel)="closeLineItem(lineItemIdx)" *ngIf="isEditLineItem[lineItemIdx] && item.lineItemType === 'Dated Value'"></line-item-dated-value>
                   <span *ngIf="isEditLineItem[lineItemIdx] && item.lineItemType === 'Escalating Value'">Escalating</span>
                   <span *ngIf="isEditLineItem[lineItemIdx] && item.lineItemType === 'Expression'">Expression</span>
                   <span *ngIf="isEditLineItem[lineItemIdx] && item.lineItemType === 'Periodic Values'">Periodic</span>

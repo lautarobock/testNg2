@@ -52,8 +52,19 @@ export class LineItemGridEditorComponent extends AbstractGridEditorComponent {
     this.value(variableId).updateLineItem(lineItems);
   }
 
-  editLineItem(variableId, lineItemIdx) {
+  editLineItem(lineItemIdx) {
     this.isEditLineItem[lineItemIdx] = true;
+  }
+
+  closeLineItem(lineItemIdx) {
+    this.isEditLineItem[lineItemIdx] = false;
+  }
+
+  changeLineItem(variableId, lineItem, lineItemIdx) {
+    this.isEditLineItem[lineItemIdx] = false;
+    let lineItems = this.value(variableId).lineItems();
+    lineItems[lineItemIdx] = lineItem;
+    this.value(variableId).updateLineItem(lineItems);
   }
 
 }
