@@ -1,10 +1,10 @@
 <table class="table table-sm" style="width: 550px">
-    <thead>
+    <!--<thead>
         <tr>
             <th colspan="2"></th>
             <th>Value</th>
         </tr>
-    </thead>
+    </thead>-->
     <tbody>
         <tr>
             <td style="width: 40px">
@@ -18,7 +18,17 @@
                 </button>
             </td>
             <td>
-              <input type="text" [(ngModel)]="expression" class="form-control form-control-sm"/>
+              <div class="input-group" >
+                <span class="form-control form-control-sm pointer" (click)="openEditor()">
+                  {{expression}}
+                </span>
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-sm btn-secondary" (click)="openEditor()">
+                    &fnof;
+                  </button>
+                </span>
+              </div>
+              
             </td>
         </tr>
     </tbody>

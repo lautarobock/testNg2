@@ -5,6 +5,7 @@ import { Value } from '../../../documents/value.model';
 import { Document } from '../../../documents/documents.model';
 import { MathService } from '../../../documents/math.service';
 import { ToastyService } from 'ng2-toasty';
+import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 
 @Component({
   selector: 'app-expression-dialog',
@@ -23,18 +24,27 @@ export class ExpressionDialogComponent implements OnInit {
   expression: string = '';
   variableQuery: string = '';
   functionQuery: string = '';
+  standAlone: boolean = false;
   @ViewChild('inputExpression') inputExpression: ElementRef;
 
   constructor(
     public activeModal: NgbActiveModal,
     private documentService: DocumentsService,
     private mathService: MathService,
-    private toastyService: ToastyService
-  ) { }
+    private toastyService: ToastyService,
+    private hotkeysService: HotkeysService
+  ) {
+    this.hotkeysService.add(new Hotkey('ctrl+enter', (event: KeyboardEvent): boolean => {
+        this.ok(this.inputExpression.nativeElement.value);
+        return false; // Prevent bubbling
+    }));
+  }
 
   ngOnInit() {
     this.mathService.functions().subscribe(data => this.functions = data);
-    if ( this.isPeriodic ) {
+    if ( this.standAlone ) {
+
+    } else if ( this.isPeriodic ) {
       this.expression = this.value.scalarExpression() || this.value.periodicExpression();
     } else {
       this.expression = this.value.expression();
@@ -103,8 +113,10 @@ export class ExpressionDialogComponent implements OnInit {
   ok(expression) {
     this.onValid(expression)
     .then(()=>{
-      this.value.updateExpression(expression);
-      this.activeModal.close();
+      if ( !this.standAlone ) {
+        this.value.updateExpression(expression);
+      }
+      this.activeModal.close(expression);
     })
     .catch(err=>console.log(err));
   }
@@ -119,6 +131,18 @@ export class ExpressionDialogComponent implements OnInit {
 export class ExpressionDialog {
 
   constructor(private modalService: NgbModal) {}
+
+  openStandAlone(value: Value, document: Document, scenario: any, expression: string) {
+    let ref = this.modalService.open(ExpressionDialogComponent, {size: 'lg',windowClass: 'modal-xl'});
+    ref.componentInstance.value  = value;
+    ref.componentInstance.readonly = false;
+    ref.componentInstance.document = document;
+    ref.componentInstance.scenario = scenario;
+    ref.componentInstance.isPeriodic = false;
+    ref.componentInstance.standAlone = true;
+    ref.componentInstance.expression = expression;
+    return ref.result;
+  }
 
   open(value: Value, readonly: boolean, document: Document, scenario: any, isPeriodic: boolean = false) {
     let ref = this.modalService.open(ExpressionDialogComponent, {size: 'lg',windowClass: 'modal-xl'});

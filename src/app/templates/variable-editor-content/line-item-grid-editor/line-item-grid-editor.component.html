@@ -8,7 +8,7 @@
           [value]="text2CopyAll" 
           (onPaste)="onPasteAll($event)"></copy-paste-box>
       </th>
-      <th></th>
+      <th style="min-width: 20px"></th>
       <th style="min-width: 100px">Category</th>
       <th style="min-width: 250px">Variable</th>
       <th style="min-width: 140px">Unit</th>
@@ -28,9 +28,9 @@
             [value]="rowContexts[idx].text2Copy" 
             (onPaste)="onPasteRow($event, variableId, idx)"></copy-paste-box>
         </td>
-        <td>
-          <i class="fa fa-caret-right pointer" [hidden]="expanded[idx]" (click)="expandLineItems(idx,true)"></i>
-          <i class="fa fa-caret-down pointer" [hidden]="!expanded[idx]" (click)="expandLineItems(idx,false)"></i>
+        <td (click)="expandLineItems(idx,!expanded[idx])" class="pointer" style="text-align: center">
+          <i class="fa fa-caret-right" [hidden]="expanded[idx]" ></i>
+          <i class="fa fa-caret-down" [hidden]="!expanded[idx]" ></i>
         </td>
         <td>{{document.variableDefinitions[variableId].category.name}}</td>
         <td class="expression-cell">
@@ -58,10 +58,12 @@
           <table class="table table-sm table-bordered">
             <thead>
               <tr>
-                <th style="width: 50px">Action</th>
+                <th style="width: 36px; text-align: center">
+                  <i class="fa fa-plus-circle pointer" style="color: blue" [hidden]="document.readonly" (click)="addLineItem(variableId)"></i>
+                </th>
                 <th style="width: 50px">ID</th>
                 <th style="width: 50px"></th>
-                <th style="width: 100px">Line Type</th>
+                <!--<th style="width: 100px">Line Type</th>-->
                 <th style="width: 170px">Data Type</th>
                 <th style="width: 150px">Comment</th>
                 <th>Values</th>
@@ -69,11 +71,14 @@
             </thead>
             <tbody>
               <tr *ngFor="let item of value(variableId).data.lineItems; let lineItemIdx = index;">
-                <td></td>
+                <td style="text-align: center">
+                  <i class="fa fa-trash pointer" [hidden]="document.readonly" style="color:red" (click)="removeLineItem(lineItemIdx, variableId)"></i>
+                </td>
                 <td>{{lineItemIdx+1}}</td>
                 <td style="text-align: center;">
                   <label class="custom-control custom-checkbox" style="margin-left: auto;margin-right: auto;clear: both;">
                     <input type="checkbox" 
+                      [disabled]="document.readonly"
                       #input
                       [checked]="item.operation==='Add'"
                       (change)="updateLineItemOperation(variableId, lineItemIdx, input.checked)"
@@ -82,7 +87,7 @@
                     <span class="custom-control-description"></span>
                   </label>
                 </td>
-                <td>{{item.lineType}}</td>
+                <!--<td>{{item.lineType}}</td>-->
                 <td>
                   <select #select
                       [(ngModel)]="item.lineItemType"
@@ -94,13 +99,15 @@
                     </option>
                   </select>
                 </td>
-                <td>{{item.comment}}</td>
                 <td>
-                  <span *ngIf="!expanded[idx][lineItemIdx]" class="pointer" (click)="editLineItem(idx,lineItemIdx)">{{buildfriendlyDescription(item,idx)}}</span>
+                  <input [disabled]="document.readonly" type="text" [(ngModel)]="item.comment" (blur)="changeLineItemComment(variableId)" class="form-control form-control-sm" (keyup.enter)="$event.srcElement.blur()" onfocus="this.select()"/>
+                </td>
+                <td>
+                  <span *ngIf="!expanded[idx][lineItemIdx]" class="pointer" [ngClass]="{'disabled':document.readonly}" (click)="!document.readonly && editLineItem(idx,lineItemIdx)">{{buildfriendlyDescription(item,idx)}}</span>
                   <line-item-dated-value [document]="document" [item]="item" (onChange)="changeLineItem(idx,variableId, $event,lineItemIdx)" (cancel)="closeLineItem(idx,lineItemIdx)" *ngIf="expanded[idx][lineItemIdx] && item.lineItemType === 'Dated Value'"></line-item-dated-value>
                   <line-item-escalating-value [document]="document" [item]="item" (onChange)="changeLineItem(idx,variableId, $event,lineItemIdx)" (cancel)="closeLineItem(idx,lineItemIdx)" *ngIf="expanded[idx][lineItemIdx] && item.lineItemType === 'Escalating Value'"></line-item-escalating-value>
                   <line-item-periodic-values  [document]="document" [unit]="rowContexts[idx].selectedUnit" [item]="item" (onChange)="changeLineItem(idx,variableId, $event,lineItemIdx)" (cancel)="closeLineItem(idx,lineItemIdx)" *ngIf="expanded[idx][lineItemIdx] && item.lineItemType === 'Periodic Values'"></line-item-periodic-values>
-                  <line-item-expression [document]="document" [item]="item" (onChange)="changeLineItem(idx,variableId, $event,lineItemIdx)" (cancel)="closeLineItem(idx,lineItemIdx)" *ngIf="expanded[idx][lineItemIdx] && item.lineItemType === 'Expression'"></line-item-expression>
+                  <line-item-expression [document]="document" [scenario]="scenario" [value]="value(variableId)" [item]="item" (onChange)="changeLineItem(idx,variableId, $event,lineItemIdx)" (cancel)="closeLineItem(idx,lineItemIdx)" *ngIf="expanded[idx][lineItemIdx] && item.lineItemType === 'Expression'"></line-item-expression>
                 </td>
               </tr>
             </tbody>

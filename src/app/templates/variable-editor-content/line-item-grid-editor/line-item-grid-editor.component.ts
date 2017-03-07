@@ -1,3 +1,4 @@
+import { ConfirmationDialog } from '../../../util/confirmation-dialog/confirmation-dialog.component';
 import { Value } from '../../../documents/value.model';
 import { LineItemTypeText } from '../../../documents/documents.service';
 import { DecimalPipe, DatePipe } from '@angular/common';
@@ -25,7 +26,9 @@ export class LineItemGridEditorComponent extends AbstractGridEditorComponent {
     decimalPipe: DecimalPipe, 
     toastyService: ToastyService, 
     private lineItemTypeText: LineItemTypeText,
-    private datePipe: DatePipe) { 
+    private datePipe: DatePipe,
+    private confirmationDialog: ConfirmationDialog
+  ) { 
     super(decimalPipe, toastyService);
     this.lineItemTypeTexts = lineItemTypeText.names;
   }
@@ -73,6 +76,43 @@ export class LineItemGridEditorComponent extends AbstractGridEditorComponent {
     let lineItems = this.value(variableId).lineItems();
     lineItems[idx].operation = checked ? 'Add' : 'None';
     this.value(variableId).updateLineItem(lineItems);
+  }
+
+  changeLineItemComment(variableId) {
+    this.value(variableId).updateLineItem(this.value(variableId).lineItems());
+  }
+
+  addLineItem(variableId) {
+    let newItem = {
+        // date: new Date(),
+        // isValid: true,
+        // operation: "Add",
+      containedValues: this.value(variableId).values().map(value => {
+        return {
+          value: 0,
+          periodString: value.periodString
+        }
+      }),
+      escalationRate: 0,
+      startDate: this.document.startDate,
+      endDate: this.document.endDate,
+      // friendlyDescription: "",
+      operation: "Add",
+      comment: "",
+      lineItemType: "Periodic Values",
+      value: 0
+    };
+    let lineItems = this.value(variableId).lineItems();
+    lineItems.push(newItem);
+    this.value(variableId).updateLineItem(lineItems);
+  }
+
+  removeLineItem(lineItemIdx, variableId) {
+    this.confirmationDialog.open(`Are you sure to remove line item with ID ${lineItemIdx+1}?`,'Remove Line Item').then(() => {
+      let lineItems = this.value(variableId).lineItems();
+      lineItems.splice(lineItemIdx,1);
+      this.value(variableId).updateLineItem(lineItems);
+    }).catch(() => console.log('no'));
   }
 
   changeLineItemType(idx, variableId, lineItem, lineItemIdx) {
