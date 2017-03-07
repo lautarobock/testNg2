@@ -100,7 +100,7 @@
                   <line-item-dated-value [document]="document" [item]="item" (onChange)="changeLineItem(idx,variableId, $event,lineItemIdx)" (cancel)="closeLineItem(idx,lineItemIdx)" *ngIf="expanded[idx][lineItemIdx] && item.lineItemType === 'Dated Value'"></line-item-dated-value>
                   <line-item-escalating-value [document]="document" [item]="item" (onChange)="changeLineItem(idx,variableId, $event,lineItemIdx)" (cancel)="closeLineItem(idx,lineItemIdx)" *ngIf="expanded[idx][lineItemIdx] && item.lineItemType === 'Escalating Value'"></line-item-escalating-value>
                   <line-item-periodic-values  [document]="document" [unit]="rowContexts[idx].selectedUnit" [item]="item" (onChange)="changeLineItem(idx,variableId, $event,lineItemIdx)" (cancel)="closeLineItem(idx,lineItemIdx)" *ngIf="expanded[idx][lineItemIdx] && item.lineItemType === 'Periodic Values'"></line-item-periodic-values>
-                  <span *ngIf="expanded[idx][lineItemIdx] && item.lineItemType === 'Expression'">Periodic</span>
+                  <line-item-expression [document]="document" [item]="item" (onChange)="changeLineItem(idx,variableId, $event,lineItemIdx)" (cancel)="closeLineItem(idx,lineItemIdx)" *ngIf="expanded[idx][lineItemIdx] && item.lineItemType === 'Expression'"></line-item-expression>
                 </td>
               </tr>
             </tbody>
