@@ -1,1 +1,28 @@
-{{item.containedValues|json}}
+<table class="table table-sm" style="width: 550px">
+    <thead>
+        <tr>
+            <th colspan="2"></th>
+            <th *ngFor="let col of containedValues">{{col.periodString}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="width: 40px">
+                <button type="button" class="btn btn-primary btn-sm" (click)="ok()">
+                    <i class="fa fa-check" ></i>
+                </button>
+            </td>
+            <td style="width: 40px">
+                <button type="button" class="btn btn-secondary btn-sm" (click)="close()">
+                    <i class="fa fa-times" ></i>
+                </button>
+            </td>
+            <td *ngFor="let value of containedValues;let periodIdx = index">
+              <input id="input-grid-{{periodIdx}}" onfocus="this.select()"
+                type="number" style="min-width:130px;text-align: right;background: white !important;"
+                class="form-control form-control-sm" (keyup.enter)="ok()" (keyup.esc)="close()"
+                [(ngModel)]="value.value">
+            </td>
+        </tr>
+    </tbody>
+</table>

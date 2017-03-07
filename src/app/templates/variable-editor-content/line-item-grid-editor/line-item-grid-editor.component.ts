@@ -1,6 +1,6 @@
 import { Value } from '../../../documents/value.model';
 import { LineItemTypeText } from '../../../documents/documents.service';
-import { DecimalPipe } from '@angular/common/src/pipes/number_pipe';
+import { DecimalPipe, DatePipe } from '@angular/common';
 import { ToastyService } from 'ng2-toasty';
 import { AbstractGridEditorComponent } from '../abstract-grid-editor/abstract-grid-editor';
 import { Component, OnInit } from '@angular/core';
@@ -21,8 +21,11 @@ export class LineItemGridEditorComponent extends AbstractGridEditorComponent {
   expanded = {};
   lineItemTypeTexts : string[] = [];
 
-
-  constructor(decimalPipe: DecimalPipe, toastyService: ToastyService, private lineItemTypeText: LineItemTypeText) { 
+  constructor(
+    decimalPipe: DecimalPipe, 
+    toastyService: ToastyService, 
+    private lineItemTypeText: LineItemTypeText,
+    private datePipe: DatePipe) { 
     super(decimalPipe, toastyService);
     this.lineItemTypeTexts = lineItemTypeText.names;
   }
@@ -40,6 +43,23 @@ export class LineItemGridEditorComponent extends AbstractGridEditorComponent {
       this.expanded[idx]={};
     } else {
       this.expanded[idx]=null;
+    }
+  }
+
+  buildfriendlyDescription(lineItem, idx) {
+    if ( lineItem.lineItemType === 'Dated Value' ) {
+      let value = this.formatter.format(lineItem.value,this.rowContexts[idx].selectedUnit);
+      let date = this.datePipe.transform(lineItem.date,'MMMM yyyy');
+      return `${value} in ${date}`;
+    } else if ( lineItem.lineItemType === 'Escalating Value' ) {
+      let value = this.formatter.format(lineItem.value,this.rowContexts[idx].selectedUnit);
+      let start = this.datePipe.transform(lineItem.startDate,'MMMM yyyy');
+      let end = this.datePipe.transform(lineItem.endDate,'MMMM yyyy');
+      return `${value} from ${start} unit ${end} excalated at ${lineItem.escalationRate}`;
+    } else if ( lineItem.lineItemType === 'Periodic Values' ) {
+      return lineItem.containedValues.map(value => this.formatter.format(value.value, this.rowContexts[idx].selectedUnit)).join('\t');
+    } else {
+      return lineItem.friendlyDescription;
     }
   }
 
@@ -72,7 +92,8 @@ export class LineItemGridEditorComponent extends AbstractGridEditorComponent {
           periodString: value.periodString
         }
       });
-      
+    } else if ( lineItem.lineItemType === 'Expression' ) {
+      lineItem.expression = '';
     }
     this.expanded[idx][lineItemIdx] = false;
     let lineItems = this.value(variableId).lineItems();

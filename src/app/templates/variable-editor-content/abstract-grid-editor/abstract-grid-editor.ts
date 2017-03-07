@@ -180,7 +180,7 @@ export class ValueFormatter {
     return this.decimalPipe.transform(this.computedValue(value, unit), this.numberFormat);
   }
 
-  computedValue(value, unit: Unit) {
+  private computedValue(value, unit: Unit) {
     if (value) {
       return value * unit.factor;
     } else {

@@ -1,4 +1,4 @@
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, DatePipe } from '@angular/common';
 import { UtilModule } from '../util/util.module';
 import { ExpanderContentComponent } from './expander-content/expander-content.component';
 import { GroupContentComponent } from './group-content/group-content.component';
@@ -129,6 +129,6 @@ import { LineItemPeriodicValuesComponent } from './variable-editor-content/line-
     CommentDialogComponent,
     ExpressionDialogComponent
   ],
-  providers: [CommentDialog, ExpressionDialog, DecimalPipe]
+  providers: [CommentDialog, ExpressionDialog, DecimalPipe, DatePipe]
 })
 export class TemplatesModule { }
