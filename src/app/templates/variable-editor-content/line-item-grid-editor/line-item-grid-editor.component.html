@@ -28,7 +28,7 @@
             [value]="rowContexts[idx].text2Copy" 
             (onPaste)="onPasteRow($event, variableId, idx)"></copy-paste-box>
         </td>
-        <td (click)="expandLineItems(idx,!expanded[idx])" class="pointer" style="text-align: center">
+        <td (click)="expandLineItems(idx,!expanded[idx])" class="pointer expander" style="text-align: center">
           <i class="fa fa-caret-right" [hidden]="expanded[idx]" ></i>
           <i class="fa fa-caret-down" [hidden]="!expanded[idx]" ></i>
         </td>
