@@ -57,7 +57,7 @@ export class DocumentDetailComponent implements OnInit {
   }
 
   shareLink(): string {
-    return `${window.location.protocol}//${window.location.host}${window.location.pathname}?documentId=${this.document.documentId}&versionId=${this.document.versionId}`;
+    return `${window.location.protocol}//${window.location.host}${window.location.pathname}#documentId=${this.document.documentId}&versionId=${this.document.versionId}`;
   }
 
   afterCopyUrl() {

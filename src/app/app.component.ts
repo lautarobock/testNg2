@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
 
   documents: Array<any> = [];
   activeIdx: string;
+  params: URLSearchParams;
 
   constructor(
     private toastyConfig: ToastyConfig, 
@@ -29,17 +30,17 @@ export class AppComponent implements OnInit {
         this.closeCurrent();
         return false; // Prevent bubbling
     }));
+    this.params = new URLSearchParams(window.location.hash.slice(1));
   }
 
   ngOnInit() {
-    let params = new URLSearchParams(window.location.search);
-    if ( params.get('?documentId') && params.get('versionId') ) {
+    if ( this.params.get('documentId') && this.params.get('versionId') ) {
       this.open({
-        documentId: params.get('?documentId'),
-        versionId: params.get('versionId')
+        documentId: parseInt(this.params.get('documentId')),
+        versionId: parseInt(this.params.get('versionId'))
       })
     }
-    console.log('params', params);
+    console.log('params', this.params);
   }
 
   open(params) {
@@ -49,7 +50,17 @@ export class AppComponent implements OnInit {
       this.documents.push(params);
       idx = this.documents.length-1;
     }
-    this.activeIdx = this.documents[idx].idx;
+    this.setActiveIdx(idx);
+  }
+
+  setActiveIdx(documentIndex: number) {
+    this.activeIdx = this.documents[documentIndex].idx;
+    window.location.hash = `#documentId=${this.documents[documentIndex].documentId}&versionId=${this.documents[documentIndex].versionId}`;
+  }
+
+  clearActiveIdx() {
+    this.activeIdx = null;
+    window.location.hash = '';
   }
 
   loadDocument(document: Document, documentIndex: number) {
@@ -66,11 +77,11 @@ export class AppComponent implements OnInit {
   closeTab(idx, documentIndex) {
     if (idx === this.activeIdx) {
         if (documentIndex === 0 && this.documents.length>1) {
-            this.activeIdx = this.documents[1].idx;
+            this.setActiveIdx(1);
         } else if (documentIndex === 0) {
-            this.activeIdx = null;
+            this.clearActiveIdx();
         } else {
-            this.activeIdx = this.documents[documentIndex - 1].idx;
+            this.setActiveIdx(documentIndex - 1);
         }
     }
     this.documents.splice(documentIndex,1);
