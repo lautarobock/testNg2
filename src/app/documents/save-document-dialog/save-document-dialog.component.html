@@ -8,6 +8,20 @@
         [(ngModel)]="text" 
         style="height:130px; margin-bottom: 1em;">
     </textarea>
+    <div class="input-group">
+        <span class="form-control" style="display: block">
+            <span [hidden]="tagsApplied.length>0" style="color: gray">Revision Tag</span>
+            <span class="badge badge-info" style="margin-right: 1em;" *ngFor="let tag of tagsApplied; let idx = index;">
+                {{tag.name}}
+                <span (click)="removeTag(idx)" style="cursor: pointer;" class="fa fa-times"></span>
+            </span>
+        </span>
+        <span class="input-group-btn">
+            <select class="btn btn-secondary" [(ngModel)]="selectedTag" (change)="onSelect(selectedTag)" >
+                <option *ngFor="let tag of tags" [ngValue]="tag">{{tag.name}}</option>
+            </select>
+        </span>
+    </div>
     <!--<div class="input-group-sm input-group">
         <span class="form-control">
             <span ng-hide="tagsApplied.length>0" style="color: gray">Revision Tag</span>

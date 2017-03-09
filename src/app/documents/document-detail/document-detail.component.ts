@@ -133,7 +133,7 @@ export class DocumentDetailComponent implements OnInit {
         this.saving = true;
         return result;
       })
-      .then(result => this._documentService.save(this.document, result.text, result.tags).toPromise())
+      .then(result => this._documentService.save(this.document, result.text, result.tags.map(m=>m.id)).toPromise())
       .then(result => {
         this.data.clearDirties();
         this.loadingService.complete();
